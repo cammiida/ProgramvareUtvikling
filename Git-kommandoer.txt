@@ -1,0 +1,35 @@
+
+>For å sette opp stuff:
+git clone link
+
+> for å gå inn i en mappe:
+cd 'link'
+
+>Her kan du tabbe til du kommer til riktig mappe, eller starte med å 
+skrive en bokstav og så tabbe deg inn i riktig mappe derfra.
+>For å gå ett hakk opp i mappestrukturen:
+.. 
+
+
+> Vis hvordan du ligger i forhold til andre (mtp commits etc)
+git status
+
+> For å laste inn andre personers forandringer:
+git pull
+
+> For å laste opp ditt til git:
+git add filnavn.filending
+
+> ALTERNATIVT laste opp alt (ikke gjør om du har gjort mye du ikke har kontroll på)
+git add .
+
+> For å laste dine forandringer til git:
+git commit -m "forklaring på hva du har gjort"
+
+> FØR DU LASTER OPP MED PUSH, ALLTID SKRIV PULL for å se om andre har endret noe
+og du kan få eventuelle konflikter. Får du konflikt: fiks denne før du går videre.
+
+> Last opp til alle andre/stuff det inn i grenen du jobber på:
+Git push
+
+
