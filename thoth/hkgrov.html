@@ -1,21 +1,44 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="myscript.js"></script>
+	<link rel="stylesheet" type="text/css" href="hkgrov.css">
+</head>
 <body>
-	
-<h1>Overskrift</h1>
-	<p>testing...</p>
-<form action="forsteKnapp">
+<header>
+<nav>
+	<input type="image" src="Ressurser/DropDownBtn.png" width="50" height="50" id="dropDownBtn">
+</nav>
+<div name="navigasjon" id="liste">
+		<li>
+			<a href="#">Item 1</a>
+		</li>
+		<li>
+			<a href="#">Item 2</a>
+		</li>
+		<li>
+			<a href="#">Item 3</a>
+		</li>
+		<li>
+			<a href="#">Item 4</a>
+		</li>
+</div>
+</header>
+<form>
 	skriv noe her:
 	<br>
 	<input type="text" name="første" value="Må skrive noe her">
 	<br>
 	Skriv noe annet her
 	<br>
-	<input type="text" name="andre" value="Må også skrive noe her">
+	<input type="text" id="textbox" value="Må også skrive noe her">
+	<input type="text" id="textbox2" value"">
 	<br>
-	<input type="submit" name="submit" value="Trykk her">
-</form>
-		
-</body>	
+	<input type ="image" name="down" id="down" src="Ressurser/knapp_down.png" width="100" height="100">
+	<input type ="image" name="up" id="up" src="Ressurser/knapp_up.png" width="100" height="100">
+</form>	
+</body>
+
 </html>

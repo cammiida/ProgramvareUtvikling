@@ -1,16 +1,36 @@
-.submit {
+#button1 {
     background-color: black; /* Green */
     border: none;
+	width: 100px;
+	height: 100px;
     color: white;
 	opacity:0.3;
-    padding: 15px 32px;
+   	padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-	border-radius: 20px 5px;
+	border-radius: 50%;
+}
+nav{
+	padding-left:350px;
+	float:right;
+	background-color:#808080;
+}
+header{
+	width: 400px;
+	height: 250px;
+	background-color:#808080;
+}
 
-h1 {
-    color: navy;
-    margin-left: 20px;
+a{
+	display: inline-block;
+	color:white;
+	text-decoration:none;
+}
+li{
+	padding:10px;
+	text-align:center;
+	background-color:#808080;
+	list-style-type:none;
 }
