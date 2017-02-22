@@ -17,6 +17,12 @@ $(document).ready(function(){
 	$("#down").mousedown(function(){
 		$("#down").prop("src","Ressurser/knapp_down(pressed).png");
 	});
+	$("#down").mouseup(function(){
+		$("#down").prop("src","Ressurser/knapp_down.png");
+	})
+	$("#up").mouseup(function(){
+		$("#up").prop("src","Ressurser/knapp_up.png");
+	})
 	$("#dropDownBtn").click(function(){
 		$("#liste").toggle();
 	})
@@ -32,12 +38,15 @@ $(document).ready(function(){
 	$("li").mouseup(function(){
 		$(this).css("box-shadow", "");
 	})
-	$("#button1").click(function(){
-		var n = $("#textbox").val();
-		if($(this).val() == "Trykk her")
-			$(this).val("Ikke trykk her");
-		else
-			$(this).val("Trykk her")
-		$("#textbox2").prop("value",n);
+	$("#down").click(function(){
+		$("#message").fadeOut("slow")
+		$("#message").text("You pressed the to fast button")
+		$("#message").fadeIn("slow");
 	});
+	$("#up").click(function(){
+		$("#message").fadeOut("slow")
+		$("#message").text("You pressed the to slow button")
+		$("#message").fadeIn("slow")
+	});
+	
 });

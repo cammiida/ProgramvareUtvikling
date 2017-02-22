@@ -1,25 +1,11 @@
-#button1 {
-    background-color: black; /* Green */
-    border: none;
-	width: 100px;
-	height: 100px;
-    color: white;
-	opacity:0.3;
-   	padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-	border-radius: 50%;
-}
 nav{
 	padding-left:350px;
 	float:right;
 	background-color:#e4e4e4;
 }
 header{
-	width: 400px;
-	height: 250px;
+	min-width: 400px;
+	min-height: 250px;
 }
 
 a{
@@ -32,4 +18,8 @@ li{
 	text-align:center;
 	background-color:#e4e4e4;
 	list-style-type:none;
+}
+
+#message{
+	opacity:hidden;
 }
