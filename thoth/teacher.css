@@ -1,6 +1,8 @@
-.receivebox{
-  width:90%;
+.receivebox, .temporarybutton{
+  width:100%;
   background:lightgrey;
   border-radius:5px;
   margin-top:5px;
+  padding:5px;
+  text-align:center;
 }

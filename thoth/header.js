@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(function(){
 	$("#dropDownBtn").click(function(){
 		$("#liste").toggle();
 	})
@@ -13,5 +13,5 @@ $(document).ready(function(){
 	})
 	$("li").mouseup(function(){
 		$(this).css("box-shadow", "");
-	})
-)}
+	});
+});

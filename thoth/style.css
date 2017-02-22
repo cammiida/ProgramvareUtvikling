@@ -1,9 +1,13 @@
-/* GENERAL */
+@import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond|Kanit');
+
+/* GENERAL (Removes unwanted problems) */
+
 * {
 	margin: 0px;
 	padding: 0px;
 }
 
+/* General background and setup for the entire page*/
 html,body {
 	background: #F7F7F7;
 	font-size: 18px;
@@ -11,21 +15,38 @@ html,body {
 	color: #666666;
 	height: 100%;
   width:100%;
+	font-family: 'Kanit','Cormorant Garamond', serif;
 	/* bakrunnseffekter: #EDEDED */
 }
-/*Navigation field that contains dropdown menu button*/
-nav img{
-	padding-left:350px;
-	float:right;
-	background-color:#e4e4e4;
-	width: 50px;
-	height: 50px;
+
+#wrapper{
+	width:90%;
+	margin: 5%;
 }
+
 /*Header tag*/
 header{
 	width: 100%;
-	height: 250px;
+	min-height: 30px;
 	background:grey;
+}
+
+/*Navigation field that contains dropdown menu button*/
+header img{
+	float:right;
+	width: 50px;
+	height: 50px;
+	padding: 5px;
+}
+
+header h2{
+	padding: 5px;
+	font-size: 40px;
+	display: inline;
+}
+
+ul{
+	margin-top: 5px;
 }
 /*anchor tag that contains items in the dropdown menu*/
 a{
