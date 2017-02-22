@@ -1,6 +1,9 @@
 var express = require('express');
-var http = require('http');
-var fs = require('fs');
+  app = express();
+  http = require('http');
+  fs = require('fs');
+
+
 
 fs.readFile('./index_page.html', function (err, html) {
     if (err) {
@@ -14,3 +17,15 @@ fs.readFile('./index_page.html', function (err, html) {
 });
 
 console.log('Server running on port 8000.');
+
+function redirectToStudentPage(){
+  app.get('/student', function(req, res){
+    res.send('You were redirected to the student page');
+  });
+}
+
+function redirectToTeacherPage(){
+  app.get('/teacher', function(req, res){
+    res.send('You were redirected to the teacher page');
+  });
+}

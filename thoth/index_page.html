@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
+<script type="text/javascript" src="include.js"></script>
 
 <h1>Index Page</h1>
+<script type="text/javascript" src="index_page.js"></script>
 
 <body>
-  <button type="button" onclick="alert('You clicked the student page!')">
+  <div id="includeHeader"></div>
+  <button type="button" onclick="redirectToStudentPage()">
     Student Page
   </button>
-  <button type="button" onclick="alert('You clicked the teacher page!')">
-    Teacher Page
+  <button><a href="teacher.html">
+    Teacher Page</a>
   </button>
 </body>
 </html>
