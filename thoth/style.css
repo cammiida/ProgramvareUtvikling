@@ -10,21 +10,22 @@ html,body {
 	text-decoration: none;
 	color: #666666;
 	height: 100%;
-  width:70%;
-  margin-left: auto;
-  margin-right: auto;
+  width:100%;
 	/* bakrunnseffekter: #EDEDED */
 }
 /*Navigation field that contains dropdown menu button*/
-nav{
+nav img{
 	padding-left:350px;
 	float:right;
 	background-color:#e4e4e4;
+	width: 50px;
+	height: 50px;
 }
 /*Header tag*/
 header{
-	width: 400px;
+	width: 100%;
 	height: 250px;
+	background:grey;
 }
 /*anchor tag that contains items in the dropdown menu*/
 a{
