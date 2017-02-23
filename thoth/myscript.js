@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	/*Speed up and down buttons with animation*/
 	$("#down").mouseout(function(){
 		$("#down").prop("src", "Ressurser/knapp_down.png");
 	});
@@ -23,6 +24,7 @@ $(document).ready(function(){
 	$("#up").mouseup(function(){
 		$("#up").prop("src","Ressurser/knapp_up.png");
 	})
+	/*Drop Down Menu functionality with button animation*/
 	$("#dropDownBtn").click(function(){
 		$("#liste").toggle();
 	})
@@ -38,15 +40,21 @@ $(document).ready(function(){
 	$("li").mouseup(function(){
 		$(this).css("box-shadow", "");
 	})
+/*Fade functionality and feedback from buttons.*/
 	$("#down").click(function(){
-		$("#message").fadeOut("slow")
 		$("#message").text("You pressed the to fast button")
 		$("#message").fadeIn("slow");
+		setTimeout(function(){
+			$("#message").fadeOut("slow");
+		}
+		,2000);
 	});
 	$("#up").click(function(){
-		$("#message").fadeOut("slow")
-		$("#message").text("You pressed the to slow button")
-		$("#message").fadeIn("slow")
+		$("#message").text("You pressed the to slow button");
+		$("#message").fadeIn("slow");
+		setTimeout(function(){
+			$("#message").fadeOut("slow");
+		},2000)
 	});
 	
 });

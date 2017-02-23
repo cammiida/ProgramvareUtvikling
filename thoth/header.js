@@ -11,7 +11,7 @@ $(function(){
 	$("li").mousedown(function(){
 		$(this).css("box-shadow", "inset 1px 0px 7px 8px #8c8c8c")
 	})
-	$("li").mouseup(function(){
+	$("li").mouseup(function(){s
 		$(this).css("box-shadow", "");
 	});
 });
