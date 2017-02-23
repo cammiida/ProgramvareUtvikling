@@ -10,11 +10,11 @@
 /* General background and setup for the entire page*/
 html,body {
 	background: #F7F7F7;
-	font-size: 18px;
+	font-size: 7vw;
 	text-decoration: none;
 	color: #666666;
-	height: 100%;
-  width:100%;
+	height: 100vw;
+  width:100vw;
 	font-family: 'Kanit','Cormorant Garamond', serif;
 	/* bakrunnseffekter: #EDEDED */
 }
@@ -22,31 +22,35 @@ html,body {
 #wrapper{
 	width:90%;
 	margin: 5%;
+	text-align: center;
 }
 
 /*Header tag*/
 header{
 	width: 100%;
-	min-height: 30px;
+	min-height: 15vw;
 	background:grey;
+	border-bottom: 1px solid #a0a09f;
+}
+
+header img{
+	height: 12vw;;
+	background:grey;
+	padding: 2vw;
 }
 
 /*Navigation field that contains dropdown menu button*/
-header img{
+#dropDownBtn{
 	float:right;
-	width: 50px;
-	height: 50px;
-	padding: 5px;
 }
 
 header h2{
 	padding: 5px;
-	font-size: 40px;
+	font-size: 10vw;
 	display: inline;
 }
 
 ul{
-	margin-top: 5px;
 }
 /*anchor tag that contains items in the dropdown menu*/
 a{
@@ -56,21 +60,38 @@ a{
 }
 /*list that contain anchor tag. Drops down when pressing menu button*/
 li{
+	border-top: 1px solid #a0a09f;
 	padding:10px;
 	text-align:center;
 	background-color:#e4e4e4;
 	list-style-type:none;
 }
 
+#liste{
+	display:none;
+}
+/* All the buttons on the page */
+
 button {
-  height: 200px;
-  width: 200px;
+  height: 20vw;
+  min-width: 80vw;
+	margin:5px;
   background-color: lightgrey;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 5vw;
   text-decoration: none;
 }
 
 #message{
 	display:none;
+}
+
+.thoth{
+	width:40vw;
+	float: right;
+	margin-right:5vw;
+}
+
+p{
+	margin:5vw;
 }
