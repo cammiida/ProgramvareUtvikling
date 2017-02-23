@@ -23,3 +23,11 @@ li{
 #message{
 	display:none;
 }
+
+#toSlow{
+	display:none;
+}
+
+#toFast{
+	display:none;
+}

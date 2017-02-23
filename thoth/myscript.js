@@ -46,6 +46,7 @@ $(document).ready(function(){
 	$("#down").click(function(){
 		toFast += 1;
 		$("#message").text("You pressed the too fast button")
+		$("#toFast").text(toFast);
 		$("#message").fadeIn("slow");
 		setTimeout(function(){
 			$("#message").fadeOut("slow");
@@ -54,7 +55,8 @@ $(document).ready(function(){
 	});
 	$("#up").click(function(){
 		toSlow += 1;
-		$("#message").text("You pressed the too slow button " + String(toSlow));
+		$("#message").text("You pressed the too slow button");
+		$("#toSlow").text(toSlow);
 		$("#message").fadeIn("slow");
 		setTimeout(function(){
 			$("#message").fadeOut("slow");
