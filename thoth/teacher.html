@@ -8,7 +8,9 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="stylesheet" type="text/css" href="teacher.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="include.js"></script>
+    <script type="text/javascript" src="teacher.js"></script>
 </head>
 <body>
 <div id="includedHeader"></div>
@@ -18,14 +20,12 @@
 		Is the lecture speed too fast or too slow? </br>
 		The students voted below...
 	</p>
-  <div class="temporarybutton">
-    Just to test
-  </div>
-  <div class="receivebox">
-    This is where content will load
-	<br>
-	<span>upvotes</span>
-	<span>downvotes</span>
+  <div id="receivebox">
+    Student Votes:
+    <br/>
+    <div id="down">0%</div>
+    <div id="up">0%</div>
+    <br/> Slow down | Speed Up <br/>
   </div>
 </div>
 </body>

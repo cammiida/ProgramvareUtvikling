@@ -1,4 +1,11 @@
+
 $(document).ready(function(){
+
+	// Starts up socket.io. Creates connection.
+	var socket = io();
+	socket.emit('usertype','student');
+
+
 	/*Speed up and down buttons with animation*/
 	var toSlow = 0;
 	var toFast = 0;
@@ -32,6 +39,10 @@ $(document).ready(function(){
 /*Fade functionality and feedback from buttons.*/
 	$("#down").click(function(){
 		toFast += 1;
+		// sending message to the server:
+		socket.emit('slower');
+
+		// Counter on page
 		$("#message").text("You pressed the too fast button")
 		$("#toFast").text(toFast);
 		$("#message").fadeIn("slow");
@@ -42,6 +53,10 @@ $(document).ready(function(){
 	});
 	$("#up").click(function(){
 		toSlow += 1;
+		// sending message to the server:
+		socket.emit('faster');
+
+		// Counter on page
 		$("#message").text("You pressed the too slow button");
 		$("#toSlow").text(toSlow);
 		$("#message").fadeIn("slow");

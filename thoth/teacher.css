@@ -1,4 +1,4 @@
-.receivebox, .temporarybutton{
+#receivebox{
   width:100%;
   background:lightgrey;
   border-radius:5px;
@@ -6,4 +6,22 @@
   padding:5px;
   text-align:center;
   font-style: italic;
+}
+
+#down, #up{
+  width:20vw;
+  height:20vw;
+  padding-top:5vw;
+  border-radius: 55%;
+  box-sizing:border-box;
+  border: 2px solid grey;
+  display:inline-block;
+}
+
+#down{
+  background-color: #d1c0c0;
+
+}
+#up{
+  background-color: #c0d1be;
 }
