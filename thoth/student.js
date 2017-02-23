@@ -26,22 +26,6 @@ $(document).ready(function(){
 	$("#up").mouseup(function(){
 		$("#up").prop("src","Ressurser/knapp_up.png");
 	})
-	/*Drop Down Menu functionality with button animation*/
-	$("#dropDownBtn").click(function(){
-		$("#liste").toggle();
-	})
-	$("li").mouseover(function(){
-		$(this).css("background-color", "#c4c4c4");
-	});
-	$("li").mouseout(function(){
-		$(this).css("background-color","#e4e4e4")
-	})
-	$("li").mousedown(function(){
-		$(this).css("box-shadow", "inset 1px 0px 7px 8px #8c8c8c")
-	})
-	$("li").mouseup(function(){
-		$(this).css("box-shadow", "");
-	})
 /*Fade functionality and feedback from buttons.*/
 	$("#down").click(function(){
 		toFast += 1;
