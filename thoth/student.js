@@ -3,10 +3,10 @@ $(document).ready(function(){
 	var toSlow = 0;
 	var toFast = 0;
 	$("#down").mouseout(function(){
-		$("#down").prop("src", "Ressurser/knapp_down.png");
+		$("#down").prop("src", "Ressurser/downbutton.png");
 	});
 	$("#up").mouseout(function(){
-		$("#up").prop("src", "Ressurser/knapp_up.png");
+		$("#up").prop("src", "Ressurser/upbutton.png");
 	});
 	$("#up").mouseover(function(){
 		$("#up").prop("src", "Ressurser/knapp_up(over).png");
@@ -21,10 +21,10 @@ $(document).ready(function(){
 		$("#down").prop("src","Ressurser/knapp_down(pressed).png");
 	});
 	$("#down").mouseup(function(){
-		$("#down").prop("src","Ressurser/knapp_down.png");
+		$("#down").prop("src","Ressurser/downbutton.png");
 	})
 	$("#up").mouseup(function(){
-		$("#up").prop("src","Ressurser/knapp_up.png");
+		$("#up").prop("src","Ressurser/upbutton.png");
 	})
 /*Fade functionality and feedback from buttons.*/
 	$("#down").click(function(){
@@ -46,5 +46,5 @@ $(document).ready(function(){
 			$("#message").fadeOut("slow");
 		},2000)
 	});
-	
+
 });
