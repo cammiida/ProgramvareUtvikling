@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	/*Speed up and down buttons with animation*/
+	var toSlow = 0;
+	var toFast = 0;
 	$("#down").mouseout(function(){
 		$("#down").prop("src", "Ressurser/knapp_down.png");
 	});
@@ -42,7 +44,8 @@ $(document).ready(function(){
 	})
 /*Fade functionality and feedback from buttons.*/
 	$("#down").click(function(){
-		$("#message").text("You pressed the to fast button")
+		toFast += 1;
+		$("#message").text("You pressed the too fast button")
 		$("#message").fadeIn("slow");
 		setTimeout(function(){
 			$("#message").fadeOut("slow");
@@ -50,7 +53,8 @@ $(document).ready(function(){
 		,2000);
 	});
 	$("#up").click(function(){
-		$("#message").text("You pressed the to slow button");
+		toSlow += 1;
+		$("#message").text("You pressed the too slow button " + String(toSlow));
 		$("#message").fadeIn("slow");
 		setTimeout(function(){
 			$("#message").fadeOut("slow");
