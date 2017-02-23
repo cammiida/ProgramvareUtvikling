@@ -14,6 +14,16 @@ $(function () {
 			});
 			$("li").mouseup(function(){
 				$(this).css("box-shadow", "");
-			})
+			});
+	});
+	var toSlow = 0;
+	var toFast = 0;
+	$("#up").click(function(){
+		toSlow += 1;
+		$("#slow_value").text(toSlow);
+	});
+	$("#down").click(function(){
+		toFast += 1;
+		$("#fast_value").text(toFast);
 	});
 });
