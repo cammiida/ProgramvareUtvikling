@@ -1,0 +1,30 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <TITLE> Teacher page </TITLE>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/teacher.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+    <script type="text/javascript" src="{% static 'javascript/teacher.js' %}"></script>
+    <script type="text/javascript" src="{% static 'javascript/header.js' %}"></script>
+</head>
+<body>
+	{% include 'header.html' %}
+<div id="wrapper">
+  <p>
+		Is the lecture speed too fast or too slow? </br>
+		The students voted below...
+	</p>
+  <div id="receivebox">
+    Student Votes:
+    <br/>
+    <div id="down">0%</div>
+    <div id="up">0%</div>
+    <br/> Slow down | Speed Up <br/>
+  </div>
+</div>
+</body>
+</html>
