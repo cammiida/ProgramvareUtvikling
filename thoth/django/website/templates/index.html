@@ -1,0 +1,31 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <TITLE> Thoth - The Ancient God of Wisdom At Your Service </TITLE>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<body>
+  <header>
+  	<div class="contentalignment">
+        <a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}"></a>
+	    <img src="{% static 'images/title.png' %}">
+    </div>
+  </header>
+
+  <div id="wrapper">
+    <img src="{% static 'images/thoth.png' %}" class="thoth">
+    <p>
+      "State your role below to enter".
+    </p>
+    <a href="{% url 'student' %}">
+      <button type="button">Student</button>
+    </a>
+    <a href="{% url 'teacher' %}">
+      <button>Teacher</button>
+    </a>
+
+  </div>
+</body>
+</html>
