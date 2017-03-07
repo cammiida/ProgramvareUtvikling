@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # ADDED THE APP HERE SO THAT WE RECOGNIZE OUR APP
-    'website',
+    'website.apps.WebsiteConfig',
 ]
 
 MIDDLEWARE = [
