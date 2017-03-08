@@ -5,12 +5,10 @@
 
 # Icon must end with two \r
 Icon
-<<<<<<< HEAD
-*.xml
-=======
 
+*.xml
 virtualenv/
->>>>>>> b78a0e30161d1c8f6192070b8272d3cd8d1e6442
+
 
 # Thumbnails
 ._*
