@@ -6,6 +6,9 @@
 # Icon must end with two \r
 Icon
 
+*.xml
+virtualenv/
+
 
 # Thumbnails
 ._*

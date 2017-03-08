@@ -1,4 +1,4 @@
-"""thoth URL Configuration
+"""thisisatestfolder URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -15,15 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from . import views
 
 urlpatterns = [
-
-    url(r'^/*$', views.index, name='index'),
-    url(r'^student/$', views.student, name='student'),
-    url(r'^teacher/$', views.teacher, name='teacher'),
-    url(r'^login/$', views.login1, name="login"),
-    url(r'^register/$', views.UserFormView.as_view(), name='register'),
-    url(r'^lecturespeed/$', views.lecturespeed, name='lecturespeed'),
-
+    url(r'^admin/', admin.site.urls),
 ]
