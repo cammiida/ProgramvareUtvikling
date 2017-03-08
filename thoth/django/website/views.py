@@ -13,14 +13,20 @@ def index (request):
     return render(request, 'index.html')
 
 def student(request):
-    return render(request, 'student.html')
+    return render(request, 'student/student.html')
 
 def teacher(request):
-    return render(request, 'teacher.html')
+    return render(request, 'teacher/teacher.html')
+
+def lecturespeed(request):
+    return render(request, 'teacher/lecturespeed.html')
 
 class UserFormView(View):
     form_class = Userform
-    template_name = 'registration_form.html'
+
+
+    template_name = 'teacher/registration_form.html'
+
         #Displays blank form
     def get(self, request):
         form = self.form_class(None)
@@ -55,7 +61,7 @@ class UserFormView(View):
 
         return render(request, self.template_name, {'form': form})
 
-#skal egentlig ha render_to_response, men fikk hele tiden error når jeg brukte det, skjønner ikke hvorfor
+#skal egentlig ha render_to_response, men fikk hele tiden error nï¿½r jeg brukte det, skjï¿½nner ikke hvorfor
 def login1(request):
     msg = []
     if request.method == 'POST':
@@ -71,4 +77,4 @@ def login1(request):
                 msg.append("disabled account")
     else:
         msg.append("invalid login")
-    return render(request, 'login.html')
+    return render(request, 'teacher/login.html')
