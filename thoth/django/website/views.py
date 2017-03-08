@@ -21,12 +21,10 @@ def teacher(request):
 class UserFormView(View):
     form_class = Userform
     template_name = 'registration_form.html'
-
         #Displays blank form
     def get(self, request):
         form = self.form_class(None)
         return render(request, self.template_name, {'form': form})
-
     # legger til bruker i databasen
     def post(self, request):
         form = self.form_class(request.POST)
