@@ -4,7 +4,7 @@ from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View
-from .forms import Userform
+from .forms import *
 
 
 # Create your views here.
@@ -21,16 +21,50 @@ def teacher(request):
         username = request.user.username
     return render(request, 'teacher/index.html', {'username' : username})
 
+def courses(request):
+    courses = Course.objects.filter(teacher=request.user)
+    return render(request, 'teacher/courses.html', {'courses':courses})
+
+def lectures(request,course_id):
+    course = Course.objects.get(id=course_id)
+    lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user)
+    return render(request, 'teacher/lectures.html', {'lectures':lectures,'course':course})
+
+def addcourse(request):
+    # checks if the form is posted. If it is, create the object
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            # add course from form, but dont add it to db just yet.
+            course = form.save(commit=False)
+            # Now add current user to the course
+            course.teacher = request.user
+            # now add it to db since we now have all our stuffs
+            course.save()
+
+            return redirect('../courses')
+    else:
+        form = CourseForm()
+    return render(request,'teacher/addcourse.html',{'form':form})
+
+def addlecture(request, course_id):
+    # checks if the form is posted. If it is, create the object
+    if request.method == 'POST':
+        form = LectureForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            return redirect('../lectures')
+    else:
+        form = LectureForm(initial={'course':course_id})
+    return render(request,'teacher/addlecture.html',{'form':form})
 
 def lecturespeed(request):
     return render(request, 'teacher/lecturespeed.html')
 
 class UserFormView(View):
     form_class = Userform
-
-
     template_name = 'teacher/registration_form.html'
-
         #Displays blank form
     def get(self, request):
         form = self.form_class(None)
@@ -38,40 +72,31 @@ class UserFormView(View):
     # legger til bruker i databasen
     def post(self, request):
         form = self.form_class(request.POST)
-
         if form.is_valid():
-
             #lager et objekt men lagrer det ikke til databasen, lagrer den lokalt
             user = form.save(commit=False)
-
             # clean data
-
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-
             #endre passord
             user.set_password(password)
             user.save()
-
             # returns userobjekt hvis all info er korrekt
-
             #sjekker om brukernavn og passord er i databasenn
             user = authenticate(username=username, password=password)
             if user is not None:
-
                 if user.is_active:
                     login(request, user)
                     return redirect('teacher')
-
         return render(request, self.template_name, {'form': form})
+#skal egentlig ha render_to_response, men fikk hele tiden error når jeg brukte det,
+#skjønner ikke hvorfor
 
-#skal egentlig ha render_to_response, men fikk hele tiden error n�r jeg brukte det, skj�nner ikke hvorfor
 def login1(request):
     if request.method == 'POST':
         username = request.POST['u']
         password = request.POST['p']
         user = authenticate(username=username, password=password)
-
         if user is not None:
             if user.is_active:
                 login(request, user)

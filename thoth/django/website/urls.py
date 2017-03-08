@@ -25,5 +25,8 @@ urlpatterns = [
     url(r'^login/$', views.login1, name="login"),
     url(r'^register/$', views.UserFormView.as_view(), name='register'),
     url(r'^lecturespeed/$', views.lecturespeed, name='lecturespeed'),
-
+    url(r'^addcourse/$', views.addcourse, name='addcourse'),
+    url(r'^addlecture/([0-9])/$', views.addlecture, name='addlecture'),
+    url(r'^courses/$', views.courses, name='courses'),
+    url(r'^lectures/([0-9])/$', views.lectures, name='lectures'),
 ]
