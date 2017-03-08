@@ -8,7 +8,7 @@ Icon
 
 *.xml
 virtualenv/
-
+/.idea_backup
 
 # Thumbnails
 ._*
