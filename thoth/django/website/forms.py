@@ -13,8 +13,3 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ['name']
-
-class LectureForm(forms.ModelForm):
-    class Meta:
-        model = Lecture
-        fields = ['name', 'course']

@@ -48,16 +48,10 @@ def addcourse(request):
     return render(request,'teacher/addcourse.html',{'form':form})
 
 def addlecture(request, course_id):
-    # checks if the form is posted. If it is, create the object
-    if request.method == 'POST':
-        form = LectureForm(request.POST)
-        if form.is_valid():
-            form.save()
-
-            return redirect('../lectures')
-    else:
-        form = LectureForm(initial={'course':course_id})
-    return render(request,'teacher/addlecture.html',{'form':form})
+    lecture = Lecture()
+    lecture.course_id = course_id
+    lecture.save()
+    return render(request,'teacher/addlecture.html',{'lecture':lecture})
 
 def lecturespeed(request):
     return render(request, 'teacher/lecturespeed.html')

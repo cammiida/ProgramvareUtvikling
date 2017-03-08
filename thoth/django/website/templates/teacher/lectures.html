@@ -3,14 +3,14 @@
 {% block content %}
 
   {{course.name}}
-  <button onclick="location.href='{% url 'addlecture' course.id %}'"> Add lecture </button>
+  <button onclick="location.href='{% url 'addlecture' course.id %}'"> Start lecture </button>
 
   <p>
 		A list of your lectures:
 	</p>
 
   {% for lecture in lectures %}
-    {{lecture.name}}({{lecture.id}}) <br/>
+    {{lecture.date}}({{lecture.id}}) <br/>
   {% endfor %}
 
 
