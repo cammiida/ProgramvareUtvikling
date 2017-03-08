@@ -57,7 +57,7 @@ class UserFormView(View):
 
         return render(request, self.template_name, {'form': form})
 
-
+#skal egentlig ha render_to_response, men fikk hele tiden error når jeg brukte det, skjønner ikke hvorfor
 def login1(request):
     msg = []
     if request.method == 'POST':
