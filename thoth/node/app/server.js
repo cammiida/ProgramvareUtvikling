@@ -33,7 +33,6 @@ io.on('connection',function(socket){
       socket.slower = false;
       socket.faster = false;
       connectedstudents.push(socket);
-	  return connectedstudents;
       // Creates a listener for a signal with a name that MAY contain data.
       // Basically an eventlistener across pages.
       socket.on('slower',function(){
