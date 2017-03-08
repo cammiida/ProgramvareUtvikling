@@ -12,19 +12,11 @@
     <script type="text/javascript" src="{% static 'javascript/header.js' %}"></script>
 </head>
 <body>
-	{% include 'header.html' %}
+	{% include 'teacher/header.html' %}
 <div id="wrapper">
-  <p>
-		Is the lecture speed too fast or too slow? </br>
-		The students voted below...
-	</p>
-  <div id="receivebox">
-    Student Votes:
-    <br/>
-    <div id="down">0%</div>
-    <div id="up">0%</div>
-    <br/> Slow down | Speed Up <br/>
-  </div>
+
+  {% block content %}{% endblock %}
+
 </div>
 </body>
 </html>

@@ -1,0 +1,19 @@
+{% load staticfiles %}
+<header>
+	<div class="contentalignment"></div>
+	<a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}"></a>
+	<img src="{% static 'images/title.png' %}">
+	<img src="{% static 'images/DropDownBtn.png' %}" id="dropDownBtn">
+
+	<div name="navigasjon" id="liste">
+
+		<ul>
+			<li>
+				<a href="{% url 'teacher' %}">Teacher</a>
+			</li>
+			<li>
+				<a href="{% url 'student' %}">Student</a>
+		</ul>
+	</div>
+
+</header>
