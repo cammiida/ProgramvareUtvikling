@@ -16,7 +16,10 @@ def student(request):
     return render(request, 'student/student.html')
 
 def teacher(request):
-    return render(request, 'teacher/index.html')
+    username = None
+    if request.user.is_authenticated():
+        username = request.user.username
+    return render(request, 'teacher/index.html', {'username' : username})
 
 
 def lecturespeed(request):
@@ -64,7 +67,6 @@ class UserFormView(View):
 
 #skal egentlig ha render_to_response, men fikk hele tiden error n�r jeg brukte det, skj�nner ikke hvorfor
 def login1(request):
-    msg = []
     if request.method == 'POST':
         username = request.POST['u']
         password = request.POST['p']
@@ -73,9 +75,8 @@ def login1(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                msg.append("login successful")
+                return redirect('teacher')
             else:
-                msg.append("disabled account")
+                print()
     else:
-        msg.append("invalid login")
-    return render(request, 'teacher/login.html')
+        return render(request, 'teacher/login.html')
