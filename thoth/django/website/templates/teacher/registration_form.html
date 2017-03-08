@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register new account</title>
-
-     {% load staticfiles %}
-    <link href="https://fonts.googleapis.com/css?family=IM+Fell+Double+Pica" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
+{% extends 'teacher/teacher.html' %}
+{% load staticfiles %}
+{% block content %}
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 col md-7">
@@ -19,7 +8,7 @@
 
                 <form class="form-horizontal" action="" method="post">
                     {% csrf_token %}
-                    {% include 'form-template.html' %}
+                    {% include 'teacher/form-template.html' %}
 
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
@@ -42,5 +31,4 @@
 {% endif %}
 
 
-</body>
-</html>
+{% endblock content %}

@@ -16,7 +16,8 @@ def student(request):
     return render(request, 'student/student.html')
 
 def teacher(request):
-    return render(request, 'teacher/teacher.html')
+    return render(request, 'teacher/index.html')
+
 
 def lecturespeed(request):
     return render(request, 'teacher/lecturespeed.html')
