@@ -18,6 +18,9 @@ def student(request):
 def teacher(request):
     return render(request, 'teacher/teacher.html')
 
+def lecturespeed(request):
+    return render(request, 'teacher/lecturespeed.html')
+
 class UserFormView(View):
     form_class = Userform
     template_name = 'teacher/registration_form.html'
