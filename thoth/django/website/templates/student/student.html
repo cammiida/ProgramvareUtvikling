@@ -3,6 +3,7 @@
 <meta charset="UTF-8">
 <html>
 <head>
+	<title>Student page</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
 
@@ -15,14 +16,7 @@
 <body>
 	{% include 'student/header.html' %}
 	<div id="wrapper">
-	<p>
-		Is the lecture speed too fast or too slow? </br>
-		Let the teacher know below...
-	</p>
-	<input type ="image" name="down" id="down" src="{% static 'images/downbutton.png' %}" width="100" height="100">
-	<input type ="image" name="up" id="up" src="{% static 'images/upbutton.png' %}" width="100" height="100">
-	<br/> Slow down | Speed Up <br/>
-	<div id="message"><span></span></div>
+	{% block content %}{% endblock %}
 
 </div>
 </body>

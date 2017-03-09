@@ -21,6 +21,7 @@ urlpatterns = [
 
     url(r'^/*$', views.index, name='index'),
     url(r'^student/$', views.student, name='student'),
+    url(r'^student/lecture/$', views.studentlecture, name='studentlecture'),
     url(r'^teacher/$', views.teacher, name='teacher'),
     url(r'^login/$', views.login1, name="login"),
     url(r'^register/$', views.UserFormView.as_view(), name='register'),

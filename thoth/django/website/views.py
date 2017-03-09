@@ -13,7 +13,11 @@ def index (request):
     return render(request, 'index.html')
 
 def student(request):
-    return render(request, 'student/student.html')
+    return render(request, 'student/index.html')
+
+def studentlecture(request):
+    lecture = Lecture.objects.get(id=request.GET['lectureid'])
+    return render(request, 'student/lecture.html', {'lecture':lecture})
 
 def teacher(request):
     username = None
