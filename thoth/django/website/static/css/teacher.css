@@ -25,3 +25,8 @@
 #up{
   background-color: #c0d1be;
 }
+
+#hidden_message{
+  display: none;
+
+}

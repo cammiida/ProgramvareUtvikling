@@ -5,15 +5,15 @@
     <div class="row">
         <div class="col-sm-12 col md-7">
             <div class="panel panel-default">
-
+                <p id="hidden_message">{{ message }}</p>
                 <form class="form-horizontal" action="/login/" method="post">
                     {% csrf_token %}
                     Login:&nbsp; <input type="text" name="u">
                     <br/>
-                    Password&nbsp;<input type="password" name="p">
+                    Password:&nbsp;<input type="password" name="p">
                     <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-success">Login</button>
+                            <button type="submit" class="btn btn-success" id="login">Login</button>
                         </div>
                     </div>
                 </form>

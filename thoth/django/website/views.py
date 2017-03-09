@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, render_to_response
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
@@ -19,7 +19,7 @@ def teacher(request):
     username = None
     if request.user.is_authenticated():
         username = request.user.username
-    return render(request, 'teacher/index.html', {'username' : username})
+    return render(request, 'teacher/index.html', {'username': username})
 
 
 def lecturespeed(request):
@@ -67,6 +67,7 @@ class UserFormView(View):
 
 #skal egentlig ha render_to_response, men fikk hele tiden error n�r jeg brukte det, skj�nner ikke hvorfor
 def login1(request):
+    message = ""
     if request.method == 'POST':
         username = request.POST['u']
         password = request.POST['p']
@@ -77,6 +78,13 @@ def login1(request):
                 login(request, user)
                 return redirect('teacher')
             else:
-                print()
+                message = "user is disabled"
     else:
-        return render(request, 'teacher/login.html')
+        message = "User doesn't exist"
+
+    return render(request, 'teacher/login.html', {'message':message})
+
+def logout_view(request):
+    logout(request)
+    return render(request, 'teacher/logout.html')
+

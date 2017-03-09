@@ -15,8 +15,9 @@
 	{% include 'teacher/header.html' %}
 <div id="wrapper">
 
-    <p>logged inn as {{ user.get_username }}</p>
-
+    {% if request.user.is_authenticated %}
+        <p>logged inn as {{ user.get_username }}</p>
+    {% endif %}
   {% block content %}{% endblock %}
 
 </div>
