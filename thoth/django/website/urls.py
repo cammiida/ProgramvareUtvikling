@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^addcourse/$', views.addcourse, name='addcourse'),
     url(r'^addlecture/([0-9]+)/$', views.addlecture, name='addlecture'),
     url(r'^courses/$', views.courses, name='courses'),
+    url(r'^activelecture/$', views.activelecture, name='activelecture'),
     url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
 ]

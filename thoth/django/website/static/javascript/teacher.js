@@ -11,10 +11,12 @@ $(document).ready(function(){
     if (data.students > 0){
       $('#up').html(Math.round(100*data.faster/data.students) + '%');
       $('#down').html(Math.round(100*data.slower/data.students) + '%');
+			$('#studentsconnected').html(data.students);
     }
     else{
       $('#up').html(' 0%');
       $('#down').html(' 0%');
+			$('#studentsconnected').html(0);
     }
 
   });

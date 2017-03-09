@@ -13,7 +13,8 @@ class Course(models.Model):
 
 class Lecture(models.Model):
     course = models.ForeignKey(Course)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now = True)
+    active = models.BooleanField(default = False)
 
     def __str__(self):
         return self.date.strftime("%B %d, %Y")

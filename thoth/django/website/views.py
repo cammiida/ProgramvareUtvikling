@@ -48,9 +48,18 @@ def addcourse(request):
     return render(request,'teacher/addcourse.html',{'form':form})
 
 def addlecture(request, course_id):
+    lectures = Lecture.objects.filter(course__teacher = request.user)
+    for lecture in lectures:
+        lecture.active = False
+        lecture.save()
     lecture = Lecture()
     lecture.course_id = course_id
+    lecture.active = True
     lecture.save()
+    return redirect('activelecture')
+
+def activelecture(request):
+    lecture = Lecture.objects.get(active=True,course__teacher = request.user)
     return render(request,'teacher/addlecture.html',{'lecture':lecture})
 
 def lecturespeed(request):

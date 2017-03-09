@@ -1,9 +1,5 @@
-{% extends 'teacher/teacher.html' %}
-{% load staticfiles %}
-{% block content %}
   <p>
-		Is the lecture speed too fast or too slow? </br>
-		The students voted below...
+		Students online: <div id="studentsconnected">0</div>
 	</p>
   <div id="receivebox">
     Student Votes:
@@ -12,7 +8,3 @@
     <div id="up">0%</div>
     <br/> Slow down | Speed Up <br/>
   </div>
-
-
-
-{% endblock content %}
