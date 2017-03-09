@@ -22,8 +22,16 @@
 	<input type ="image" name="down" id="down" src="{% static 'images/downbutton.png' %}" width="100" height="100">
 	<input type ="image" name="up" id="up" src="{% static 'images/upbutton.png' %}" width="100" height="100">
 	<br/> Slow down | Speed Up <br/>
-	<div id="message"><span></span></div>
+	<div id="message"><span></span>	</div>
 
-</div>
+	<form action="/teacher/questions" method="post">
+		{% csrf_token %}
+		{{ form }}
+
+		<label>Type a quesiton here</label>
+		<input type="submit" name="question" />
+	</form>
+
+	</div>
 </body>
 </html>
