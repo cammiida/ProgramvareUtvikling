@@ -16,4 +16,4 @@ class Lecture(models.Model):
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.name
+        return self.date.strftime("%B %d, %Y")
