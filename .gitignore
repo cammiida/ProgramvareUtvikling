@@ -9,6 +9,7 @@ Icon
 *.xml
 virtualenv/
 /.idea_backup
+*.iml
 # Thumbnails
 ._*
 *.log
