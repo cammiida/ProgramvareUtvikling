@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 	// Starts up socket.io. Creates connection.
 
-  var socket = io.connect('http://localhost:3000');
+  var socket = io.connect('http://thothnode.helemork.com');
 	var lectureid = $('#lectureid').html();
 	console.log('asd'+lectureid);
 
