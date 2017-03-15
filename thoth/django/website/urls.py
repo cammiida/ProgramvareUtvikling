@@ -21,5 +21,5 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^student/$', views.student, name='student'),
     url(r'^teacher/$', views.teacher, name='teacher'),
-    url(r'^teacher/questions/$', views.questions, name='questions')
+    url(r'^questions/$', views.add_question, name='questions')
 ]
