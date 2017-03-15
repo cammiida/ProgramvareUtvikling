@@ -13,7 +13,7 @@ html,body {
 	font-size: 7vw;
 	text-decoration: none;
 	color: #666666;
-	height: 100vw;
+	height: 100vh;
   width:100vw;
 	font-family: 'Kanit','Cormorant Garamond', serif;
 	/* bakrunnseffekter: #EDEDED */
@@ -23,6 +23,7 @@ html,body {
 	width:90%;
 	margin: 5%;
 	text-align: center;
+	box-sizing: border-box;
 }
 
 /*Header tag*/
@@ -31,6 +32,8 @@ header{
 	min-height: 15vw;
 	background:grey;
 	border-bottom: 1px solid #a0a09f;
+	box-sizing: border-box;
+	padding-left: 1vw;
 }
 
 header img{
@@ -60,8 +63,6 @@ a{
 	text-decoration:none;
 }
 
-
-
 /*list that contain anchor tag. Drops down when pressing menu button*/
 li{
 	border-top: 1px solid #a0a09f;
@@ -70,6 +71,11 @@ li{
 	background-color:#e4e4e4;
 	list-style-type:none;
 }
+
+li:hover{
+	background-color:#F7F7F7;
+}
+
 
 #liste{
 	display:none;
@@ -84,6 +90,11 @@ button {
   border-radius: 10px;
   font-size: 5vw;
   text-decoration: none;
+}
+
+button:hover{
+	cursor:pointer;
+	background-color: #e4e4e4;
 }
 
 #message{

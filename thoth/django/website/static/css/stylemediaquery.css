@@ -1,0 +1,103 @@
+/* STORE SKJERMER */
+@media only screen and (min-width: 1160px) {
+}
+
+
+/* MEDIUM SKJERMER OG PADDER */
+@media only screen and (min-width: 769px) {
+  @import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond|Kanit');
+
+  /* General background and setup for the entire page*/
+  html,body {
+  	font-size: 18px;
+  	height: 100vh;
+    width:100vw;
+  }
+
+  #wrapper{
+  	width:80%;
+  	margin: 5%;
+  }
+
+  /*Header tag*/
+  header{
+  	width: 100%;
+  	min-height:80px;
+  }
+
+  header img{
+  	height: 60px;
+  	background:grey;
+  	padding: 10px;
+  }
+
+  /*Navigation field that contains dropdown menu button*/
+  #dropDownBtn{
+    display:none;
+  }
+
+  header h2{
+  	padding: 5px;
+  	font-size: 30px;
+  }
+
+ ul{
+   box-sizing: border-box;
+ }
+
+  a{
+  	color:black;
+  }
+
+  /*list that contain anchor tag. Drops down when pressing menu button*/
+  li{
+  	padding:10px;
+  	text-align:center;
+  	background:none;
+  }
+
+  #liste{
+  	display:inline-block;
+    max-width:50%;
+    float:right;
+    background:none;
+    box-sizing: border-box;
+  }
+
+  #liste li{
+    display:inline-block;
+    width:100px;
+    height:60px;
+    float:left;
+  }
+  /* All the buttons on the page */
+
+  button {
+    height: 150px;
+    min-width: 150px;
+  	margin:5px;
+    background-color: lightgrey;
+    border-radius: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 50%;
+  }
+
+  #message{
+  	display:none;
+  }
+
+  .thoth{
+  	width:300px;
+  	float: right;
+  	margin-right:2%;
+  	margin-bottom:2%;
+    box-sizing: border-box;
+  }
+
+  p{
+  	margin:5%;
+  }
+
+
+}

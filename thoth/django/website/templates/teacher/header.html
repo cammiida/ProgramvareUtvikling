@@ -5,21 +5,29 @@
 	<img src="{% static 'images/title.png' %}">
 	<img src="{% static 'images/DropDownBtn.png' %}" id="dropDownBtn">
 	<div name="navigasjon" id="liste">
-		<li>
+		<ul>
+			{% if not request.user.is_authenticated %}
 			<li>
 				<a href="{% url 'register' %}">Register New User</a>
 			</li>
 			<li>
 				<a href="{% url 'login' %}">Login</a>
 			</li>
-			{% if request.user.is_authenticated %}
-			<li>
-				<a href="{% url 'logout' %}">Logout</a>
-			</li>
 			{% endif %}
+			{% if request.user.is_authenticated %}
+
+
 			<li>
 				<a href="{% url 'lecturespeed' %}">Lecture Speed</a>
 			</li>
+			<li>
+				<a href="{% url 'logout' %}">Logout</a>
+			</li>
+			<li>
+				 logged inn as {{ user.get_username }}
+			</li>
+			 {% endif %}
+
 		</ul>
 	</div>
 </header>
