@@ -71,6 +71,11 @@ li{
 	list-style-type:none;
 }
 
+li:hover{
+	background-color:#F7F7F7;
+}
+
+
 #liste{
 	display:none;
 }
@@ -84,6 +89,11 @@ button {
   border-radius: 10px;
   font-size: 5vw;
   text-decoration: none;
+}
+
+button:hover{
+	cursor:pointer;
+	background-color: #e4e4e4;
 }
 
 #message{

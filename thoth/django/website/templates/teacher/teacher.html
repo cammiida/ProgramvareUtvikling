@@ -6,8 +6,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/stylemediaquery.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/teacher.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/teachermediaquery.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/updown.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
     <script type="text/javascript" src="{% static 'javascript/teacher.js' %}"></script>
@@ -15,12 +14,12 @@
 </head>
 <body>
 	{% include 'teacher/header.html' %}
-<div id="wrapper">
+  <div id="wrapper">
 
-    <p>logged inn as {{ user.get_username }}</p>
+
 
   {% block content %}{% endblock %}
 
-</div>
+  </div>
 </body>
 </html>

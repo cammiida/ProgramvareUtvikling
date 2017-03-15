@@ -68,13 +68,14 @@
   /* All the buttons on the page */
 
   button {
-    height: 20vw;
-    min-width: 80vw;
+    height: 150px;
+    min-width: 150px;
   	margin:5px;
     background-color: lightgrey;
     border-radius: 10px;
-    font-size: 5vw;
+    font-size: 18px;
     text-decoration: none;
+    border-radius: 50%;
   }
 
   #message{
@@ -82,10 +83,11 @@
   }
 
   .thoth{
-  	width:40vw;
+  	width:300px;
   	float: right;
-  	margin-right:5vw;
-  	margin-bottom:2vw;
+  	margin-right:2%;
+  	margin-bottom:2%;
+    box-sizing: border-box;
   }
 
   p{
