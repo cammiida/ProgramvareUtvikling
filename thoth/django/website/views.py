@@ -141,5 +141,5 @@ def add_question(request):
     return render(request, 'website/question.html', {'obj': models.Question.objects.all()})
 
 
-def question(request):
+def questions(request):
     return render
