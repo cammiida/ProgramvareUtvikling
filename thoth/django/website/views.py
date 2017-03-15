@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
@@ -5,9 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View
 from .forms import *
-
-
-# Create your views here.
+from django.http import HttpResponse
 
 def index (request):
     return render(request, 'index.html')
@@ -126,3 +125,21 @@ def login1(request):
 def logout_view(request):
     logout(request)
     return render(request, 'teacher/logout.html')
+
+def questions(request):
+    if request.method == 'POST':
+        form = Questions(request.POST)
+        if form.is_valid():
+
+            form.save()
+            # redirect
+            return render(request, 'questions.html')
+        else:
+            return HttpResponse("Form Not Valid")
+    else:
+        form = RecipeForm()
+
+        context = Context({'form': form, })
+        context.update(csrf(request))
+        template = loader.get_template('myApp/add.html')
+        return HttpResponse(template.render(context))

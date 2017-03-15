@@ -54,5 +54,5 @@ $RECYCLE.BIN/
 #video files
 *.mp4
 *.ogv
-
+.idea/
 .idea/*

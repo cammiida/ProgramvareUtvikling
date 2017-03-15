@@ -13,3 +13,7 @@ class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ['name']
+
+class Questions(forms.Form):
+    question=forms.CharField(max_length=500)
+    value=forms.IntegerField()
