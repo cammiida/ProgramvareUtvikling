@@ -66,6 +66,13 @@ def activelecture(request):
     lecture = Lecture.objects.get(active=True,course__teacher = request.user)
     return render(request,'teacher/addlecture.html',{'lecture':lecture})
 
+def endlecture(request):
+    lecture = Lecture.objects.get(active=True,course__teacher = request.user)
+    lecture.active = False
+    lecture.save()
+    return  redirect('lectures',lecture.course.id)
+
+
 def lecturespeed(request):
     return render(request, 'teacher/lecturespeed.html')
 

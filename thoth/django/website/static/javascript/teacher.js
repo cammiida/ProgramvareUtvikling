@@ -1,9 +1,12 @@
 $(document).ready(function(){
 
 	// Starts up socket.io. Creates connection.
-	console.log('asd');
+	console.log('node er på.');
   var socket = io.connect('http://localhost:3000');
-  socket.emit('usertype','teacher');
+
+	var lectureid = $('#lectureid').html();
+
+  socket.emit('usertype','teacher',lectureid);
 
   // Create a listener for signals from the server.
   socket.on('update',function(data){
@@ -21,8 +24,4 @@ $(document).ready(function(){
 
   });
 
-
 });
-
-$("#login").click(function()){
-  $("#hidden_message").fadeIn("fast")}
