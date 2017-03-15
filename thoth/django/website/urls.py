@@ -34,4 +34,5 @@ urlpatterns = [
     url(r'^endlecture/$', views.endlecture, name='endlecture'),
     url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
     url(r'^teacher/questions/$', views.questions, name='questions')
+    url(r'^questions/$', views.add_question, name='questions')
 ]

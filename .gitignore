@@ -5,8 +5,8 @@
 
 # Icon must end with two \r
 Icon
-
 *.xml
+# virutal enviroment folder
 virtualenv/
 /.idea_backup
 *.iml
@@ -31,6 +31,9 @@ Temporary Items
 .apdisk
 
 
+# log files
+*.log
+
 ### Windows ###
 # Windows image file caches
 Thumbs.db
@@ -54,5 +57,7 @@ $RECYCLE.BIN/
 #video files
 *.mp4
 *.ogv
+
+# Django workspace folder
 .idea/
 .idea/*

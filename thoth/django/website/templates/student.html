@@ -24,11 +24,12 @@
 	<br/> Slow down | Speed Up <br/>
 	<div id="message"><span></span>	</div>
 
-	<form action="/teacher/questions" method="post">
+	<form action="{%url 'website:questions' %}" method="post">
 		{% csrf_token %}
 		{{ form }}
 
 		<label>Type a quesiton here</label>
+		<input type = "text" name="questionfield"/>
 		<input type="submit" name="question" />
 	</form>
 

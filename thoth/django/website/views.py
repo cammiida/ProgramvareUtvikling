@@ -1,4 +1,4 @@
-
+from .models import Question
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
@@ -126,20 +126,20 @@ def logout_view(request):
     logout(request)
     return render(request, 'teacher/logout.html')
 
-def questions(request):
+def add_question(request):
     if request.method == 'POST':
-        form = Questions(request.POST)
+        form = QuestionForm(request.POST)
         if form.is_valid():
 
             form.save()
             # redirect
-            return render(request, 'questions.html')
+
+
+            return render(request,'questions.html')
         else:
             return HttpResponse("Form Not Valid")
-    else:
-        form = RecipeForm()
+    return render(request, 'website/question.html', {'obj': models.Question.objects.all()})
 
-        context = Context({'form': form, })
-        context.update(csrf(request))
-        template = loader.get_template('myApp/add.html')
-        return HttpResponse(template.render(context))
+
+def question(request):
+    return render
