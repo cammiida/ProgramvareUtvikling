@@ -23,8 +23,18 @@ io.on('connection', function(socket){
 				console.log('Skal sende array');
 				io.emit('array', connectedStudent);
 			});
-
-			//io.to(teacherid).emit('update', feedbackcalcualtor());
+			
+	        socket.on('disconnect',function(){
+				console.log('kjører denne?');
+	            for (var i = 0; i<connectedstudents.length;i++){
+					socket.disconnect();
+	              if ( connectedstudents[i].id == socket.id){
+	                connectedstudents.splice(i,1);
+	              }
+	            };
+				console.log(util.inspect(feedbackcalculator()));
+	            io.to(teacherid).emit('update',feedbackcalculator());
+	        });
 		}
 	    else{
 	     	console.log('Teacher has logged on');

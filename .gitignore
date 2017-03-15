@@ -9,9 +9,9 @@ Icon
 *.xml
 virtualenv/
 /.idea_backup
-
 # Thumbnails
 ._*
+*.log
 
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
