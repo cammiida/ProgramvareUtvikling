@@ -7,12 +7,9 @@ var io = require('socket.io')(http);
 // Big security hole, but makes all files availiable from the outside.
 // Quickfix for us.
 // We will fix this hole later. But it works for the first demo.
-app.use('/', express.static(__dirname + '/'));
+//app.use('/', express.static(__dirname + '/'));
 
-
-var teacherid;
-var connectedstudents = [];
-
+var lectures = {};
 
 // Now we will connect the users to socket.io.
 // Socket io is a library that maintains and keeps track of connected users.
@@ -23,16 +20,16 @@ io.on('connection',function(socket){
 
   // Creates events for the existing connection
 
-  socket.on('usertype',function(type){
+  socket.on('usertype',function(type,lectureid){
     // Checks if the type of person connected is using the javascript from the
     // student page or the teacher page, and decides further actions based on
     // this.
     if (type == 'student'){
-      console.log('Student has logged on');
+      console.log('Student has logged on to lecture ' + lectureid);
       socket.slower = false;
       socket.faster = false;
-      connectedstudents.push(socket);
-      io.to(teacherid).emit('update',feedbackcalculator());
+      lectures[lectureid]['students'].push(socket);
+      io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
 
       // Creates a listener for a signal with a name that MAY contain data.
       // Basically an eventlistener across pages.
@@ -41,32 +38,43 @@ io.on('connection',function(socket){
         // send message to teacher:
         socket.slower = true;
         socket.faster = false;
-        io.to(teacherid).emit('update',feedbackcalculator());
+        io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
       });
       socket.on('faster',function(){
         console.log('Student pressed faster button');
         socket.faster = true;
         socket.slower = false;
-        io.to(teacherid).emit('update',feedbackcalculator());
+        io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
       });
       socket.on('disconnect',function(){
+        var connectedstudents = lectures[lectureid].students;
           for (var i = 0; i<connectedstudents.length;i++){
             if ( connectedstudents[i].id == socket.id){
               connectedstudents.splice(i,1);
             }
           };
-          io.to(teacherid).emit('update',feedbackcalculator());
+          io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
       });
     }
     else{
-      console.log('Teacher has logged on');
+      console.log('Teacher has logged on with lecture ' + lectureid);
       // detects the socket id from the teacher connection and sets it.
-      teacherid = socket.id;
+      lectures[lectureid] = {
+        teacherid:socket.id,
+        students:[],
+      };
+      socket.on('disconnect',function(){
+        console.log('teacher disconnect');
+        // her må vi først lagre dataene våre sånn at de ikke forsvinner.
+        // dvs stuffe inn i db før delete.
+        //delete lectures[lectureid];
+      });
     }
   });
 });
 
-function feedbackcalculator(){
+function feedbackcalculator(lectureid){
+  var connectedstudents = lectures[lectureid].students;
   var slower = 0;
   var faster = 0;
   for (var i = 0; i<connectedstudents.length;i++){
