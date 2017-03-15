@@ -1,0 +1,11 @@
+{% extends 'teacher/teacher.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<h2>Current Lecture</h2>
+<h1>ID: {{lecture.id}}</h1>
+{% include 'teacher/lecturespeed.html' %}
+
+
+
+{% endblock content %}

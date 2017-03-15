@@ -29,10 +29,11 @@ io.on('connection',function(socket){
     // this.
     if (type == 'student'){
       console.log('Student has logged on');
-      io.to(teacherid).emit('update',feedbackcalculator());
       socket.slower = false;
       socket.faster = false;
       connectedstudents.push(socket);
+      io.to(teacherid).emit('update',feedbackcalculator());
+
       // Creates a listener for a signal with a name that MAY contain data.
       // Basically an eventlistener across pages.
       socket.on('slower',function(){

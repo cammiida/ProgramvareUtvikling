@@ -25,7 +25,10 @@ io.on('connection', function(socket){
 			});
 			
 	        socket.on('disconnect',function(){
+<<<<<<< HEAD
 				console.log('kjører denne?');
+=======
+>>>>>>> coursefeatures
 	            for (var i = 0; i<connectedstudents.length;i++){
 					socket.disconnect();
 	              if ( connectedstudents[i].id == socket.id){
