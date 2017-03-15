@@ -4,11 +4,6 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-// Big security hole, but makes all files availiable from the outside.
-// Quickfix for us.
-// We will fix this hole later. But it works for the first demo.
-//app.use('/', express.static(__dirname + '/'));
-
 var lectures = {};
 
 // Now we will connect the users to socket.io.
