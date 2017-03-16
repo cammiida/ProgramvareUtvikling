@@ -1,0 +1,25 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html>
+<head>
+	<title>Student page</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+
+	<script src="{% static 'javascript/header.js' %}"></script>
+	
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/updown.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/stylemediaquery.css' %}">
+
+
+</head>
+<body>
+	{% include 'student/header.html' %}
+	<div id="wrapper">
+	{% block content %}{% endblock %}
+
+</div>
+</body>
+</html>

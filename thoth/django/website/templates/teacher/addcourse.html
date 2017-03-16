@@ -1,0 +1,15 @@
+{% extends 'teacher/teacher.html' %}
+{% load staticfiles %}
+{% block content %}
+  <p>
+		Create a new course below
+	</p>
+  <form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Submit</button>
+  </form>
+
+
+
+{% endblock content %}

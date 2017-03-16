@@ -1,10 +1,12 @@
 $(document).ready(function(){
 
 	// Starts up socket.io. Creates connection.
-	console.log('asd');
-  var socket = io.connect('http://localhost:3000');
 
-	socket.emit('usertype','student');
+  var socket = io.connect('http://localhost:3000');
+	var lectureid = $('#lectureid').html();
+	console.log('asd'+lectureid);
+
+	socket.emit('usertype','student', lectureid);
 
 
 	/*Speed up and down buttons with animation*/

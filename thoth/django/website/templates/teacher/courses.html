@@ -1,0 +1,16 @@
+{% extends 'teacher/teacher.html' %}
+{% load staticfiles %}
+{% block content %}
+  <p>
+		A list of your courses:
+	</p>
+
+  <button onclick="location.href='{% url 'addcourse' %}'"> Add course </button>
+
+  {% for course in courses %}
+    <a href="{% url 'lectures' course.id %}">{{course.name}}</a>
+  {% endfor %}
+
+
+
+{% endblock content %}
