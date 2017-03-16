@@ -25,7 +25,14 @@
 	<br/> Slow down | Speed Up <br/>
 	<div id="message"><span></span>	</div>
 
-	<form action="{%url 'questions' %}" method="post">
+	<h3>Questions</h3>
+	<ul>
+		{% for question in question_set.all %}
+			<li>{{ questions.question }} - {{ question.answer }}</li>
+		{% endfor %}
+	</ul>
+
+	<form action="{%url 'add_questions' %}" method="post">
 		{% csrf_token %}
 		{{ form.as_p }}
 

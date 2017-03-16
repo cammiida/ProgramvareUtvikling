@@ -1,9 +1,7 @@
-from .models import Question
-<<<<<<< HEAD
+from .models import Questions
 from .forms import *
 
 # Create your views here.
-=======
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
@@ -12,21 +10,17 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import View
 from .forms import *
 from django.http import HttpResponse
->>>>>>> 1e8c2d1383cb510c484184170de230c395b0f6b9
 
 def index (request):
     return render(request, 'index.html')
 
 def student(request):
-<<<<<<< HEAD
-    return render(request,'questions.html')
-=======
+    #return render(request,'student/questions.html')
     return render(request, 'student/index.html')
 
 def studentlecture(request):
     lecture = Lecture.objects.get(id=request.GET['lectureid'])
     return render(request, 'student/lecture.html', {'lecture':lecture})
->>>>>>> 1e8c2d1383cb510c484184170de230c395b0f6b9
 
 def teacher(request):
     username = None
@@ -136,25 +130,22 @@ def logout_view(request):
     logout(request)
     return render(request, 'teacher/logout.html')
 
-def add_question(request):
+def add_questions(request):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
 
             form.save()
-            # redirect
+            # redirected
 
-
-            return render(request,'questions.html')
+            return render(request,'student/questions.html')
         else:
             return HttpResponse("Form Not Valid")
-<<<<<<< HEAD
+    return render(request, 'student/question.html', {'obj': models.Question.objects.all()})
 
-
-=======
-    return render(request, 'website/question.html', {'obj': models.Question.objects.all()})
-
+def answer_questions(request):
+    if request.method == 'POST':
+        return
 
 def questions(request):
-    return render
->>>>>>> 1e8c2d1383cb510c484184170de230c395b0f6b9
+    return render(request, 'student/questions.html')

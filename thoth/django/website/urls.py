@@ -33,8 +33,7 @@ urlpatterns = [
     url(r'^activelecture/$', views.activelecture, name='activelecture'),
     url(r'^endlecture/$', views.endlecture, name='endlecture'),
     url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
-    url(r'^teacher/questions/$', views.questions, name='questions'),
-
-    # Disse bør ikke hete det samme på navnet sitt. 
-    url(r'^questions/$', views.add_question, name='questions')
+    url(r'^student/questions/$', views.questions, name='questions'),
+    url(r'^teacher/questions/$', views.answer_questions, name='answer_questions'),
+    url(r'^student/questions/$', views.add_questions, name='ask_questions')
 ]

@@ -5,6 +5,5 @@ db.sqlite3
 thoth/__pycache__/
 virtualenv/
 website/__pycache__/
-website/forms.py
 website/migrations/__pycache__/
 /iml
