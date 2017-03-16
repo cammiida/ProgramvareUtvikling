@@ -20,9 +20,17 @@ from . import views
 urlpatterns = [
 
     url(r'^/*$', views.index, name='index'),
+
+    #student urls
     url(r'^student/$', views.student, name='student'),
     url(r'^student/lecture/$', views.studentlecture, name='studentlecture'),
+    url(r'^student/questions/$', views.questions, name='questions'),
+    url(r'^student/questions/$', views.add_questions, name='add_questions'),
+
+    #teacher urls
     url(r'^teacher/$', views.teacher, name='teacher'),
+    url(r'^teacher/questions/$', views.answer_questions, name='answer_questions'),
+
     url(r'^login/$', views.login1, name="login"),
     url(r'^logout/$', views.logout_view, name="logout"),
     url(r'^register/$', views.UserFormView.as_view(), name='register'),
@@ -33,7 +41,7 @@ urlpatterns = [
     url(r'^activelecture/$', views.activelecture, name='activelecture'),
     url(r'^endlecture/$', views.endlecture, name='endlecture'),
     url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
-    url(r'^student/questions/$', views.questions, name='questions'),
-    url(r'^teacher/questions/$', views.answer_questions, name='answer_questions'),
-    url(r'^student/questions/$', views.add_questions, name='ask_questions')
+
+
+
 ]
