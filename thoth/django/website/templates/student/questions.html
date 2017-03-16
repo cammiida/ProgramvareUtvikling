@@ -1,5 +1,6 @@
+
+{% extends 'student/student.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
 <meta charset="UTF-8">
 <html>
 <head>
@@ -24,9 +25,9 @@
 	<br/> Slow down | Speed Up <br/>
 	<div id="message"><span></span>	</div>
 
-	<form action="{%url 'website:questions' %}" method="post">
+	<form action="{%url 'questions' %}" method="post">
 		{% csrf_token %}
-		{{ form }}
+		{{ form.as_p }}
 
 		<label>Type a quesiton here</label>
 		<input type = "text" name="questionfield"/>

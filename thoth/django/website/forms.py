@@ -1,5 +1,8 @@
+from django.contrib.auth.models import User
 from django import forms
+from .models import *
 
-class Questions(forms.Form):
-    question=forms.CharField(max_length=500)
-    value=forms.IntegerField(default=0)
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['question']
