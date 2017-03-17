@@ -16,31 +16,7 @@ var options = {
 			var util = require('util');
 
 describe('sockets', function(){
-	
-	beforeEach(function(done){
-		socket = io.connect(socketUrl, options);
-		socket.on('connect', function(){
-			socket.emit('usertype', 'student');
-			console.log('worked');
-			done();
-		});
-	    socket.on('disconnect', function() {
-	        console.log('disconnected...');
-	    })
-	});
 
-	afterEach(function(done){
-				if(socket.connected) {
-		            console.log('disconnecting...');
-		            socket.disconnect();
-		        } 
-				else {
-		            // There will not be a connection unless you have done() in beforeEach, socket.on('connect'...)
-		            console.log('no connection to break...');
-		     	 }
-		done();
-	});
-	
 	/*
 	it('should know if a student log in', function(done){
 		var connectedStudents = [];
@@ -60,24 +36,56 @@ describe('sockets', function(){
 		});
 	});
 	*/
-	it('should connect as a teacher', function(done){
-		socket = io.connect(socketUrl, options);
-		socket.on('connect', function(){
-			socket.emit('usertype', 'teacher');
+	it('should connect as a teacher, to connect as student and update connected students', function(done){
+		teacher = io.connect(socketUrl, options);
+		teacher.on('connect', function(){
+			teacher.emit('usertype', 'teacher', 1);
 		});
-		socket.on('teacherid', function(array){
-			expect(array['teacherId']).equal(socket.id);
+		student = io.connect(socketUrl, options);
+		student.on('connect', function(){
+			student.emit('usertype', 'student', 1);
 		});
-		socket2 = io.connect(socketUrl, options);
-		socket2.on('connect', function(){
-			socket.emit('usertype', 'student');
-		})
-		socket.on('update', function(feedbackcalculator){
-			expect(feedbackcalculator['students']).to.equal(1);
-			//console.log(util.inspect(feedbackcalculator));
+		teacher.on('update', function(array){
+			expect(array['students']).to.equal(1);	
 			done();
-
 		});
+	});
+	
+	it('Should know update slower if student pushed slower', function(done){
+		teacher = io.connect(socketUrl, options);
+		student = io.connect(socketUrl, options);
+		teacher.on('connect', function(){
+			teacher.emit('usertype', 'teacher', 1);
+		});
+		student.on('connect', function(){
+			student.emit('usertype', 'student', 1);
+			student.emit('slower');
+		});
+		teacher.once('update', function(){
+			teacher.on('update', function(array){
+				expect(array['slower']).to.equal(1);
+				done();
+			});
+		});
+	});
+	
+	it('should update when student log out', function(done){
+		teacher = io.connect(socketUrl, options);
+		student = io.connect(socketUrl, options);
+		teacher.on('connect', function(){
+			teacher.emit('usertype', 'teacher', 1);
+		});
+		student.on('connect', function(){
+			student.emit('usertype', 'student', 1);
+		});
+		teacher.once('update', function(array){
+			expect(array['students']).to.equal(1);
+			student.disconnect();
+			teacher.on('update', function(array){
+				expect(array['students']).to.equal(0);
+				done();
+		});
+	});
 
 	});
 });
