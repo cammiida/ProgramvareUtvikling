@@ -42,6 +42,7 @@ io.on('connection',function(socket){
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
       });
       socket.on('disconnect',function(){
+        console.log('student disconnect');
         var connectedstudents = lectures[lectureid].students;
           for (var i = 0; i<connectedstudents.length;i++){
             if ( connectedstudents[i].id == socket.id){
