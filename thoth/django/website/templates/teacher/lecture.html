@@ -1,0 +1,30 @@
+{% extends 'teacher/teacher.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<h2>{{lecture.name}} (ID: <span id="lectureid">{{lecture.id}}</span>)</h2>
+<h1>Add new task</h1>
+<div id="addtask">
+    <form action="" method="post">
+      {% csrf_token %}
+    <label for="id_description">Description:</label> <input id="id_description" maxlength="500" name="description" type="text" required /><br/>
+    <label for="id_textanswer">Textanswer:</label> <input id="id_textanswer" maxlength="500" name="textanswer" type="text"  /><br/>
+    <label for="id_option1">Option1:</label> <input id="id_option1" maxlength="500" name="option1" type="text"  />
+    <label for="id_option1_correct">Option1 correct:</label> <input id="id_option1_correct" name="option1_correct" type="checkbox" /><br/>
+    <label for="id_option2">Option2:</label> <input id="id_option2" maxlength="500" name="option2" type="text"  />
+    <label for="id_option2_correct">Option2 correct:</label> <input id="id_option2_correct" name="option2_correct" type="checkbox" /><br/>
+    <label for="id_option3">Option3:</label> <input id="id_option3" maxlength="500" name="option3" type="text"  />
+    <label for="id_option3_correct">Option3 correct:</label> <input id="id_option3_correct" name="option3_correct" type="checkbox" /><br/>
+    <label for="id_option4">Option4:</label> <input id="id_option4" maxlength="500" name="option4" type="text"  />
+    <label for="id_option4_correct">Option4 correct:</label> <input id="id_option4_correct" name="option4_correct" type="checkbox" /><br/>
+    <label for="id_timeout">Timeout:</label> <input id="id_timeout" min="0" name="timeout" type="number"  /><br/>
+    <button>Submit</button>
+    </form>
+</div>
+<h1>Tasks for this lecture</h1>
+{% for task in tasks %}
+  <div class="lecturelist"> {{task.description}}</div>
+{% endfor %}
+
+
+{% endblock content %}

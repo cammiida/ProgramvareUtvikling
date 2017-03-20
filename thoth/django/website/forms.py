@@ -22,3 +22,10 @@ class LectureForm(forms.ModelForm):
 class Questions(forms.Form):
     question=forms.CharField(max_length=500)
     value=forms.IntegerField()
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['description','textanswer','option1','option2','option3',
+        'option4','option1_correct','option2_correct','option3_correct',
+        'option4_correct','timeout']
