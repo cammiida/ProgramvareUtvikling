@@ -20,8 +20,8 @@
 		{% block content %}
 			<h3>Questions</h3>
 			<ul>
-				{% for question in question_set.all %}
-					<li>{{ questions.question }} - {{ question.answer }}</li>
+				{% for question in all_questions %}
+					<li>{{ question.question }} - {{ question.answer }}</li>
 				{% endfor %}
 			</ul>
 

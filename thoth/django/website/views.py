@@ -1,4 +1,4 @@
-from .models import Questions
+from .models import *
 from .forms import *
 
 # Create your views here.
@@ -6,10 +6,11 @@ from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse_lazy
+#from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic import View
-from .forms import *
 from django.http import HttpResponse
+from django.template import loader
 
 def index (request):
     return render(request, 'index.html')
@@ -130,15 +131,21 @@ def logout_view(request):
     logout(request)
     return render(request, 'teacher/logout.html')
 
-def add_questions(request):
-    if request.method == 'POST':
-        form = QuestionForm(request.POST)
-        if form.is_valid():
 
+
+def add_questions(request):
+    form_class = QuestionForm
+    template_name = 'student/questions.html'
+
+    if request.method == 'POST':
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+
+            question = form.cleaned_data['question']
             form.save()
             # redirected
-
-            return render(request,'student/questions.html')
+            return render(request, self.template_name, {'form': form})
         else:
             return HttpResponse("Form Not Valid")
     return render(request, 'student/question.html', {'obj': models.Question.objects.all()})
@@ -148,4 +155,18 @@ def answer_questions(request):
         return
 
 def questions(request):
-    return render(request, 'student/questions.html')
+    all_questions = Questions.objects.all()
+    template = loader.get_template('student/questions.html')
+    context = {
+        'all_questions' : all_questions,
+
+    }
+    # KAN KANKSJE BRUKES NÅR LÆRER SKAL KUNNE LEGGE TIL SVAR PÅ SPØRSMÅL
+
+    #html=''
+    #for question in all_questions:
+    #    url = 'student/questions/' + str(question.id) + '/'
+    #    html += '<a href= "' + url + '">' + question.question + '</a><br>'
+
+
+    return HttpResponse(template.render(context, request))

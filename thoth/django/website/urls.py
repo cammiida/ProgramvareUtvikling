@@ -18,8 +18,8 @@ from django.contrib import admin
 from . import views
 
 urlpatterns = [
-
-    url(r'^/*$', views.index, name='index'),
+    #r'^/*$'
+    url(r'^$', views.index, name='index'),
 
     #student urls
     url(r'^student/$', views.student, name='student'),
