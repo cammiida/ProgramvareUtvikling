@@ -111,3 +111,21 @@ button:hover{
 p{
 	margin:5vw;
 }
+
+.start{
+	width:20px;
+	height:40px;
+	border-radius: 0%;
+	float:right;
+	margin-top:0px;
+}
+
+.lecturelist{
+	background:grey;
+	padding:20px;
+	width:100%;
+}
+
+.lecturelist:nth-child(even){
+	background:white;
+}
