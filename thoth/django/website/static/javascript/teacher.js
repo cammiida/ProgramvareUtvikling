@@ -3,12 +3,8 @@ $(document).ready(function(){
 	// Starts up socket.io. Creates connection.
 	console.log('node er på.');
   	var socket = io.connect('http://localhost:3000');
-	var title = "Dette er en test";
-	var options = 	{
-						body: "testen går som følgende",
- 	   					image: "/static/images/logo.png",
-						silent: true
-					}
+
+
 	
   
 
@@ -34,20 +30,29 @@ $(document).ready(function(){
   //Logic for when lecturespeed is to high/slow
   socket.on('update', function(data){
     console.log(data);
-    if (data.students < 10){
+    if (data.students < 1){
       $('#fast_slow').html('too few students online');
     }
     else{
       if (data.slower/data.students >= 0.4){
+        showNotification("too slow");
         $('#fast_slow').html('the lecture speed is to slow');}
       else if (data.faster/data.students >= 0.4){
+        showNotification("too fast");
         $('#fast_slow').html('the lecture speed is to fast');}
       else{
         $('#fast_slow').html('the lecture speed is fine');}
       }
   });
 
-  socket.on('show', function(){
+function showNotification(message){
+    var title = "Dette er en test";
+    console.log("kjører denne?")
+	var options = 	{
+						body: message,
+ 	   					image: "/static/images/logo.png",
+						silent: true
+						}
 	var notification = new Notification(title, options);
 		notification.onshow = function(){
 			  console.log("dette er en test")
@@ -55,6 +60,6 @@ $(document).ready(function(){
 			  	notification.close();
 			  },2000)
 		  }
-  });
+  };
 
 });

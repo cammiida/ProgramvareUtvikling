@@ -65,9 +65,7 @@ io.on('connection',function(socket){
         teacherid:socket.id,
         students:[],
       };
-		  setInterval(function(){
-		  	socket.emit("show")
-		  },5000);
+
 		  
 
 
