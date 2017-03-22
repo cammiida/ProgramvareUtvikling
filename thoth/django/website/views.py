@@ -133,22 +133,20 @@ def logout_view(request):
 
 
 
-def add_questions(request):
+def add_question(request):
 
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
 
             question = form.save()
-
-            return redirect('question_list')
-        else:
-            form = QuestionForm()
-    return render(request, 'student/add_question.html')
+    else:
+        form = QuestionForm()
+    return render(request, 'student/add_question.html', {'form': form})
 
 
 
-def answer_questions(request):
+def answer_question(request):
     if request.method == 'POST':
         return
 
@@ -169,4 +167,14 @@ def question_list(request):
 
 
     #return HttpResponse(template.render(context, request))
+    return render(request,template,context)
+
+
+def questions(request):
+    all_questions = Question.objects.filer(value > -6)
+    template = 'student/question_list.html'
+    context = {
+        'all_questions' : all_questions,
+
+    }
     return render(request,template,context)

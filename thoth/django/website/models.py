@@ -22,8 +22,8 @@ class Lecture(models.Model):
 
 class Question(models.Model):
     question = models.CharField(max_length=500)
-    value = models.PositiveIntegerField(default=0)
-    answer = models.CharField(max_length=500, default="")
+    value = models.IntegerField(default=0)
+    answer = models.CharField(max_length=500, default="", blank=True)
     #lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
 
     def __str__(self):

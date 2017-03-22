@@ -9,9 +9,9 @@
         {% endfor %}
     </ul>
 
-    <form action="{% url 'add_questions' %}" method="post">
+    <form action="{% url 'add_question' %}" method="post">
         {% csrf_token %}
-        {{ QuestionForm.as_p }}
+        {{ form.as_p }}
 
         <button>Submit</button>
     </form>

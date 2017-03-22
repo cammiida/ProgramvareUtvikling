@@ -30,7 +30,7 @@ urlpatterns = [
 
     #teacher urls
     url(r'^teacher/$', views.teacher, name='teacher'),
-    url(r'^teacher/questions/$', views.answer_questions, name='answer_question'),
+    url(r'^teacher/questions/$', views.answer_question, name='answer_question'),
 
     url(r'^login/$', views.login1, name="login"),
     url(r'^logout/$', views.logout_view, name="logout"),
