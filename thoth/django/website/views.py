@@ -25,7 +25,7 @@ def studentlecture(request):
 
 def teacher(request):
     username = None
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         username = request.user.username
     return render(request, 'teacher/index.html', {'username': username})
 
