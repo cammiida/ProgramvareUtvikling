@@ -2,12 +2,19 @@ $(document).ready(function(){
 
 	// Starts up socket.io. Creates connection.
 	console.log('node er på.');
-  var socket = io.connect('http://localhost:3000');
+  	var socket = io.connect('http://localhost:3000');
+	var title = "Dette er en test";
+	var options = 	{
+						body: "testen går som følgende",
+ 	   					image: "/static/images/logo.png",
+						silent: true
+					}
+	
+  
 
 	var lectureid = $('#lectureid').html();
 
   socket.emit('usertype','teacher',lectureid);
-console.log("hei hei");
   // Create a listener for signals from the server.
   socket.on('update',function(data){
     console.log(data);
@@ -38,6 +45,16 @@ console.log("hei hei");
       else{
         $('#fast_slow').html('the lecture speed is fine');}
       }
+  });
+
+  socket.on('show', function(){
+	var notification = new Notification(title, options);
+		notification.onshow = function(){
+			  console.log("dette er en test")
+			  setTimeout(function(){
+			  	notification.close();
+			  },2000)
+		  }
   });
 
 });

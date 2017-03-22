@@ -9,33 +9,10 @@ var options = {
             , 'reopen delay' : 0
             , 'force new connection' : true
        	 	};
-
 			var socket;
-
-
-			var util = require('util');
+			//var util = require('util');
 
 describe('sockets', function(){
-
-	/*
-	it('should know if a student log in', function(done){
-		var connectedStudents = [];
-		socket.emit('array', 'student');
-		socket.on('array', function(connectedstudents){
-			connectedStudents = connectedstudents.games;
-			expect(connectedstudents['students']).to.have.length(1);
-			expect(connectedstudents['students'][0]).to.equal('socket');
-			done();
-		});
-	});
-
-	it('should communicate', function (done){  	
-		socket.once('echo', function(message){
-			expect(message).to.equal('Hello World');
-			done();
-		});
-	});
-	*/
 	it('should connect as a teacher, to connect as student and update connected students', function(done){
 		teacher = io.connect(socketUrl, options);
 		teacher.on('connect', function(){
@@ -84,8 +61,7 @@ describe('sockets', function(){
 			teacher.on('update', function(array){
 				expect(array['students']).to.equal(0);
 				done();
+			});
 		});
-	});
-
 	});
 });

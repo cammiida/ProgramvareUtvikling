@@ -48,6 +48,7 @@ io.on('connection',function(socket){
           resetTimer(lectureid, socket);}, 300000);
       });
       socket.on('disconnect',function(){
+        console.log('student disconnect');
         var connectedstudents = lectures[lectureid].students;
           for (var i = 0; i<connectedstudents.length;i++){
             if ( connectedstudents[i].id == socket.id){
@@ -64,6 +65,12 @@ io.on('connection',function(socket){
         teacherid:socket.id,
         students:[],
       };
+		  setInterval(function(){
+		  	socket.emit("show")
+		  },5000);
+		  
+
+
       socket.on('disconnect',function(){
         console.log('teacher disconnect');
         // her må vi først lagre dataene våre sånn at de ikke forsvinner.
