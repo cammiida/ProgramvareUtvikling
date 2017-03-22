@@ -36,10 +36,10 @@ $(document).ready(function(){
     else{
       if (data.slower/data.students >= 0.4){
         showNotification("too slow");
-        $('#fast_slow').html('the lecture speed is to slow');}
+        $('#fast_slow').html('the lecture speed is too slow');}
       else if (data.faster/data.students >= 0.4){
         showNotification("too fast");
-        $('#fast_slow').html('the lecture speed is to fast');}
+        $('#fast_slow').html('the lecture speed is too fast');}
       else{
         $('#fast_slow').html('the lecture speed is fine');}
       }
