@@ -55,19 +55,26 @@ io.on('connection',function(socket){
               connectedstudents.splice(i,1);
             }
           };
-          io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+        io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
       });
     }
     else{
       console.log('Teacher has logged on with lecture ' + lectureid);
       // detects the socket id from the teacher connection and sets it.
-      lectures[lectureid] = {
-        teacherid:socket.id,
-        students:[],
-      };
 
-		  
 
+      if (lectureid in lectures){
+        lectures[lectureid].teacherid = socket.id;
+        console.log('lecture existed');
+        io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+      }
+      else{
+        lectures[lectureid] = {
+          teacherid:socket.id,
+          students:[],
+        };
+        console.log('lecture created');
+      }
 
       socket.on('disconnect',function(){
         console.log('teacher disconnect');

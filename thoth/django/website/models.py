@@ -15,10 +15,28 @@ class Course(models.Model):
 class Lecture(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now = True)
+    name = models.CharField(max_length=200)
     active = models.BooleanField(default = False)
 
     def __str__(self):
         return self.date.strftime("%B %d, %Y")
+
+
+class Task(models.Model):
+    lecture = models.ForeignKey(Lecture)
+    description = models.CharField(max_length=500)
+    textanswer = models.CharField(max_length=500, blank=True)
+    option1 = models.CharField(max_length=500, blank=True)
+    option2 = models.CharField(max_length=500, blank=True)
+    option3 = models.CharField(max_length=500, blank=True)
+    option4 = models.CharField(max_length=500, blank=True)
+    option1_correct = models.BooleanField(default=False)
+    option2_correct = models.BooleanField(default=False)
+    option3_correct = models.BooleanField(default=False)
+    option4_correct = models.BooleanField(default=False)
+    timeout = models.PositiveIntegerField()
+    def __str__(self):
+        return self.description
 
 class Question(models.Model):
     question = models.CharField(max_length=500)

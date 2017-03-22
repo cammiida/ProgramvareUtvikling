@@ -1,4 +1,5 @@
 environment/*
+environment_storpc/*
 *.pyc
 db.sqlite3
 .idea/*

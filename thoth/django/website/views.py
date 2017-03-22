@@ -35,8 +35,28 @@ def courses(request):
 
 def lectures(request,course_id):
     course = Course.objects.get(id=course_id)
-    lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user)
+    lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
+
     return render(request, 'teacher/lectures.html', {'lectures':lectures,'course':course})
+
+def lecture(request,lecture_id):
+    lecture = Lecture.objects.get(id=lecture_id)
+    tasks = Task.objects.filter(lecture = lecture)
+    #lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            # add course from form, but dont add it to db just yet.
+            task = form.save(commit=False)
+            # Now add current user to the course
+            task.lecture_id = lecture_id
+            # now add it to db since we now have all our stuffs
+            task.save()
+
+            return redirect('lecture', lecture_id)
+    else:
+        form = TaskForm()
+    return render(request, 'teacher/lecture.html', {'lecture':lecture, 'form':form, 'tasks':tasks})
 
 def addcourse(request):
     # checks if the form is posted. If it is, create the object
@@ -55,20 +75,37 @@ def addcourse(request):
         form = CourseForm()
     return render(request,'teacher/addcourse.html',{'form':form})
 
-def addlecture(request, course_id):
+def startlecture(request, lecture_id):
     lectures = Lecture.objects.filter(course__teacher = request.user)
     for lecture in lectures:
         lecture.active = False
         lecture.save()
-    lecture = Lecture()
-    lecture.course_id = course_id
+    lecture = Lecture.objects.get(id=lecture_id)
     lecture.active = True
     lecture.save()
     return redirect('activelecture')
 
+def addlecture(request, course_id):
+    # checks if the form is posted. If it is, create the object
+    course = Course.objects.get(id=course_id)
+    if request.method == 'POST':
+        form = LectureForm(request.POST)
+        if form.is_valid():
+            lecture = form.save(commit=False)
+            lecture.course_id = course_id
+            lecture.save()
+            return redirect('lectures',course_id)
+    else:
+        form = LectureForm()
+    return render(request,'teacher/addlecture.html',{'form':form, 'course':course})
+
+
+
+
 def activelecture(request):
     lecture = Lecture.objects.get(active=True,course__teacher = request.user)
-    return render(request,'teacher/addlecture.html',{'lecture':lecture})
+    tasks = Task.objects.filter(lecture = lecture)
+    return render(request,'teacher/activelecture.html',{'lecture':lecture, 'tasks':tasks})
 
 def endlecture(request):
     lecture = Lecture.objects.get(active=True,course__teacher = request.user)

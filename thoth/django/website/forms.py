@@ -19,3 +19,14 @@ class QuestionForm(forms.ModelForm):
         model = Question
         fields = ['question']
 
+class LectureForm(forms.ModelForm):
+    class Meta:
+        model = Lecture
+        fields = ['name']
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['description','textanswer','option1','option2','option3',
+        'option4','option1_correct','option2_correct','option3_correct',
+        'option4_correct','timeout']
