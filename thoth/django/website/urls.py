@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^student/$', views.student, name='student'),
     url(r'^student/lecture/$', views.studentlecture, name='studentlecture'),
     url(r'^student/questions/$', views.questions, name='questions'),
-    url(r'^student/questions/$', views.add_questions, name='add_questions'),
+    url(r'^student/add_questions/$', views.add_questions, name='add_questions'),
 
     #teacher urls
     url(r'^teacher/$', views.teacher, name='teacher'),

@@ -134,21 +134,18 @@ def logout_view(request):
 
 
 def add_questions(request):
-    form = QuestionForm()
-    template = 'student/questions.html'
+    template = 'student/add_questions.html'
 
     if request.method == 'POST':
-        form = form(request.POST)
+        form = QuestionForm(request.POST)
         if form.is_valid():
-            question = form.save(commit=False)
 
-            question = form.cleaned_data['question']
-            question.save()
+            question = form.save()
 
-            return render(request, template, {{'questionForm':form}})
+            return redirect('questions')
         else:
-            return HttpResponse("Form Not Valid")
-    return render(request, 'student/question.html')
+            form = QuestionForm()
+    return render(request, template)
 
 def answer_questions(request):
     if request.method == 'POST':

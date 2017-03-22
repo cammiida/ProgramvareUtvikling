@@ -1,39 +1,21 @@
 
 {% extends 'student/student.html' %}
 {% load staticfiles %}
-<script src="{% static 'javascript/student.js' %}"></script>
-<meta charset="UTF-8">
-<html>
-<head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
 
-	<script src="{% static 'javascript/header.js' %}"></script>
-	<script src="{% static 'javascript/student.js' %}"></script>
-	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/student.css' %}">
-</head>
-<body>
-	{% include 'student/header.html' %}
-	<div id="wrapper">
+{% block content %}
+	<h3>Questions</h3>
+	<ul>
+		{% for question in all_questions %}
+			<li>{{question.value}}  {{ question.question }} - {{ question.answer }} </li>
+		{% endfor %}
+	</ul>
 
-		{% block content %}
-			<h3>Questions</h3>
-			<ul>
-				{% for question in all_questions %}
-					<li>{{question.value}}  {{ question.question }} - {{ question.answer }} </li>
-				{% endfor %}
-			</ul>
+	<form class="" action="" method="post">
+		{% csrf_token %}
+		{{ questionForm.as_p }}
 
-			<form class="" action="{% url 'add_questions' %}" method="post">
-				{% csrf_token %}
-				{{ questionForm.as_p }}
-
-				<label>Type a quesiton here</label>
-				<input id ="question" type = "text" name="questionfield" value="{{question}}"/>
-				<input type="submit" name="submit" value="Submit Question"/>
-			</form>
-		{% endblock %}
-	</div>
-</body>
-</html>
+		<label>Type a quesiton here</label>
+		<input id ="add_question" type = "text" name="questionfield" value="{{question}}"/>
+		<input type="submit" name="submit" value="Submit Question"/>
+	</form>
+{% endblock %}

@@ -27,5 +27,5 @@ class Question(models.Model):
     #lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.question + self.answer
+        return self.question
 
