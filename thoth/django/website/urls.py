@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^student/$', views.student, name='student'),
     url(r'^student/lecture/$', views.studentlecture, name='studentlecture'),
     url(r'^student/questions/$', views.questions, name='questions'),
-    url(r'^student/add_question/$', views.add_question, name='add_question'),
+    url(r'^student/add_question//([0-9]+)/$', views.add_question, name='add_question'),
     url(r'^student/question_list/$', views.question_list, name='question_list'),
 
     #teacher urls

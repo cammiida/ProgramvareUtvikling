@@ -1,5 +1,32 @@
+ function showfeedback(){
+	$('#feedback').show();
+ 	$('#addquestion').hide();
+ 	$('#questionlist').hide();
+  if($(window).width() < 769)
+    $('#liste').hide();
+ }
+ function showaddquestion(){
+	$('#feedback').hide();
+	$('#addquestion').show();
+	$('#questionlist').hide();
+  if($(window).width() < 769)
+    $('#liste').hide();
+ }
+ function showquestionlist(){
+	$('#feedback').hide();
+	$('#addquestion').hide();
+	$('#questionlist').show();
+  if($(window).width() < 769)
+    $('#liste').hide();
+ }
+
+
+
 $(document).ready(function(){
 
+	$('#feedback').hide();
+	$('#addquestion').hide();
+	$('#questionlist').hide();
 	// Starts up socket.io. Creates connection.
 
   var socket = io.connect('http://localhost:3000');

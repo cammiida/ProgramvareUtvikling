@@ -8,11 +8,14 @@
 	<div name="navigasjon" id="liste">
 
 		<ul>
-			<li>
-				<a href="{% url 'teacher' %}">Teacher</a>
+			<li onclick="showfeedback()">
+				Feedback
 			</li>
-			<li>
-				<a href="{% url 'student' %}">Student</a>
+			<li onclick="showaddquestion()">
+				Ask a question
+			</li>
+			<li onclick="showquestionlist()">
+				Questions
 			</li>
 		</ul>
 	</div>

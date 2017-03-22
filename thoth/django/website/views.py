@@ -21,7 +21,9 @@ def student(request):
 
 def studentlecture(request):
     lecture = Lecture.objects.get(id=request.GET['lectureid'])
-    return render(request, 'student/lecture.html', {'lecture':lecture})
+    all_questions = Question.objects.filter(lecture=lecture)
+    form = QuestionForm()
+    return render(request, 'student/lecture.html', {'lecture':lecture, 'all_questions':all_questions, 'form':form})
 
 def teacher(request):
     username = None
@@ -170,16 +172,16 @@ def logout_view(request):
 
 
 
-def add_question(request):
-
+def add_question(request,lectureid):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
         if form.is_valid():
-
-            question = form.save()
+            addquestion = form.save(commit=False)
+            addquestion.lecture_id = lectureid
+            addquestion.save()
+            return redirect('/student/lecture/?lectureid=' + str(lectureid))
     else:
         form = QuestionForm()
-    #return render(request, 'student/add_question.html', {'form': form})
     return render(request, 'student/add_question.html', {'form': form})
 
 
