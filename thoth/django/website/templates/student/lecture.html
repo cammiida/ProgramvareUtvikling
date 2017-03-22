@@ -2,7 +2,16 @@
 {% load staticfiles %}
 {% block content %}
 <script src="{% static 'javascript/student.js' %}"></script>
-<p>You are connected to the lecture {{lecture.name}} in the course {{lecture.course.name}} with id <span id="lectureid">{{lecture.id}}</span></p>
+{% if lecture.active %}
+<script src="{% static 'javascript/realtimestudent.js' %}"></script>
+This Lecture is ACTIVE!
+{% else %}
+This Lecture is not active, but you can still ask and see questions.
+{% endif %}
+
+
+<p>You are logged into to the lecture {{lecture.name}} in the course
+{{lecture.course.name}} with id <span id="lectureid">{{lecture.id}}</span></p>
 
 
 

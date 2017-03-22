@@ -59,6 +59,10 @@ io.on('connection',function(socket){
       });
     }
     else{
+
+      /******************************************************
+                            TEACHER
+      ******************************************************/
       console.log('Teacher has logged on with lecture ' + lectureid);
       // detects the socket id from the teacher connection and sets it.
 
@@ -75,7 +79,15 @@ io.on('connection',function(socket){
         };
         console.log('lecture created');
       }
-
+      socket.on('endlecture',function(lectureid){
+        console.log('Lecture has ended '+lectureid);
+        // SEND ENDMESSAGELECTURE TO OUR STUDENTS
+        var connectedstudents = lectures[lectureid].students;
+        for (var i = 0; i<connectedstudents.length;i++){
+          var student = connectedstudents[i];
+            io.to(student.id).emit('endlecture');
+          }
+      })
       socket.on('disconnect',function(){
         console.log('teacher disconnect');
         // her må vi først lagre dataene våre sånn at de ikke forsvinner.

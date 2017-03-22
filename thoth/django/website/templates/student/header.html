@@ -8,9 +8,11 @@
 	<div name="navigasjon" id="liste">
 
 		<ul>
+			{% if lecture.active %}
 			<li onclick="showfeedback()">
 				Feedback
 			</li>
+			{% endif %}
 			<li onclick="showaddquestion()">
 				Ask a question
 			</li>
