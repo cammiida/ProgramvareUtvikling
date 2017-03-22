@@ -34,14 +34,21 @@ io.on('connection',function(socket){
         socket.slower = true;
         socket.faster = false;
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+        // ADDED CODE
+        setTimeout(function() {
+          resetTimer(lectureid, socket);}, 300000);
       });
       socket.on('faster',function(){
         console.log('Student pressed faster button');
         socket.faster = true;
         socket.slower = false;
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+        //ADDED CODE
+        setTimeout(function() {
+          resetTimer(lectureid, socket);}, 300000);
       });
       socket.on('disconnect',function(){
+        console.log('student disconnect');
         var connectedstudents = lectures[lectureid].students;
           for (var i = 0; i<connectedstudents.length;i++){
             if ( connectedstudents[i].id == socket.id){
@@ -58,6 +65,10 @@ io.on('connection',function(socket){
         teacherid:socket.id,
         students:[],
       };
+
+		  
+
+
       socket.on('disconnect',function(){
         console.log('teacher disconnect');
         // her må vi først lagre dataene våre sånn at de ikke forsvinner.
@@ -68,9 +79,16 @@ io.on('connection',function(socket){
   });
 });
 
+
+function resetTimer(lectureid, socket){
+  socket.slower = false;
+  socket.faster = false;
+  io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+  }
+
 function feedbackcalculator(lectureid){
   var connectedstudents = lectures[lectureid].students;
-  var slower = 0;
+  var slower   = 0;
   var faster = 0;
   for (var i = 0; i<connectedstudents.length;i++){
     var student = connectedstudents[i];
