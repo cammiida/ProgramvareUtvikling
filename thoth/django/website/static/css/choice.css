@@ -1,0 +1,84 @@
+
+/* Core */
+.tgl-sw {
+    display: none;
+}
+.tgl-sw,
+.tgl-sw:after,
+.tgl-sw:before,
+.tgl-sw *,
+.tgl-sw *:after,
+.tgl-sw *:before,
+.tgl-sw + .btn-switch {
+    box-sizing: border-box;
+}
+.tgl-sw::-moz-selection,
+.tgl-sw:after::-moz-selection,
+.tgl-sw:before::-moz-selection,
+.tgl-sw *::-moz-selection,
+.tgl-sw *:after::-moz-selection,
+.tgl-sw *:before::-moz-selection,
+.tgl-sw + .btn-switch::-moz-selection {
+    background: none;
+}
+.tgl-sw::selection,
+.tgl-sw:after::selection,
+.tgl-sw:before::selection,
+.tgl-sw *::selection,
+.tgl-sw *:after::selection,
+.tgl-sw *:before::selection,
+.tgl-sw + .btn-switch::selection {
+    background: none;
+}
+.tgl-sw + .btn-switch {
+    outline: 0;
+    display: block;
+    width: 4em;
+    height: 2em;
+    position: relative;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.tgl-sw + .btn-switch:after,
+.tgl-sw + .btn-switch:before {
+    position: relative;
+    display: block;
+    content: "";
+    width: 50%;
+    height: 100%;
+}
+.tgl-sw + .btn-switch:after {
+    left: 0;
+}
+.tgl-sw + .btn-switch:before {
+    display: none;
+}
+.tgl-sw-active + .btn-switch:after {
+    left: 50%;
+}
+
+/* Light */
+.tgl-sw-light + .btn-switch {
+    background: #d9d9d9;
+    border-radius: 2em;
+    padding: 2px;
+    -webkit-transition: all .4s ease;
+    transition: all .4s ease;
+}
+.tgl-sw-light + .btn-switch:after {
+    border-radius: 50%;
+    background: #fff;
+    -webkit-transition: all .2s ease;
+    transition: all .2s ease;
+}
+.tgl-sw-light-checked + .btn-switch {
+    background: #4CAF50;
+}
+#permission{
+	float:left;
+	display:inline;
+}
+

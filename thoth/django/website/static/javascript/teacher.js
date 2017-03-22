@@ -2,7 +2,15 @@ $(document).ready(function(){
 
 	// Starts up socket.io. Creates connection.
 	console.log('node er på.');
-  var socket = io.connect('http://localhost:3000');
+  	var socket = io.connect('http://localhost:3000');
+	var title = "Dette er en test";
+	var options = 	{
+						body: "testen går som følgende",
+ 	   					image: "/static/images/logo.png",
+						silent: true
+					}
+	
+  
 
 	var lectureid = $('#lectureid').html();
 
@@ -23,5 +31,14 @@ $(document).ready(function(){
     }
 
   });
-
+  
+  socket.on('show', function(){
+	var notification = new Notification(title, options);
+		notification.onshow = function(){
+			  console.log("dette er en test")
+			  setTimeout(function(){
+			  	notification.close();
+			  },2000)
+		  }
+  });
 });
