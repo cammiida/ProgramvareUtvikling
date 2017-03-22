@@ -2,13 +2,7 @@
 {% load staticfiles %}
 
 {% block content %}
-    <h3>Questions</h3>
-    <ul>
-        {% for question in all_questions %}
-            <li>{{question.value}}  {{ question.question }} - {{ question.answer }} </li>
-        {% endfor %}
-    </ul>
-
+    <a href="{% url 'question_list' %}">Click here if you want to see posted questions</a><br/>
     <form action="{% url 'add_question' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}

@@ -142,6 +142,7 @@ def add_question(request):
             question = form.save()
     else:
         form = QuestionForm()
+    #return render(request, 'student/add_question.html', {'form': form})
     return render(request, 'student/add_question.html', {'form': form})
 
 
@@ -171,7 +172,7 @@ def question_list(request):
 
 
 def questions(request):
-    all_questions = Question.objects.filer(value > -6)
+    all_questions = Question.objects.all()
     template = 'student/question_list.html'
     context = {
         'all_questions' : all_questions,

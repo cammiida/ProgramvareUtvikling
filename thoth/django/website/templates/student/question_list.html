@@ -1,8 +1,8 @@
-
 {% extends 'student/student.html' %}
 {% load staticfiles %}
 
 {% block content %}
+	<a href="{% url 'add_question' %}">Click here if you want to ask a question</a><br/>
 	<h3>Questions</h3>
 	<ul>
 		{% for question in all_questions %}
@@ -10,12 +10,5 @@
 		{% endfor %}
 	</ul>
 
-	<form action="" method="post">
-		{% csrf_token %}
-		{{ QuestionForm.as_p }}
 
-		<label>Type a quesiton here</label>
-		<input id ="add_question" type = "text" name="questionfield" value="{{question}}"/>
-		<input type="submit" name="submit" value="Submit Question"/>
-	</form>
 {% endblock %}
