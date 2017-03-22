@@ -24,7 +24,6 @@ $(document).ready(function(){
       $('#down').html(' 0%');
 			$('#studentsconnected').html(0);
     }
-
   });
 
   //Logic for when lecturespeed is to high/slow
@@ -37,30 +36,30 @@ $(document).ready(function(){
       slowerPercent = data.slower/data.students;
       fasterPercent = data.faster/data.students;
       if (slowerPercent >= 0.4){
-        showNotification("too slow " + slowerPercent*100 + "% means this");
+        showNotification("too slow " + slowerPercent*100 + "% means this", "/static/images/thoth.png");
         $('#fast_slow').html('the lecture speed is too slow');}
       else if (fasterPercent >= 0.4){
-        showNotification("too fast " + fasterPercent*100 + "% means this");
+        showNotification("too fast " + fasterPercent*100 + "% means this", "/static/images/thoth.png");
         $('#fast_slow').html('the lecture speed is too fast');}
       else{
         $('#fast_slow').html('the lecture speed is fine');}
       }
   });
 
-function showNotification(message){
+function showNotification(message, icon){
     var title = "Dette er en test";
     console.log("kjører denne?")
 	var options = 	{
 						body: message,
- 	   					image: "/static/images/logo.png",
-						silent: true
+						icon: icon,
+						image: icon
 						}
 	var notification = new Notification(title, options);
 		notification.onshow = function(){
 			  console.log("dette er en test")
 			  setTimeout(function(){
 			  	notification.close();
-			  },2000)
+			  }, 2000)
 		  }
   };
 
