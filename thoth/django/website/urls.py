@@ -29,7 +29,6 @@ urlpatterns = [
     #teacher urls
     url(r'^teacher/$', views.teacher, name='teacher'),
     url(r'^teacher/questions/$', views.answer_question, name='answer_question'),
-
     url(r'^login/$', views.login1, name="login"),
     url(r'^logout/$', views.logout_view, name="logout"),
     url(r'^register/$', views.UserFormView.as_view(), name='register'),
