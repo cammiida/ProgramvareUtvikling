@@ -34,11 +34,13 @@ $(document).ready(function(){
       $('#fast_slow').html('too few students online');
     }
     else{
-      if (data.slower/data.students >= 0.4){
-        showNotification("too slow");
+      slowerPercent = data.slower/data.students;
+      fasterPercent = data.faster/data.students;
+      if (slowerPercent >= 0.4){
+        showNotification("too slow " + slowerPercent*100 + "% means this");
         $('#fast_slow').html('the lecture speed is too slow');}
-      else if (data.faster/data.students >= 0.4){
-        showNotification("too fast");
+      else if (fasterPercent >= 0.4){
+        showNotification("too fast " + fasterPercent*100 + "% means this");
         $('#fast_slow').html('the lecture speed is too fast');}
       else{
         $('#fast_slow').html('the lecture speed is fine');}
