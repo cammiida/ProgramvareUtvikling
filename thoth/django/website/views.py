@@ -16,7 +16,7 @@ def index (request):
     return render(request, 'index.html')
 
 def student(request):
-    #return render(request,'student/questions.html')
+    #return render(request,'student/question_list.html')
     return render(request, 'student/index.html')
 
 def studentlecture(request):
@@ -134,7 +134,6 @@ def logout_view(request):
 
 
 def add_questions(request):
-    template = 'student/add_questions.html'
 
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -142,18 +141,21 @@ def add_questions(request):
 
             question = form.save()
 
-            return redirect('questions')
+            return redirect('question_list')
         else:
             form = QuestionForm()
-    return render(request, template)
+    return render(request, 'student/add_question.html')
+
+
 
 def answer_questions(request):
     if request.method == 'POST':
         return
 
-def questions(request):
+
+def question_list(request):
     all_questions = Question.objects.all()
-    template = 'student/questions.html'
+    template = 'student/question_list.html'
     context = {
         'all_questions' : all_questions,
 
