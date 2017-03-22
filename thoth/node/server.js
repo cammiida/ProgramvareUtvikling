@@ -34,12 +34,18 @@ io.on('connection',function(socket){
         socket.slower = true;
         socket.faster = false;
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+        // ADDED CODE
+        setTimeout(function() {
+          resetTimer(lectureid, socket);}, 300000);
       });
       socket.on('faster',function(){
         console.log('Student pressed faster button');
         socket.faster = true;
         socket.slower = false;
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+        //ADDED CODE
+        setTimeout(function() {
+          resetTimer(lectureid, socket);}, 300000);
       });
       socket.on('disconnect',function(){
         var connectedstudents = lectures[lectureid].students;
@@ -68,9 +74,16 @@ io.on('connection',function(socket){
   });
 });
 
+
+function resetTimer(lectureid, socket){
+  socket.slower = false;
+  socket.faster = false;
+  io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+  }
+
 function feedbackcalculator(lectureid){
   var connectedstudents = lectures[lectureid].students;
-  var slower = 0;
+  var slower   = 0;
   var faster = 0;
   for (var i = 0; i<connectedstudents.length;i++){
     var student = connectedstudents[i];
