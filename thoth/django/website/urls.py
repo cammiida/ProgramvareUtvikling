@@ -19,7 +19,7 @@ from . import views
 
 urlpatterns = [
 
-    url(r'^/*$', views.index, name='index'),
+    url(r'^$', views.index, name='index'),
     url(r'^student/$', views.student, name='student'),
     url(r'^student/lecture/$', views.studentlecture, name='studentlecture'),
     url(r'^teacher/$', views.teacher, name='teacher'),
