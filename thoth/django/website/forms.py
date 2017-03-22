@@ -16,6 +16,6 @@ class CourseForm(forms.ModelForm):
 
 class QuestionForm(forms.ModelForm):
     class Meta:
-        model = Questions
-        fields = ['question', 'value', 'answer']
+        model = Question
+        fields = ['question']
 

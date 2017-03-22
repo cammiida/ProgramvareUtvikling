@@ -134,29 +134,29 @@ def logout_view(request):
 
 
 def add_questions(request):
-    form_class = QuestionForm
-    template_name = 'student/questions.html'
+    form = QuestionForm()
+    template = 'student/questions.html'
 
     if request.method == 'POST':
-        form = self.form_class(request.POST)
+        form = form(request.POST)
         if form.is_valid():
             question = form.save(commit=False)
 
             question = form.cleaned_data['question']
-            form.save()
-            # redirected
-            return render(request, self.template_name, {'form': form})
+            question.save()
+
+            return render(request, template, {{'questionForm':form}})
         else:
             return HttpResponse("Form Not Valid")
-    return render(request, 'student/question.html', {'obj': models.Question.objects.all()})
+    return render(request, 'student/question.html')
 
 def answer_questions(request):
     if request.method == 'POST':
         return
 
 def questions(request):
-    all_questions = Questions.objects.all()
-    template = loader.get_template('student/questions.html')
+    all_questions = Question.objects.all()
+    template = 'student/questions.html'
     context = {
         'all_questions' : all_questions,
 
@@ -169,4 +169,5 @@ def questions(request):
     #    html += '<a href= "' + url + '">' + question.question + '</a><br>'
 
 
-    return HttpResponse(template.render(context, request))
+    #return HttpResponse(template.render(context, request))
+    return render(request,template,context)

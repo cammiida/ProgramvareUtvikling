@@ -20,7 +20,7 @@ class Lecture(models.Model):
     def __str__(self):
         return self.date.strftime("%B %d, %Y")
 
-class Questions(models.Model):
+class Question(models.Model):
     question = models.CharField(max_length=500)
     value = models.PositiveIntegerField(default=0)
     answer = models.CharField(max_length=500, default="")

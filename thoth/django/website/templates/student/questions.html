@@ -21,17 +21,17 @@
 			<h3>Questions</h3>
 			<ul>
 				{% for question in all_questions %}
-					<li>{{ question.question }} - {{ question.answer }}</li>
+					<li>{{question.value}}  {{ question.question }} - {{ question.answer }} </li>
 				{% endfor %}
 			</ul>
 
-			<form action="{%url 'questions' %}" method="post">
+			<form class="" action="{% url 'add_questions' %}" method="post">
 				{% csrf_token %}
-				{{ form.as_p }}
+				{{ questionForm.as_p }}
 
 				<label>Type a quesiton here</label>
-				<input type = "text" name="questionfield"/>
-				<input type="submit" name="submit" />
+				<input id ="question" type = "text" name="questionfield" value="{{question}}"/>
+				<input type="submit" name="submit" value="Submit Question"/>
 			</form>
 		{% endblock %}
 	</div>
