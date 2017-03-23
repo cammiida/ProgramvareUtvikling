@@ -39,6 +39,7 @@ urlpatterns = [
     url(r'^activelecture/$', views.activelecture, name='activelecture'),
     url(r'^endlecture/$', views.endlecture, name='endlecture'),
     url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
+    url(r'^registration/$', views.authentication),
 
 
 

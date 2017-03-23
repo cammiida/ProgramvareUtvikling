@@ -12,6 +12,9 @@
                     <br/>
                     Password:&nbsp;<input type="password" name="p">
                     <div class="form-group">
+						{% if errors %}
+						<p>{{ errors }}</p>
+						{% endif %}
                         <div class="col-sm-offset-2 col-sm-10">
                             <button type="submit" class="btn btn-success" id="login">Login</button>
                         </div>

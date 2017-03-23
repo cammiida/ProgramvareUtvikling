@@ -112,9 +112,11 @@ class UserFormView(View):
 
 def login1(request):
     message = ""
+    errors = False
     if request.method == 'POST':
         username = request.POST['u']
         password = request.POST['p']
+        message = "No Users"
         user = authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
@@ -122,10 +124,11 @@ def login1(request):
                 return redirect('teacher')
             else:
                 message = "user is disabled"
+                errors = True
     else:
         message = "User doesn't exist"
-
-    return render(request, 'teacher/login.html', {'message':message})
+        
+    return render(request, 'teacher/login.html', {'errors': message})
 
 def logout_view(request):
     logout(request)
@@ -156,8 +159,7 @@ def question_list(request):
     all_questions = Question.objects.all()
     template = 'student/question_list.html'
     context = {
-        'all_questions' : all_questions,
-
+        'all_questions' : all_questions
     }
     # KAN KANKSJE BRUKES NÅR LÆRER SKAL KUNNE LEGGE TIL SVAR PÅ SPØRSMÅL
 
@@ -170,6 +172,15 @@ def question_list(request):
     #return HttpResponse(template.render(context, request))
     return render(request,template,context)
 
+def authentication(request):
+    if(request.method == "POST"):
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            return render(request, "teacher/successful.html")
+    else:
+        form = RegistrationForm()
+    return render(request, "teacher/registration.html", {'form': form})
 
 def questions(request):
     all_questions = Question.objects.all()

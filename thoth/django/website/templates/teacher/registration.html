@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title>Login to Thoth</title>
+</head>
+<body>
+	<h1>Login to Thoth</h1>
+	
+	{% if form.errors %}
+		<p style ="color: red;">
+			Please correct the error {{ form.errors|pluralize }} below.
+		</p>
+		{% endif %}
+		
+	<form class = "form-horizontal" name=LoginForm action="/login/" method="post">
+		<table>
+			{{ form.as_table }}
+		</table>
+		    {% csrf_token %}
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>
