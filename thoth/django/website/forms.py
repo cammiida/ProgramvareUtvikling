@@ -30,3 +30,8 @@ class TaskForm(forms.ModelForm):
         fields = ['description','textanswer','option1','option2','option3',
         'option4','option1_correct','option2_correct','option3_correct',
         'option4_correct','timeout']
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['answer']

@@ -23,7 +23,7 @@ class Lecture(models.Model):
 
 
 class Task(models.Model):
-    lecture = models.ForeignKey(Lecture)
+    lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
     description = models.CharField(max_length=500)
     textanswer = models.CharField(max_length=500, blank=True)
     option1 = models.CharField(max_length=500, blank=True)

@@ -22,13 +22,11 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^student/$', views.student, name='student'),
     url(r'^student/lecture/$', views.studentlecture, name='studentlecture'),
-    url(r'^student/questions/$', views.questions, name='questions'),
     url(r'^student/add_question//([0-9]+)/$', views.add_question, name='add_question'),
     url(r'^student/question_list/$', views.question_list, name='question_list'),
 
     #teacher urls
     url(r'^teacher/$', views.teacher, name='teacher'),
-    url(r'^teacher/questions/$', views.answer_question, name='answer_question'),
     url(r'^login/$', views.login1, name="login"),
     url(r'^logout/$', views.logout_view, name="logout"),
     url(r'^register/$', views.UserFormView.as_view(), name='register'),
@@ -41,6 +39,7 @@ urlpatterns = [
     url(r'^activelecture/$', views.activelecture, name='activelecture'),
     url(r'^endlecture/$', views.endlecture, name='endlecture'),
     url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
+    url(r'^teacher/answer_question/(?P<question_id>[0-9]+)/$', views.answer_question, name='answer_question'),
 
 
 ]
