@@ -66,6 +66,7 @@ def addlecture(request, course_id):
     lecture.save()
     return redirect('activelecture')
 
+
 def activelecture(request):
     lecture = Lecture.objects.get(active=True,course__teacher = request.user)
     return render(request,'teacher/addlecture.html',{'lecture':lecture})
@@ -80,56 +81,18 @@ def endlecture(request):
 def lecturespeed(request):
     return render(request, 'teacher/lecturespeed.html')
 
-class UserFormView(View):
-    form_class = Userform
-    template_name = 'teacher/registration_form.html'
-        #Displays blank form
-    def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form': form})
-    # legger til bruker i databasen
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            #lager et objekt men lagrer det ikke til databasen, lagrer den lokalt
-            user = form.save(commit=False)
-            # clean data
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            #endre passord
-            user.set_password(password)
-            user.save()
-            # returns userobjekt hvis all info er korrekt
-            #sjekker om brukernavn og passord er i databasenn
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('teacher')
-        return render(request, self.template_name, {'form': form})
-#skal egentlig ha render_to_response, men fikk hele tiden error når jeg brukte det,
-#skjønner ikke hvorfor
+
+
 
 def login1(request):
-    message = ""
-    errors = False
-    if request.method == 'POST':
-        username = request.POST['u']
-        password = request.POST['p']
-        message = "No Users"
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return redirect('teacher')
-            else:
-                message = "user is disabled"
-                errors = True
-    else:
-        message = "User doesn't exist"
-        
-    return render(request, 'teacher/login.html', {'errors': message})
-
+    form = LoginForm(request.POST or None)
+    if request.POST and form.is_valid():
+        user = form.login(request)
+        if user:
+            login(request, user)
+            return redirect("teacher")# Redirect to a success page.
+    return render(request, 'teacher/login.html', {'form': form })
+    
 def logout_view(request):
     logout(request)
     return render(request, 'teacher/logout.html')
@@ -172,15 +135,22 @@ def question_list(request):
     #return HttpResponse(template.render(context, request))
     return render(request,template,context)
 
-def authentication(request):
-    if(request.method == "POST"):
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            return render(request, "teacher/successful.html")
+def register(request):
+    registered = False
+    if(request.method == 'POST'):
+        user_form = Userform(data=request.POST)
+        if(user_form.is_valid()):
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            registered = True
+        else:
+            print (user_form.errors)
     else:
-        form = RegistrationForm()
-    return render(request, "teacher/registration.html", {'form': form})
+        user_form = Userform()
+    return render(request, 'teacher/registration.html', {'form': user_form, 'registered': registered})
+
+
 
 def questions(request):
     all_questions = Question.objects.all()

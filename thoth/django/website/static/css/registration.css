@@ -1,0 +1,29 @@
+#id_username{
+	border: 2px solid #e1e1e1;
+	padding: 6px 15px;
+	border-radius: 4px;
+}
+#id_password{
+	border: 2px solid #e1e1e1;
+	padding: 6px 15px;
+	border-radius: 4px;
+}
+#id_email{
+	border: 2px solid #e1e1e1;
+	padding: 6px 15px;
+	border-radius: 4px;
+}
+
+label{
+    display: inline-block;
+    clear: left;
+	width: 100px;
+    text-align: left;
+	padding: 5px;
+}
+input {
+  	display: inline-block;
+	border: 2px solid #e1e1e1;
+	padding: 6px 15px;
+	border-radius: 4px;
+}

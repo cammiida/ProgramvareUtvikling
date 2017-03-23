@@ -1,22 +1,49 @@
-<html>
-<head>
-	<title>Login to Thoth</title>
-</head>
-<body>
-	<h1>Login to Thoth</h1>
-	
-	{% if form.errors %}
-		<p style ="color: red;">
-			Please correct the error {{ form.errors|pluralize }} below.
-		</p>
-		{% endif %}
-		
-	<form class = "form-horizontal" name=LoginForm action="/login/" method="post">
-		<table>
-			{{ form.as_table }}
-		</table>
-		    {% csrf_token %}
-		<input type="submit" value="Submit">
-	</form>
-</body>
-</html>
+{% extends 'teacher/teacher.html' %}
+{% load staticfiles %}
+{% block content %}
+
+
+	{% if registered %}
+	<p>Thank you for registering</p>
+	{% else %}
+	<h1>Registrer here:</h1>
+    <form action="" method="post">
+		  <div class="field{% if form.message.errors %} errors{% endif %}">
+		      {% if form.username.errors %}
+		          <ul>
+		          {% for error in form.username.errors %}
+		              <li style="color:#ff9999; border: none;"><strong>{{ error }}</strong></li>
+		          {% endfor %}
+		      {% endif %}
+			   <label for="id_username">Username:</label>
+               {{ form.username }}
+			   
+           </div>
+ 		  <div class="field{% if form.message.errors %} errors{% endif %}">
+			  <ul>
+ 		      {% if form.email.errors %}
+ 		          {% for error in form.email.errors %}
+		              <li style="color:#ff9999; border: none;"><strong>{{ error }}</strong></li>
+ 		          {% endfor %}
+			  </ul>
+ 		      {% endif %}
+              <label for="id_email">E-Mail:</label>
+			  {{ form.email }}
+           </div>
+	  <div class="field{% if form.message.errors %} errors{% endif %}">
+	      {% if form.password.errors %}
+		  	<ul>
+	          {% for error in form.password.errors %}
+		              <li style="color:#ff9999; border: none;"><strong>{{ error }}</strong></li>
+	          {% endfor %}
+	          </ul>
+	      {% endif %}
+		  <label for="id_password">Password:</label>
+               {{ form.password }}
+		   </div>
+           {% csrf_token %}
+       <button type="submit" class="btn btn-success">Submit</button>
+       </form>
+	{% endif %}
+
+{% endblock content %}
