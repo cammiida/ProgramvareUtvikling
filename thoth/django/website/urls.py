@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^teacher/questions/$', views.answer_question, name='answer_question'),
     url(r'^login/$', views.login1, name="login"),
     url(r'^logout/$', views.logout_view, name="logout"),
-    url(r'^register/$', views.UserFormView.as_view(), name='register'),
+    #url(r'^register/$', views.UserFormView.as_view(), name='register'),
     url(r'^lecturespeed/$', views.lecturespeed, name='lecturespeed'),
     url(r'^addcourse/$', views.addcourse, name='addcourse'),
     url(r'^addlecture/([0-9]+)/$', views.addlecture, name='addlecture'),
@@ -41,6 +41,5 @@ urlpatterns = [
     url(r'^activelecture/$', views.activelecture, name='activelecture'),
     url(r'^endlecture/$', views.endlecture, name='endlecture'),
     url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
-
-
+    url(r'^registration/$', views.register, name='register'),
 ]
