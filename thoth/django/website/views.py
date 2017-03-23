@@ -214,7 +214,7 @@ def answer_question(request, question_id):
             answer_question = form.save(commit=False)
             answer_question.lecture_id = lecture.id
             answer_question.save()
-            return render(request, 'teacher/answer_question.html', {'question': question, 'lecture':lecture, 'form':form})
+            return redirect('lectures', lecture.id)
     else:
         form = AnswerForm(instance=question)
         return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
