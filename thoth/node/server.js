@@ -36,7 +36,7 @@ io.on('connection',function(socket){
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
         // ADDED CODE
         setTimeout(function() {
-          resetTimer(lectureid, socket);}, 300000);
+          resetTimer(lectureid, socket);}, 3000);
       });
       socket.on('faster',function(){
         console.log('Student pressed faster button');
@@ -78,6 +78,7 @@ io.on('connection',function(socket){
           students:[],
         };
         console.log('lecture created');
+		io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
       }
       socket.on('endlecture',function(lectureid){
         console.log('Lecture has ended '+lectureid);

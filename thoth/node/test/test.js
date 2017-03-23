@@ -10,9 +10,16 @@ var options = {
             , 'force new connection' : true
        	 	};
 			var socket;
-			//var util = require('util');
+			var util = require('util');
 
 describe('sockets', function(){
+	afterEach(function(){
+		student.disconnect();
+		teacher.disconnect();
+	})
+	
+	
+	
 	it('should connect as a teacher, to connect as student and update connected students', function(done){
 		teacher = io.connect(socketUrl, options);
 		teacher.on('connect', function(){
@@ -22,9 +29,11 @@ describe('sockets', function(){
 		student.on('connect', function(){
 			student.emit('usertype', 'student', 1);
 		});
-		teacher.on('update', function(array){
-			expect(array['students']).to.equal(1);	
-			done();
+		teacher.once('update', function(array){
+			teacher.on('update', function(array){
+				expect(array['students']).to.equal(1);	
+				done();
+			});
 		});
 	});
 	
@@ -32,16 +41,18 @@ describe('sockets', function(){
 		teacher = io.connect(socketUrl, options);
 		student = io.connect(socketUrl, options);
 		teacher.on('connect', function(){
-			teacher.emit('usertype', 'teacher', 1);
+			teacher.emit('usertype', 'teacher', 2);
 		});
 		student.on('connect', function(){
-			student.emit('usertype', 'student', 1);
+			student.emit('usertype', 'student', 2);
 			student.emit('slower');
 		});
 		teacher.once('update', function(){
-			teacher.on('update', function(array){
-				expect(array['slower']).to.equal(1);
-				done();
+			teacher.once('update', function(){
+				teacher.on('update', function(array){
+					expect(array['slower']).to.equal(1);
+					done();
+				});
 			});
 		});
 	});
@@ -50,18 +61,32 @@ describe('sockets', function(){
 		teacher = io.connect(socketUrl, options);
 		student = io.connect(socketUrl, options);
 		teacher.on('connect', function(){
-			teacher.emit('usertype', 'teacher', 1);
+			teacher.emit('usertype', 'teacher', 3);
 		});
 		student.on('connect', function(){
-			student.emit('usertype', 'student', 1);
+			student.emit('usertype', 'student', 3);
 		});
 		teacher.once('update', function(array){
-			expect(array['students']).to.equal(1);
-			student.disconnect();
-			teacher.on('update', function(array){
-				expect(array['students']).to.equal(0);
-				done();
+			teacher.once('update', function(array){
+				expect(array['students']).to.equal(1);
+				student.disconnect();
+				teacher.on('update', function(array){
+					expect(array['students']).to.equal(0);
+					done();
+				});
 			});
+		});
+	});
+	
+	it('should be able to start up existing lecture', function(done){
+		teacher = io.connect(socketUrl, options);
+		teacher.on('connect', function(){
+			teacher.emit('usertype', 'teacher', 1);
+		});
+		teacher.on('update', function(array){
+			console.log(util.inspect(array))
+			expect(array['students']).to.equal(0);
+			done();
 		});
 	});
 });
