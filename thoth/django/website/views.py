@@ -207,13 +207,14 @@ def question_list(request):
 def answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
+
     if request.method == 'POST':
         form = AnswerForm(request.POST)
         if form.is_valid():
             answer_question = form.save(commit=False)
             answer_question.lecture_id = lecture.id
             answer_question.save()
-            return redirect(request, 'teacher/answer_question.html', {'question': question}, {'form':form}, {'lecture':lecture})
+            return render(request, 'teacher/answer_question.html', {'question': question, 'lecture':lecture, 'form':form})
     else:
         form = AnswerForm()
-        return render(request, 'teacher/answer_question.html', {'question': question}, {'form':form}, {'lecture':lecture})
+        return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
