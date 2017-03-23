@@ -14,6 +14,24 @@ class CourseForm(forms.ModelForm):
         model = Course
         fields = ['name']
 
-class Questions(forms.Form):
-    question=forms.CharField(max_length=500)
-    value=forms.IntegerField()
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['question']
+
+class LectureForm(forms.ModelForm):
+    class Meta:
+        model = Lecture
+        fields = ['name']
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['description','textanswer','option1','option2','option3',
+        'option4','option1_correct','option2_correct','option3_correct',
+        'option4_correct','timeout']
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['answer']

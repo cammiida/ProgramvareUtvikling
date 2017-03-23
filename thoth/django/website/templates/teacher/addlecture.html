@@ -1,11 +1,15 @@
 {% extends 'teacher/teacher.html' %}
 {% load staticfiles %}
 {% block content %}
-<script type="text/javascript" src="{% static 'javascript/teacher.js' %}"></script>
-<h2>Current Lecture</h2>
-<h1>ID: <span id="lectureid">{{lecture.id}}</span></h1>
-{% include 'teacher/lecturespeed.html' %}
-<button onclick="location.href='{% url 'endlecture' %}'">End Lecture</button>
+  <p>
+		Create a new lecture in the course {{course.name}} below
+	</p>
+  <form action="" method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button>Submit</button>
+  </form>
+
 
 
 {% endblock content %}
