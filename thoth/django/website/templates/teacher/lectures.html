@@ -13,6 +13,17 @@
     <div class="lecturelist">ID: {{lecture.id}},  <a href="{% url 'lecture' lecture.id %}">{{lecture.name}}</a><button onclick="location.href='{% url 'startlecture' lecture.id %}'" class="start"> Start lecture </button><br/></div>
   {% endfor %}
 
+  <p>
+		Questions related to this course:
+	</p>
+  <ul>
+    {% for question in all_questions %}
+        <li> Question: {{ question.question }} ({{question.value}})</li>
+		<li> Answer: {{ question.answer }} <button onclick="location.href='{% url 'answer_question' question.id %}'"> Answer question </button></li>
+    {% endfor %}
 
+  </ul>
+    <p>
 
+	</p>
 {% endblock content %}

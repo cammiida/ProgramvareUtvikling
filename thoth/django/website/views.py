@@ -38,8 +38,9 @@ def courses(request):
 def lectures(request,course_id):
     course = Course.objects.get(id=course_id)
     lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
+    all_questions = Question.objects.filter(lecture__course=course_id)
 
-    return render(request, 'teacher/lectures.html', {'lectures':lectures,'course':course})
+    return render(request, 'teacher/lectures.html', {'lectures':lectures,'course':course, 'all_questions':all_questions})
 
 def lecture(request,lecture_id):
     lecture = Lecture.objects.get(id=lecture_id)
@@ -146,12 +147,6 @@ def add_question(request,lectureid):
     return render(request, 'student/add_question.html', {'form': form})
 
 
-
-def answer_question(request):
-    if request.method == 'POST':
-        return
-
-
 def question_list(request):
     all_questions = Question.objects.all()
     template = 'student/question_list.html'
@@ -185,12 +180,17 @@ def register(request):
     return render(request, 'teacher/registration.html', {'form': user_form, 'registered': registered})
 
 
-
-def questions(request):
-    all_questions = Question.objects.all()
-    template = 'student/question_list.html'
-    context = {
-        'all_questions' : all_questions,
-
-    }
-    return render(request,template,context)
+def answer_question(request, question_id):
+    question = Question.objects.get(id = question_id)
+    lecture = question.lecture
+    
+    if request.method == 'POST':
+        form = AnswerForm(request.POST, instance=question)
+        if form.is_valid():
+            answer_question = form.save(commit=False)
+            answer_question.lecture_id = lecture.id
+            answer_question.save()
+            return redirect('lectures', lecture.id)
+    else:
+        form = AnswerForm(instance=question)
+        return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})

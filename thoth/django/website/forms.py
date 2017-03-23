@@ -34,7 +34,6 @@ class TaskForm(forms.ModelForm):
         'option4','option1_correct','option2_correct','option3_correct',
         'option4_correct','timeout']
 
-        
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=25, required=True)
     password = forms.CharField(widget=forms.PasswordInput, required=True)
@@ -51,3 +50,8 @@ class LoginForm(forms.Form):
         password = self.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         return user
+
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['answer']
