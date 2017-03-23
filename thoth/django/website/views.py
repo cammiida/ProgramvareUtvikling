@@ -1,6 +1,6 @@
 from .models import *
 from .forms import *
-
+from django.db import OperationalError
 # Create your views here.
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
@@ -20,7 +20,14 @@ def student(request):
     return render(request, 'student/index.html')
 
 def studentlecture(request):
-    lecture = Lecture.objects.get(id=request.GET['lectureid'])
+    try:
+        lecture = Lecture.objects.get(id=request.GET['lectureid'])
+    except OperationalError:
+        message =   "You have entered an incorrect ID"
+        return render(request, 'student/index.html', {'error': message})
+    except:
+        message =   "You have entered an incorrect ID"
+        return render(request, 'student/index.html', {'error': message})
     all_questions = Question.objects.filter(lecture=lecture)
     form = QuestionForm()
     return render(request, 'student/lecture.html', {'lecture':lecture, 'all_questions':all_questions, 'form':form})
