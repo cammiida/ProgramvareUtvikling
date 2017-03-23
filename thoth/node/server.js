@@ -1,9 +1,10 @@
 // Importing libraries
 var express = require('express');
+var cors = require('cors');
 var app = require('express')();
+app.use(cors());
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-io.origins('http://thothnode.helemork.com:80')
 
 var lectures = {};
 
