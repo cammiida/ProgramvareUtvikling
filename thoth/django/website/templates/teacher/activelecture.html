@@ -1,0 +1,18 @@
+{% extends 'teacher/teacher.html' %}
+{% load staticfiles %}
+{% block content %}
+
+
+<script type="text/javascript" src="{% static 'javascript/teacher.js' %}"></script>
+<h2>Current Lecture</h2>
+<h1>ID: <span id="lectureid">{{lecture.id}}</span></h1>
+{% include 'teacher/lecturespeed.html' %}
+<button onclick="endlecture('{% url 'endlecture' %}', {{lecture.id}})">End Lecture</button>
+
+
+<h1>Tasks for this lecture</h1>
+{% for task in tasks %}
+  <div class="lecturelist"> {{task.description}}</div>
+{% endfor %}
+
+{% endblock content %}

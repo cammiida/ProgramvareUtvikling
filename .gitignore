@@ -61,3 +61,6 @@ $RECYCLE.BIN/
 # Django workspace folder
 .idea/
 .idea/*
+
+#Folder containing migrations
+migrations/

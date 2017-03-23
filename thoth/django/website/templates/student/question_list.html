@@ -1,0 +1,8 @@
+{% load staticfiles %}
+<h3>Questions</h3>
+<ul>
+	{% for question in all_questions %}
+		<li> Question: {{ question.question }} ({{question.value}})</li>
+		<li> Answer: {{ question.answer }} </li>
+	{% endfor %}
+</ul>

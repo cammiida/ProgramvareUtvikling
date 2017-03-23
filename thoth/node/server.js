@@ -36,30 +36,61 @@ io.on('connection',function(socket){
         socket.slower = true;
         socket.faster = false;
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+        // ADDED CODE
+        setTimeout(function() {
+          resetTimer(lectureid, socket);}, 3000);
       });
       socket.on('faster',function(){
         console.log('Student pressed faster button');
         socket.faster = true;
         socket.slower = false;
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+        //ADDED CODE
+        setTimeout(function() {
+          resetTimer(lectureid, socket);}, 300000);
       });
       socket.on('disconnect',function(){
+        console.log('student disconnect');
         var connectedstudents = lectures[lectureid].students;
           for (var i = 0; i<connectedstudents.length;i++){
             if ( connectedstudents[i].id == socket.id){
               connectedstudents.splice(i,1);
             }
           };
-          io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+        io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
       });
     }
     else{
+
+      /******************************************************
+                            TEACHER
+      ******************************************************/
       console.log('Teacher has logged on with lecture ' + lectureid);
       // detects the socket id from the teacher connection and sets it.
-      lectures[lectureid] = {
-        teacherid:socket.id,
-        students:[],
-      };
+
+
+      if (lectureid in lectures){
+        lectures[lectureid].teacherid = socket.id;
+        console.log('lecture existed');
+        io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+      }
+      else{
+        lectures[lectureid] = {
+          teacherid:socket.id,
+          students:[],
+        };
+        console.log('lecture created');
+		io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+      }
+      socket.on('endlecture',function(lectureid){
+        console.log('Lecture has ended '+lectureid);
+        // SEND ENDMESSAGELECTURE TO OUR STUDENTS
+        var connectedstudents = lectures[lectureid].students;
+        for (var i = 0; i<connectedstudents.length;i++){
+          var student = connectedstudents[i];
+            io.to(student.id).emit('endlecture');
+          }
+      })
       socket.on('disconnect',function(){
         console.log('teacher disconnect');
         // her må vi først lagre dataene våre sånn at de ikke forsvinner.
@@ -70,9 +101,16 @@ io.on('connection',function(socket){
   });
 });
 
+
+function resetTimer(lectureid, socket){
+  socket.slower = false;
+  socket.faster = false;
+  io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+  }
+
 function feedbackcalculator(lectureid){
   var connectedstudents = lectures[lectureid].students;
-  var slower = 0;
+  var slower   = 0;
   var faster = 0;
   for (var i = 0; i<connectedstudents.length;i++){
     var student = connectedstudents[i];

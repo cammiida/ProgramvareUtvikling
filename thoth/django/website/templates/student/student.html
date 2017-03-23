@@ -12,12 +12,13 @@
 	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/updown.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/stylemediaquery.css' %}">
-
+	<link />
 
 </head>
 <body>
 	{% include 'student/header.html' %}
 	<div id="wrapper">
+		{{ error }}
 	{% block content %}{% endblock %}
 
 </div>

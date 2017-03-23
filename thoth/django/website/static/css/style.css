@@ -14,7 +14,7 @@ html,body {
 	text-decoration: none;
 	color: #666666;
 	height: 100vh;
-  width:100vw;
+  	width:100vw;
 	font-family: 'Kanit','Cormorant Garamond', serif;
 	/* bakrunnseffekter: #EDEDED */
 }
@@ -110,4 +110,43 @@ button:hover{
 
 p{
 	margin:5vw;
+}
+
+.start{
+	width:20px;
+	height:40px;
+	border-radius: 0%;
+	float:right;
+	margin-top:0px;
+}
+
+.lecturelist{
+	background:grey;
+	padding:20px;
+	width:100%;
+}
+
+.lecturelist:nth-child(even){
+	background:white;
+}
+
+#addtask{
+	background:grey;
+	min-height:20px
+}
+
+#id_description, #id_textanswer, #id_option1, #id_option2, #id_option3, #id_option4{
+	margin-left: auto;
+	margin-right: auto;
+	min-height:40px;
+	font-size: 20px;
+	padding-left:5px;
+	background:none;
+	border-top:none;
+	border-left: none;
+	border-right:none;
+}
+
+#id_description, #id_textanswer{
+	width:90%;
 }
