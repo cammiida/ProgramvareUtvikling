@@ -36,7 +36,7 @@ io.on('connection',function(socket){
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
         // ADDED CODE
         setTimeout(function() {
-          resetTimer(lectureid, socket);}, 300000);
+          resetTimer(lectureid, socket);}, 3000);
       });
       socket.on('faster',function(){
         console.log('Student pressed faster button');
@@ -55,20 +55,40 @@ io.on('connection',function(socket){
               connectedstudents.splice(i,1);
             }
           };
-          io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+        io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
       });
     }
     else{
+
+      /******************************************************
+                            TEACHER
+      ******************************************************/
       console.log('Teacher has logged on with lecture ' + lectureid);
       // detects the socket id from the teacher connection and sets it.
-      lectures[lectureid] = {
-        teacherid:socket.id,
-        students:[],
-      };
-
-		  
 
 
+      if (lectureid in lectures){
+        lectures[lectureid].teacherid = socket.id;
+        console.log('lecture existed');
+        io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+      }
+      else{
+        lectures[lectureid] = {
+          teacherid:socket.id,
+          students:[],
+        };
+        console.log('lecture created');
+		io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
+      }
+      socket.on('endlecture',function(lectureid){
+        console.log('Lecture has ended '+lectureid);
+        // SEND ENDMESSAGELECTURE TO OUR STUDENTS
+        var connectedstudents = lectures[lectureid].students;
+        for (var i = 0; i<connectedstudents.length;i++){
+          var student = connectedstudents[i];
+            io.to(student.id).emit('endlecture');
+          }
+      })
       socket.on('disconnect',function(){
         console.log('teacher disconnect');
         // her må vi først lagre dataene våre sånn at de ikke forsvinner.

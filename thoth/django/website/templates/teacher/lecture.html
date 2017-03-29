@@ -1,0 +1,31 @@
+{% extends 'teacher/teacher.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<h2>{{lecture.name}} (ID: <span id="lectureid">{{lecture.id}}</span>)</h2>
+<h1>Add new task</h1>
+<div id="addtask">
+    <form action="" method="post">
+      {% csrf_token %}
+      <br/>
+    <input id="id_description" maxlength="500" name="description" type="text" required placeholder="Write your question or task description here"/><br/>
+    <input id="id_textanswer" maxlength="500" name="textanswer" type="text"  placeholder="If you want a textanswer fill in this field"/><br/>
+    <input id="id_option1" maxlength="500" name="option1" type="text" placeholder="option 1"  />
+    <input id="id_option1_correct" name="option1_correct" type="checkbox" />
+    <input id="id_option2" maxlength="500" name="option2" type="text"  placeholder="option 2"/>
+    <input id="id_option2_correct" name="option2_correct" type="checkbox" /><br/>
+    <input id="id_option3" maxlength="500" name="option3" type="text" placeholder="option 3" />
+    <input id="id_option3_correct" name="option3_correct" type="checkbox" />
+    <input id="id_option4" maxlength="500" name="option4" type="text"  placeholder="option 4"/>
+    <input id="id_option4_correct" name="option4_correct" type="checkbox" /><br/>
+    <input id="id_timeout" min="0" name="timeout" type="number"  /><br/>
+    <button>Submit</button>
+    </form>
+</div>
+<h1>Tasks for this lecture</h1>
+{% for task in tasks %}
+  <div class="lecturelist"> {{task.description}}</div>
+{% endfor %}
+
+
+{% endblock content %}

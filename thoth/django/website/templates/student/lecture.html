@@ -2,17 +2,25 @@
 {% load staticfiles %}
 {% block content %}
 <script src="{% static 'javascript/student.js' %}"></script>
-	<p>You are connected to {{lecture.course.name}} with id <span id="lectureid">{{lecture.id}}</span></p>
-	<p>
-		Is the lecture speed too fast or too slow? </br>
-		Let the teacher know below...
-	</p>
-	<input type ="image" name="down" id="down" src="{% static 'images/downbutton.png' %}" width="100" height="100">
-	<input type ="image" name="up" id="up" src="{% static 'images/upbutton.png' %}" width="100" height="100">
-	<br/> Slow down | Speed Up <br/>
-	<div id="message"><span></span></div>
+{% if lecture.active %}
+<script src="{% static 'javascript/realtimestudent.js' %}"></script>
+This Lecture is ACTIVE!
+{% else %}
+This Lecture is not active, but you can still ask and see questions.
+{% endif %}
+
+
+<p>You are logged into to the lecture {{lecture.name}} in the course
+{{lecture.course.name}} with id <span id="lectureid">{{lecture.id}}</span></p>
+
 
 
 	<a href="{% url 'add_question' %}">Questions</a>
 {% endblock %}
 
+
+<div id="feedback">{% include 'student/speedfeedback.html' %}</div>
+<div id="addquestion">{% include 'student/add_question.html' %}</div>
+<div id="questionlist">{% include 'student/question_list.html' %}</div>
+
+{% endblock %}
