@@ -34,24 +34,33 @@ $(document).ready(function(){
   });
 
   //Logic for when lecturespeed is to high/slow
+  var canCall = true;
   socket.on('update', function(data){
     console.log(data);
     if (data.students < 1){
       $('#fast_slow').html('too few students online');
     }
     else{
+    console.log("cancall = " + canCall)
       slowerPercent = data.slower/data.students;
       fasterPercent = data.faster/data.students;
       if (slowerPercent >= 0.4){
-        showNotification("too slow " + slowerPercent*100 + "% means this", "/static/images/thoth.png");
+        if (canCall){
+          showNotification("too slow " + slowerPercent*100 + "% means this", "/static/images/thoth.png");
+          canCall = false;
+          setTimeout(function() {canCall = true;}, 10000);}
         $('#fast_slow').html('the lecture speed is too slow');}
       else if (fasterPercent >= 0.4){
-        showNotification("too fast " + fasterPercent*100 + "% means this", "/static/images/thoth.png");
+        if (canCall){
+          showNotification("too fast " + fasterPercent*100 + "% means this", "/static/images/thoth.png");
+          canCall = false;
+          setTimeout(function() {canCall = true;}, 10000);}
         $('#fast_slow').html('the lecture speed is too fast');}
       else{
         $('#fast_slow').html('the lecture speed is fine');}
       }
   });
+
 
 function showNotification(message, icon){
     var title = "Dette er en test";
