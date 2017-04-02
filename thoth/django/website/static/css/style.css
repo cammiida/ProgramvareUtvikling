@@ -150,3 +150,8 @@ p{
 #id_description, #id_textanswer{
 	width:90%;
 }
+
+
+.studenttasks{
+	display:none;
+}

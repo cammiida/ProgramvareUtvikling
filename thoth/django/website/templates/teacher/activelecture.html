@@ -12,7 +12,7 @@
 
 <h1>Tasks for this lecture</h1>
 {% for task in tasks %}
-  <div class="lecturelist"> {{task.description}}</div>
+  <div class="lecturelist"> {{task.description}}  <button class="start starttask" onclick="starttask({{task.id}})">Start Task</button></div>
 {% endfor %}
 
 {% endblock content %}

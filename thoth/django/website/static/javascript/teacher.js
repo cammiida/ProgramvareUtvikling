@@ -5,14 +5,16 @@ function endlecture(url,lectureid){
 	location.href=url;
 }
 
+function starttask(taskid){
+	console.log(taskid);
+	socket.emit('starttask',taskid);
+}
+
 $(document).ready(function(){
 
 	// Starts up socket.io. Creates connection.
 	console.log('node er på.');
   	socket = io.connect('http://localhost:3000');
-
-
-
 
 
 	var lectureid = $('#lectureid').html();

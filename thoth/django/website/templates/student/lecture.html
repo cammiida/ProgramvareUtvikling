@@ -13,11 +13,7 @@ This Lecture is not active, but you can still ask and see questions.
 <p>You are logged into to the lecture {{lecture.name}} in the course
 {{lecture.course.name}} with id <span id="lectureid">{{lecture.id}}</span></p>
 
-
-
-	<a href="{% url 'add_question' %}">Questions</a>
-{% endblock %}
-
+{% include 'student/tasks.html' %}
 
 <div id="feedback">{% include 'student/speedfeedback.html' %}</div>
 <div id="addquestion">{% include 'student/add_question.html' %}</div>

@@ -29,8 +29,9 @@ def studentlecture(request):
         message =   "You have entered an incorrect ID"
         return render(request, 'student/index.html', {'error': message})
     all_questions = Question.objects.filter(lecture=lecture)
+    tasks = Task.objects.filter(lecture=lecture)
     form = QuestionForm()
-    return render(request, 'student/lecture.html', {'lecture':lecture, 'all_questions':all_questions, 'form':form})
+    return render(request, 'student/lecture.html', {'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions, 'form':form})
 
 def teacher(request):
     username = None
@@ -62,7 +63,7 @@ def lecture(request,lecture_id):
             task.lecture_id = lecture_id
             # now add it to db since we now have all our stuffs
             task.save()
-
+            print('OK')
             return redirect('lecture', lecture_id)
     else:
         form = TaskForm()
@@ -134,8 +135,8 @@ def login1(request):
             login(request, user)
             return redirect("teacher")# Redirect to a success page.
     return render(request, 'teacher/login.html', {'form': form })
-    
-    
+
+
 def logout_view(request):
     logout(request)
     return render(request, 'teacher/logout.html')
@@ -190,7 +191,7 @@ def register(request):
 def answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
-    
+
     if request.method == 'POST':
         form = AnswerForm(request.POST, instance=question)
         if form.is_valid():
