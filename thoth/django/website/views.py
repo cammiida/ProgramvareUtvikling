@@ -1,6 +1,7 @@
 from .models import *
 from .forms import *
 from django.db import OperationalError
+from django.db.models import F
 # Create your views here.
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
@@ -12,6 +13,7 @@ from django.views.generic import View
 from django.http import HttpResponse
 from django.template import loader
 
+
 def index (request):
     return render(request, 'index.html')
 
@@ -19,8 +21,9 @@ def student(request):
     #return render(request,'student/question_list.html')
     return render(request, 'student/index.html')
 
-def studentlecture(request):
+def studentlecture(request, lecture_id):
     try:
+        # TODO: use LectureForm fra forms.py
         lecture = Lecture.objects.get(id=request.GET['lectureid'])
     except OperationalError:
         message =   "You have entered an incorrect ID"
@@ -46,11 +49,12 @@ def courses(request):
 def lectures(request,course_id):
     course = Course.objects.get(id=course_id)
     lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
-    all_questions = Question.objects.filter(lecture__course=course_id)
 
-    return render(request, 'teacher/lectures.html', {'lectures':lectures,'course':course, 'all_questions':all_questions})
+
+    return render(request, 'teacher/lectures.html', {'lectures':lectures,'course':course})
 
 def lecture(request,lecture_id):
+    all_questions = Question.objects.filter(lecture = lecture_id)
     lecture = Lecture.objects.get(id=lecture_id)
     tasks = Task.objects.filter(lecture = lecture)
     #lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
@@ -67,7 +71,7 @@ def lecture(request,lecture_id):
             return redirect('lecture', lecture_id)
     else:
         form = TaskForm()
-    return render(request, 'teacher/lecture.html', {'lecture':lecture, 'form':form, 'tasks':tasks})
+    return render(request, 'teacher/lecture.html', {'lecture':lecture, 'form':form, 'tasks':tasks, 'all_questions':all_questions})
 
 def addcourse(request):
     # checks if the form is posted. If it is, create the object
@@ -113,8 +117,9 @@ def addlecture(request, course_id):
 
 def activelecture(request):
     lecture = Lecture.objects.get(active=True,course__teacher = request.user)
+    all_questions = Question.objects.filter(lecture=lecture.id)
     tasks = Task.objects.filter(lecture = lecture)
-    return render(request,'teacher/activelecture.html',{'lecture':lecture, 'tasks':tasks})
+    return render(request,'teacher/activelecture.html',{'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions})
 
 def endlecture(request):
     lecture = Lecture.objects.get(active=True,course__teacher = request.user)
@@ -157,20 +162,7 @@ def add_question(request,lectureid):
 
 def question_list(request):
     all_questions = Question.objects.all()
-    template = 'student/question_list.html'
-    context = {
-        'all_questions' : all_questions
-    }
-    # KAN KANKSJE BRUKES NÅR LÆRER SKAL KUNNE LEGGE TIL SVAR PÅ SPØRSMÅL
-
-    #html=''
-    #for question in all_questions:
-    #    url = 'student/questions/' + str(question.id) + '/'
-    #    html += '<a href= "' + url + '">' + question.question + '</a><br>'
-
-
-    #return HttpResponse(template.render(context, request))
-    return render(request,template,context)
+    return render(request,'student/question_list.html',{'all_questions' : all_questions})
 
 def register(request):
     registered = False
@@ -198,7 +190,23 @@ def answer_question(request, question_id):
             answer_question = form.save(commit=False)
             answer_question.lecture_id = lecture.id
             answer_question.save()
-            return redirect('lectures', lecture.id)
+            return redirect('activelecture')
     else:
         form = AnswerForm(instance=question)
         return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
+
+def vote(request, question_id):
+    question = Question.objects.get(id = question_id)
+    lecture = question.lecture
+    all_questions = Question.objects.filter(lecture=lecture.id)
+    form = QuestionForm()
+    if request.POST.get("up_button"):
+        question.value = F("value") + 1
+        question.save()
+    elif request.POST.get("down_button"):
+        question.value = F("value") - 1
+        question.save()
+
+    return render(request, 'student/lecture.html', {'lecture':lecture, 'all_questions':all_questions, 'form':form})
+
+

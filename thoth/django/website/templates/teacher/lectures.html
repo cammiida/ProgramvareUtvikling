@@ -16,14 +16,5 @@
   <p>
 		Questions related to this course:
 	</p>
-  <ul>
-    {% for question in all_questions %}
-        <li> Question: {{ question.question }} ({{question.value}})</li>
-		<li> Answer: {{ question.answer }} <button onclick="location.href='{% url 'answer_question' question.id %}'"> Answer question </button></li>
-    {% endfor %}
 
-  </ul>
-    <p>
-
-	</p>
 {% endblock content %}

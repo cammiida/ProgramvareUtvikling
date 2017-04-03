@@ -16,4 +16,12 @@
   <div class="lecturelist"> {{task.description}}  <button class="start starttask" onclick="starttask({{task.id}}, {{task.timeout}})">Start Task</button></div>
 {% endfor %}
 
+<ul>
+    {% for question in all_questions %}
+        <li> Question: {{ question.question }} ({{question.value}})</li>
+		<li> Answer: {{ question.answer }} <button onclick="location.href='{% url 'answer_question' question.id %}'"> Answer question </button></li>
+    {% endfor %}
+
+  </ul>
+
 {% endblock content %}

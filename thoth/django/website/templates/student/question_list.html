@@ -2,7 +2,11 @@
 <h3>Questions</h3>
 <ul>
 	{% for question in all_questions %}
-		<li> Question: {{ question.question }} ({{question.value}})</li>
-		<li> Answer: {{ question.answer }} </li>
+		<li> Question: {{ question.question }} ({{question.value}}) Answer: {{ question.answer }}
+			<form action='{% url "vote" question.id %}' method="post">
+				{% csrf_token %}
+				<input type="submit" class="button" value=" Vote up " name="up_button"/>
+				<input type="submit" class="button" value="Vote down" name="down_button"/>
+			</form>
 	{% endfor %}
 </ul>
