@@ -189,16 +189,16 @@ def answer_question(request, question_id):
             answer_question = form.save(commit=False)
             answer_question.lecture_id = lecture.id
             answer_question.save()
-            return redirect('lectures', lecture.id)
+            return redirect('activelecture')
     else:
         form = AnswerForm(instance=question)
         return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
 
-def up_vote(request, question_id):
+def vote(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
     all_questions = Question.objects.filter(lecture=lecture.id)
-
+    form = QuestionForm()
     if request.POST.get("up_button"):
         question.value = F("value") + 1
         question.save()
@@ -206,6 +206,6 @@ def up_vote(request, question_id):
         question.value = F("value") - 1
         question.save()
 
-    return render(request, 'student/lecture.html', {'lecture':lecture, 'all_questions':all_questions})
+    return render(request, 'student/lecture.html', {'lecture':lecture, 'all_questions':all_questions, 'form':form})
 
 

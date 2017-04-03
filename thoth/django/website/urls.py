@@ -28,7 +28,9 @@ urlpatterns = [
     url(r'^student/question_list/$', views.question_list, name='question_list'),
 
     #voting a question up or down
-    url(r'^student/question/([0-9]+)/vote/up$', views.up_vote, name='up_vote'),
+    url(r'^student/lecture/vote/(?P<question_id>[0-9]+)$', views.vote, name='vote'),
+    #url(r'^student/question/vote/?P<question_id>[0-9]+)$', views.vote, name='vote'),
+    #url(r'^student/question/([0-9]+)/vote/up$', views.vote, name='up_vote'),
 
     #teacher urls
     url(r'^teacher/$', views.teacher, name='teacher'),
