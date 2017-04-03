@@ -20,10 +20,15 @@ from . import views
 urlpatterns = [
     #r'^/*$'
     url(r'^$', views.index, name='index'),
+
+    #student urls
     url(r'^student/$', views.student, name='student'),
-    url(r'^student/lecture/$', views.studentlecture, name='studentlecture'),
-    url(r'^student/add_question//([0-9]+)/$', views.add_question, name='add_question'),
+    url(r'^student/lecture/([0-9]+)?$', views.studentlecture, name='studentlecture'),
+    url(r'^student/add_question/([0-9]+)/$', views.add_question, name='add_question'),
     url(r'^student/question_list/$', views.question_list, name='question_list'),
+
+    #voting a question up or down
+    url(r'^student/question/([0-9]+)/vote/up$', views.up_vote, name='up_vote'),
 
     #teacher urls
     url(r'^teacher/$', views.teacher, name='teacher'),
