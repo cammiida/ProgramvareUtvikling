@@ -1,15 +1,24 @@
 var socket;
 
+/******************************************************
+                    END LECTURE
+******************************************************/
 function endlecture(url,lectureid){
 	socket.emit('endlecture',lectureid);
 	location.href=url;
 }
 
-function starttask(taskid){
+/******************************************************
+                      START TASK
+******************************************************/
+function starttask(taskid,timeout){
 	console.log(taskid);
-	socket.emit('starttask',taskid);
+	socket.emit('starttask',taskid,timeout);
 }
 
+/******************************************************
+                  DOCUMENT IS RUNNING
+******************************************************/
 $(document).ready(function(){
 
 	// Starts up socket.io. Creates connection.
@@ -19,9 +28,32 @@ $(document).ready(function(){
 
 	var lectureid = $('#lectureid').html();
 
+	/******************************************************
+	                      LOGS ON TEACHER
+	******************************************************/
   socket.emit('usertype','teacher',lectureid);
-  // Create a listener for signals from the server.
-  socket.on('update',function(data){
+
+	/******************************************************
+	                     RECEIVE TASK SUMMARY
+	******************************************************/
+	socket.on('sendtasksummay',function(taskid,correct,wrong, loggedon){
+		alert(correct+' out of '+loggedon+' students answered correctly to task '+taskid+' while '+wrong+' answered wrongly.')
+		var correctpercentage = (correct/loggedon)*100;
+		var wrongpercentage = (wrong/loggedon)*100;
+		var timedoutnr = (loggedon-correct-wrong);
+		var timedoutpercentage = (timedoutnr/loggedon)*100;
+		$('#correctanswers').html(Math.round(correctpercentage));
+		$('#wronganswers').html(Math.round(wrongpercentage));
+		$('#timedoutanswers').html(Math.round(timedoutpercentage));
+		$('#correctanswers').css('height',Math.round(correctpercentage)*3+'px');
+		$('#wronganswers').css('height',Math.round(wrongpercentage)*3+'px');
+		$('#timedoutanswers').css('height',Math.round(timedoutpercentage)*3+'px');
+	});
+
+	/******************************************************
+	                     UPDATE SPEED
+	******************************************************/
+	socket.on('update',function(data){
     console.log(data);
     if (data.students > 0){
       $('#up').html(Math.round(100*data.faster/data.students) + '%');
@@ -35,7 +67,10 @@ $(document).ready(function(){
     }
   });
 
-  //Logic for when lecturespeed is to high/slow
+
+	/******************************************************
+	                     LECTURE SPEED LOGIC
+	******************************************************/
   var canCall = true;
   socket.on('update', function(data){
     console.log(data);
@@ -64,6 +99,9 @@ $(document).ready(function(){
   });
 
 
+/******************************************************
+	                   SHOW NOTOFICATION
+******************************************************/
 function showNotification(message, icon){
     var title = "Dette er en test";
     console.log("kjører denne?")

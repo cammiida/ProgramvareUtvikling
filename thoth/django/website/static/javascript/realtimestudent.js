@@ -5,31 +5,36 @@ THE STUDENTS. MOVED OUT OF STUDENT.JS TO SEPARATE
 REALTIME FROM INACTIVE STUFFS
 **************************************************
 */
-
-
+var socket;
+var stop = false;
 
 /******************************************************
                       VALIDATE TASK
 ******************************************************/
 function submittaskanswer(correctanswer,taskid){
   if($('#textanswer_'+taskid).val().toLowerCase() == correctanswer.toLowerCase()){
+    socket.emit('studentanswer',true,taskid);
     alert('YOU ANSWERED CORRECTLY. WP.');
-
   }
   else{
+    socket.emit('studentanswer',false,taskid);
     alert('Failed.');
   }
   $('#studenttask_'+taskid).hide();
+  stop = true;
 }
 
 function correctoption(correctoption,taskid){
   if(correctoption == 'True'){
+    socket.emit('studentanswer',true,taskid);
     alert('YOU ANSWERED CORRECTLY. WP.');
   }
   else{
+    socket.emit('studentanswer',false,taskid);
     alert('Failed.');
   }
     $('#studenttask_'+taskid).hide();
+    stop = true;
 }
 
 
@@ -42,7 +47,9 @@ function countdown(taskid){
   if(secondsleft > 0){
     secondsleft -= 1;
     $('#studenttimeout_'+taskid).html(secondsleft);
-    setTimeout(countdown,1000,taskid);
+    if(stop == false){
+      setTimeout(countdown,1000,taskid);
+    }
   }
   else{
     alert('You did not answer in time.');
@@ -61,7 +68,7 @@ $(document).ready(function(){
                 CONNECTS THE STUDENTS
 ******************************************************/
 
- var socket = io.connect('http://localhost:3000');
+ socket = io.connect('http://localhost:3000');
  var lectureid = $('#lectureid').html();
  console.log('asd'+lectureid);
  socket.emit('usertype','student', lectureid);
@@ -72,7 +79,6 @@ $(document).ready(function(){
  ******************************************************/
  socket.on('starttask',function(taskid){
    console.log('TASK IS STARTING. ');
-   alert("Task starting :"+taskid);
    var totaltimeout = $('#totaltimeout_'+taskid).html();
    $('#studenttimeout_'+taskid).html(totaltimeout);
    setTimeout(countdown,1000,taskid);

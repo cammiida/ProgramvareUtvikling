@@ -31,3 +31,22 @@
   display: none;
 
 }
+
+
+#correctanswers,#wronganswers,#timedoutanswers{
+  width:40px;
+  padding:5px;
+  margin:5px;
+  height:0px;
+  display:inline-block;
+}
+
+#correctanswers{
+  background: green;
+}
+#wronganswers{
+  background: red;
+}
+#timedoutanswers{
+  background: grey;
+}
