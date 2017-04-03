@@ -13,5 +13,6 @@
 			<button class="quiz" onclick="correctoption('{{task.option3_correct}}',{{task.id}})">{{task.option3}}</button>
 			<button class="quiz" onclick="correctoption('{{task.option4_correct}}',{{task.id}})">{{task.option4}}</button>
 		{% endif %}
+		<h1>Time left: <span id="studenttimeout_{{task.id}}">{{task.timeout}}</span> of a total of <span id="totaltimeout_{{task.id}}">{{task.timeout}}</span> </h1>
 	</div>
 {% endfor %}

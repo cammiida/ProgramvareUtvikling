@@ -9,7 +9,7 @@ REALTIME FROM INACTIVE STUFFS
 
 
 /******************************************************
-                      ALIDATE TASK
+                      VALIDATE TASK
 ******************************************************/
 function submittaskanswer(correctanswer,taskid){
   if($('#textanswer_'+taskid).val().toLowerCase() == correctanswer.toLowerCase()){
@@ -32,6 +32,28 @@ function correctoption(correctoption,taskid){
     $('#studenttask_'+taskid).hide();
 }
 
+
+/******************************************************
+                    COUNTDOWN FOR TASK
+******************************************************/
+function countdown(taskid){
+  var secondsleft = $('#studenttimeout_'+taskid).html();
+  secondsleft = parseInt(secondsleft);
+  if(secondsleft > 0){
+    secondsleft -= 1;
+    $('#studenttimeout_'+taskid).html(secondsleft);
+    setTimeout(countdown,1000,taskid);
+  }
+  else{
+    alert('You did not answer in time.');
+    $('#studenttask_'+taskid).hide();
+  }
+}
+
+
+/******************************************************
+                WHILE DOCUMENT IS RUNNING:
+******************************************************/
 $(document).ready(function(){
  // Starts up socket.io. Creates connection.
 
@@ -51,8 +73,12 @@ $(document).ready(function(){
  socket.on('starttask',function(taskid){
    console.log('TASK IS STARTING. ');
    alert("Task starting :"+taskid);
+   var totaltimeout = $('#totaltimeout_'+taskid).html();
+   $('#studenttimeout_'+taskid).html(totaltimeout);
+   setTimeout(countdown,1000,taskid);
    $('#studenttask_'+taskid).show();
  });
+
 
  /******************************************************
                        END LECTURE
