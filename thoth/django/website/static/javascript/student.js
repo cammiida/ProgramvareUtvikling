@@ -12,16 +12,9 @@ AND DISPLAYING THEM
   if($(window).width() < 769)
     $('#liste').hide();
  }
- function showaddquestion(){
-	$('#feedback').hide();
-	$('#addquestion').show();
-	$('#questionlist').hide();
-  if($(window).width() < 769)
-    $('#liste').hide();
- }
  function showquestionlist(){
 	$('#feedback').hide();
-	$('#addquestion').hide();
+	$('#addquestion').show();
 	$('#questionlist').show();
   if($(window).width() < 769)
     $('#liste').hide();
