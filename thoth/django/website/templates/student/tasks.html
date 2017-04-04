@@ -1,0 +1,17 @@
+{% load staticfiles %}
+{% for task in tasks %}
+	<div class="studenttasks" id="studenttask_{{task.id}}">
+		The task nr {{task.id}} has begun.
+		<h1>{{task.description}}</h1>
+		{% if task.textanswer %}
+			<input type="text" id="textanswer_{{task.id}}" placeholder="Answer Here">
+			<button onclick="submittaskanswer('{{task.textanswer}}',{{task.id}})">Submit</button>
+		{% else %}
+			<button class="quiz" onclick="correctoption('{{task.option1_correct}}',{{task.id}})">{{task.option1}}</button>
+			<button class="quiz" onclick="correctoption('{{task.option2_correct}}',{{task.id}})">{{task.option2}}</button>
+			<button class="quiz" onclick="correctoption('{{task.option3_correct}}',{{task.id}})">{{task.option3}}</button>
+			<button class="quiz" onclick="correctoption('{{task.option4_correct}}',{{task.id}})">{{task.option4}}</button>
+		{% endif %}
+		<h1>Time left: <span id="studenttimeout_{{task.id}}">{{task.timeout}}</span> of a total of <span id="totaltimeout_{{task.id}}">{{task.timeout}}</span> </h1>
+	</div>
+{% endfor %}

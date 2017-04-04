@@ -6,6 +6,17 @@ var io = require('socket.io')(http);
 
 var lectures = {};
 
+/******************************************************
+      SEND SUMMARY OF TASK ANSWERS TO TEACHER
+******************************************************/
+function tasksummary(lectureid,taskid){
+  var correct = lectures[lectureid].tasks[taskid].correct;
+  var wrong = lectures[lectureid].tasks[taskid].wrong;
+  var loggedon = lectures[lectureid].students.length;
+  console.log('sending summary to teacher')
+  io.to(lectures[lectureid].teacherid).emit('sendtasksummay',taskid,correct,wrong, loggedon);
+}
+
 // Now we will connect the users to socket.io.
 // Socket io is a library that maintains and keeps track of connected users.
 // We added things to student.html and student.js to make it work.
@@ -19,6 +30,10 @@ io.on('connection',function(socket){
     // Checks if the type of person connected is using the javascript from the
     // student page or the teacher page, and decides further actions based on
     // this.
+
+    /******************************************************
+                          STUDENT
+    ******************************************************/
     if (type == 'student'){
       console.log('Student has logged on to lecture ' + lectureid);
       socket.slower = false;
@@ -26,8 +41,29 @@ io.on('connection',function(socket){
       lectures[lectureid]['students'].push(socket);
       io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
 
-      // Creates a listener for a signal with a name that MAY contain data.
-      // Basically an eventlistener across pages.
+      /******************************************************
+                            STUDENT ANSWER
+      ******************************************************/
+
+      socket.on('studentanswer',function(correctanswer,taskid){
+        if(correctanswer){
+          console.log('student answered correctly');
+          lectures[lectureid].tasks[taskid].correct+=1;
+        }
+        else{
+          console.log('student answered wrongly');
+          lectures[lectureid].tasks[taskid].wrong+=1;
+        }
+        console.log('for task nr '+taskid);
+        console.log('Current correct: '+lectures[lectureid].tasks[taskid].correct);
+        console.log('Current wrong: '+lectures[lectureid].tasks[taskid].wrong);
+
+      });
+
+
+      /******************************************************
+                            PRESSED BUTTON
+      ******************************************************/
       socket.on('slower',function(){
         console.log('Student pressed slower button');
         // send message to teacher:
@@ -47,6 +83,9 @@ io.on('connection',function(socket){
         setTimeout(function() {
           resetTimer(lectureid, socket);}, 300000);
       });
+      /******************************************************
+                            DISCONNECT
+      ******************************************************/
       socket.on('disconnect',function(){
         console.log('student disconnect');
         var connectedstudents = lectures[lectureid].students;
@@ -76,10 +115,31 @@ io.on('connection',function(socket){
         lectures[lectureid] = {
           teacherid:socket.id,
           students:[],
+          tasks:[],
         };
         console.log('lecture created');
 		io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
       }
+      /******************************************************
+                            START TASK
+      ******************************************************/
+      socket.on('starttask',function(taskid,timeout){
+        console.log('TASK STARTING NOW: '+taskid);
+        lectures[lectureid].tasks[taskid] = {
+          correct:0,
+          wrong:0,
+        };
+        // SEND ENDMESSAGELECTURE TO OUR STUDENTS
+        var connectedstudents = lectures[lectureid].students;
+        for (var i = 0; i<connectedstudents.length;i++){
+          var student = connectedstudents[i];
+            io.to(student.id).emit('starttask',taskid);
+          }
+        setTimeout(tasksummary,timeout*1000+2000,lectureid,taskid);
+      })
+      /******************************************************
+                            END LECTURE
+      ******************************************************/
       socket.on('endlecture',function(lectureid){
         console.log('Lecture has ended '+lectureid);
         // SEND ENDMESSAGELECTURE TO OUR STUDENTS
@@ -89,6 +149,9 @@ io.on('connection',function(socket){
             io.to(student.id).emit('endlecture');
           }
       })
+      /******************************************************
+                            DISCONNECT
+      ******************************************************/
       socket.on('disconnect',function(){
         console.log('teacher disconnect');
         // her må vi først lagre dataene våre sånn at de ikke forsvinner.
@@ -99,7 +162,9 @@ io.on('connection',function(socket){
   });
 });
 
-
+/******************************************************
+                      FEEDBACK CALCULATOR
+******************************************************/
 function resetTimer(lectureid, socket){
   socket.slower = false;
   socket.faster = false;
@@ -128,7 +193,9 @@ function feedbackcalculator(lectureid){
 };
 
 
-
+/******************************************************
+                      STARTS SERVER
+******************************************************/
 // Starts the server on port 3000.
 http.listen(3000, function(){
   console.log('listening on *:3000');

@@ -9,10 +9,11 @@
 {% include 'teacher/lecturespeed.html' %}
 <button onclick="endlecture('{% url 'endlecture' %}', {{lecture.id}})">End Lecture</button>
 
+{% include 'teacher/tasksummary.html' %}
 
 <h1>Tasks for this lecture</h1>
 {% for task in tasks %}
-  <div class="lecturelist"> {{task.description}}</div>
+  <div class="lecturelist"> {{task.description}}  <button class="start starttask" onclick="starttask({{task.id}}, {{task.timeout}})">Start Task</button></div>
 {% endfor %}
 
 <ul>

@@ -1,22 +1,24 @@
 {% extends 'student/student.html' %}
 {% load staticfiles %}
 {% block content %}
-<script src="{% static 'javascript/student.js' %}"></script>
-{% if lecture.active %}
-<script src="{% static 'javascript/realtimestudent.js' %}"></script>
-This Lecture is ACTIVE!
-{% else %}
-This Lecture is not active, but you can still ask and see questions.
-{% endif %}
+
+<div id="topinfo">
+    <strong>Course:</strong> {{lecture.course.name}} |
+    <strong>Lecture:</strong> {{lecture.name}} |
+    <strong>Lecture ID:</strong> <span id="lectureid">{{lecture.id}}</span> |
+
+    <script src="{% static 'javascript/student.js' %}"></script>
+    {% if lecture.active %}
+    <script src="{% static 'javascript/realtimestudent.js' %}"></script>
+    This Lecture is ACTIVE!
+    {% else %}
+    This Lecture is not active, but you can still ask and see questions.
+    {% endif %}
+</div>
 
 
-<p>You are logged into to the lecture {{lecture.name}} in the course
-{{lecture.course.name}} with id <span id="lectureid">{{lecture.id}}</span></p>
-
-
-
+<div id="wrapper">
 <div id="feedback">{% include 'student/speedfeedback.html' %}</div>
 <div id="addquestion">{% include 'student/add_question.html' %}</div>
 <div id="questionlist">{% include 'student/question_list.html' %}</div>
-
 {% endblock %}
