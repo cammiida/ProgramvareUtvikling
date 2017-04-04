@@ -1,10 +1,12 @@
-/*
-**************************************************
+/***************************************************
 AT THIS TIME THE ONLY THING THIS DOES IS THE buttons
 AND DISPLAYING THEM
-**************************************************
-*/
+***************************************************/
 
+
+/***************************************************
+            SHOWING AND HIDING TABS
+***************************************************/
  function showfeedback(){
 	$('#feedback').show();
  	$('#addquestion').hide();
@@ -20,22 +22,24 @@ AND DISPLAYING THEM
     $('#liste').hide();
  }
 
+ /***************************************************
+              AJAX FUNCTIONS FOR VOTE up/down
+ ***************************************************/
  function vote(type,url,questionid){
    data = {};
    data[type] = 'true';
    console.log(data);
-   $.post(url,data);
+   $.post(url,data)
 
-   if(type == 'up_button'){
-     $('#questionvalue_'+questionid).html(parseInt($('#questionvalue_'+questionid).html())+1);
-   }
-   else{
-     $('#questionvalue_'+questionid).html(parseInt($('#questionvalue_'+questionid).html())-1);
-   }
+   .done(function(data){
+     $('#questionlist').load('/student/question_list/'+$('#lectureid').html()+'/');
+   });
 
  }
 
-  // DJANGOSTUFFS - SAFETY THINGS COPIED FROM THE WEB
+ /***************************************************
+              FROM THE WEB TO HANDLE COOKIES
+ ***************************************************/
  function getCookie(name) {
      var cookieValue = null;
      if (document.cookie && document.cookie != '') {
@@ -52,24 +56,59 @@ AND DISPLAYING THEM
      return cookieValue;
  }
 
+ /***************************************************
+              FROM THE WEB TO HANDLE HTTP STUFF
+ ***************************************************/
  function csrfSafeMethod(method) {
      // these HTTP methods do not require CSRF protection
      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
  }
 
 
+ /***************************************************
+              WHEN DOCUMENT IS ACTIVE
+ ***************************************************/
 $(document).ready(function(){
 
+  /***************************************************
+               LOADING AND HIDING LECTURE CONTENT
+  ***************************************************/
+  $('#questionlist').load('/student/question_list/'+$('#lectureid').html()+'/');
 	$('#feedback').hide();
 	$('#addquestion').hide();
 	$('#questionlist').hide();
-  // This is required due to djangos CSRF protection
-    var csrftoken = getCookie('csrftoken');
-    $.ajaxSetup({
-        beforeSend: function(xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
-        }
-});
+
+
+  /***************************************************
+          FROM THE WEB TO HANDLE COOKIE
+  ***************************************************/
+  var csrftoken = getCookie('csrftoken');
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrftoken);
+          }
+      }
+    });
+
+    /***************************************************
+              TO USE AJAX ON ADD QUESTIONFORM
+    ***************************************************/
+    $('#addquestionform').submit(function(event){
+      //create dictionary
+      var formData = {
+        'question' : $('#id_question').val(),
+      };
+
+      var url = $('#addquestionform').attr('action');
+      $.post(url,formData)
+      // when this function has posted the question with ajax, we want to
+      // reload the question div but not the page. That's why we use ajax.
+      .done(function(data){
+          $('#questionlist').load('/student/question_list/'+$('#lectureid').html()+'/');
+      });
+      //Stop the page from normally refreshing and disconnecting our students:
+      event.preventDefault();
+    });
+
 });

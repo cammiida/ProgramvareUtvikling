@@ -161,8 +161,8 @@ def add_question(request,lectureid):
     return render(request, 'student/add_question.html', {'form': form})
 
 
-def question_list(request):
-    all_questions = Question.objects.all().order_by('value')
+def question_list(request,lecture_id):
+    all_questions = Question.objects.filter(lecture_id=lecture_id).order_by('-value')
     return render(request,'student/question_list.html',{'all_questions' : all_questions})
 
 def register(request):
