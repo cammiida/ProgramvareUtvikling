@@ -197,14 +197,17 @@ def answer_question(request, question_id):
         return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
 
 def vote(request, question_id):
+    print("test")
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
     all_questions = Question.objects.filter(lecture=lecture.id).order_by('value')
     form = QuestionForm()
     if request.POST.get('up_button'):
+        print("up")
         question.value = F('value') + 1
         question.save()
     elif request.POST.get('down_button'):
+        print("down")
         question.value = F('value') - 1
         questions_less_than = Question.objects.filter(value__lte=-5)
         if questions_less_than:
@@ -212,7 +215,8 @@ def vote(request, question_id):
         else:
             question.save()
 
-    return render(request, 'student/lecture.html', {'lecture':lecture, 'all_questions':all_questions, 'form':form})
+    return HttpResponse('OK')
+    #return render(request, 'student/lecture.html', {'lecture':lecture, 'all_questions':all_questions, 'form':form})
 
 def delete_answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
