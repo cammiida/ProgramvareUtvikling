@@ -86,7 +86,7 @@ def addcourse(request):
             # now add it to db since we now have all our stuffs
             course.save()
 
-            return redirect('../courses')
+            return redirect('courses')
     else:
         form = CourseForm()
     return render(request,'teacher/addcourse.html',{'form':form})
