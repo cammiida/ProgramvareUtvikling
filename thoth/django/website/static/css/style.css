@@ -198,3 +198,40 @@ p{
 	height:auto;
 	box-sizing: border-box;
 }
+
+.questiondiv{
+	width:100%;
+	background:#e8e5e5;
+	border: 1px solid #d6d4d4;
+	min-height: 90px;
+}
+.answerdiv{
+	width:100%;
+	background:#f2efef;
+	color:#8e8e8e;
+	border:1px solid #d8d6d6;
+	border-top:none;
+	margin-bottom:5px;
+}
+
+.questionvoting{
+	float:right;
+	min-height:90px;
+	margin-right:0px;
+	padding:0px;
+	font-size:15px;
+
+}
+
+.questionvotebtn{
+	margin:0px;
+	padding:5px;
+	background:none;
+	border:none;
+	font-weight:bold;
+}
+
+.questionvotebtn:hover{
+	color:grey;
+	cursor: pointer;
+}

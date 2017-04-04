@@ -115,5 +115,10 @@
   	height:30px;
   }
 
+  .questionvoting{
+  	height:auto;
+  	margin-right:10px;
+  	padding:5px;
+  }
 
 }
