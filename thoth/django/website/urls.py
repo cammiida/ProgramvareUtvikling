@@ -46,5 +46,6 @@ urlpatterns = [
     url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
     url(r'^registration/$', views.register, name='register'),
     url(r'^teacher/answer_question/(?P<question_id>[0-9]+)/$', views.answer_question, name='answer_question'),
+    url(r'^teacher/delete_answer_question/(?P<question_id>[0-9]+)/$', views.delete_answer_question, name='delete_answer_question'),
 
 ]

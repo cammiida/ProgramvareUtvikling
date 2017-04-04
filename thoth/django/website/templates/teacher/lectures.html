@@ -13,8 +13,4 @@
     <div class="lecturelist">ID: {{lecture.id}},  <a href="{% url 'lecture' lecture.id %}">{{lecture.name}}</a><button onclick="location.href='{% url 'startlecture' lecture.id %}'" class="start"> Start lecture </button><br/></div>
   {% endfor %}
 
-  <p>
-		Questions related to this course:
-	</p>
-
 {% endblock content %}

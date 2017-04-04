@@ -214,4 +214,19 @@ def vote(request, question_id):
 
     return render(request, 'student/lecture.html', {'lecture':lecture, 'all_questions':all_questions, 'form':form})
 
+def delete_answer_question(request, question_id):
+    question = Question.objects.get(id = question_id)
+    lecture = question.lecture
+    all_questions = Question.objects.filter(lecture=lecture.id).order_by('value')
 
+    if request.POST.get('answer_button'):
+        form = QuestionForm()
+        #if request.method == 'POST':
+        return redirect('answer_question', question_id)
+    if request.POST.get('delete_button'):
+        #if request.method == 'POST':
+        question.delete()
+        return redirect('activelecture')
+
+
+    return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})

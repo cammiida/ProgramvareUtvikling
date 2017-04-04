@@ -16,12 +16,19 @@
   <div class="lecturelist"> {{task.description}}  <button class="start starttask" onclick="starttask({{task.id}}, {{task.timeout}})">Start Task</button></div>
 {% endfor %}
 
-<ul>
+<div>
     {% for question in all_questions %}
-        <li> Question: {{ question.question }} ({{question.value}})</li>
-		<li> Answer: {{ question.answer }} <button onclick="location.href='{% url 'answer_question' question.id %}'"> Answer question </button></li>
+    <li> Question: {{ question.question }} ({{question.value}})</br>
+        Answer: {{ question.answer }}</li>
+
+            {#<!--<button onclick="location.href='{% url 'answer_question' question.id %}'"> Answer question </button></li>-->#}
+        <form action='{% url "delete_answer_question" question.id %}' method="post" )>
+            {% csrf_token %}
+            <input type="submit" value="Answer Question" method="post" name="answer_button">
+            <input type="submit" value="Delete Question" method="post" name="delete_button">
+        </form></br>
     {% endfor %}
 
-  </ul>
+</div>
 
 {% endblock content %}
