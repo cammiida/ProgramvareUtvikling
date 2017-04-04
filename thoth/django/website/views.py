@@ -2,6 +2,7 @@ from .models import *
 from .forms import *
 from django.db import OperationalError
 from django.db.models import F
+from django.db.models import Q
 # Create your views here.
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth import authenticate, login, logout
@@ -205,8 +206,9 @@ def vote(request, question_id):
         question.save()
     elif request.POST.get('down_button'):
         question.value = F('value') - 1
-        if question.value < -5:
-            question.delete()
+        questions_less_than = Question.objects.filter(value__lte=-5)
+        if questions_less_than:
+            questions_less_than.delete()
         else:
             question.save()
 
