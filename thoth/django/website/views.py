@@ -11,6 +11,9 @@ from django.urls import reverse_lazy
 from django.views.generic import View
 from django.http import HttpResponse
 from django.template import loader
+import sys
+sys.path.insert(0, '/Users/hakongrov/Documents/INDØK/2.År/2.Semester/Programvareutvikling/GIT/ProgramvareUtviklingGroup50/thoth/django')
+import API2 as apis
 
 def index (request):
     return render(request, 'index.html')
@@ -148,6 +151,8 @@ def add_question(request,lectureid):
             addquestion = form.save(commit=False)
             addquestion.lecture_id = lectureid
             addquestion.save()
+            apis.predict(addquestion)
+            apis.similar(addquestion)
             return redirect('/student/lecture/?lectureid=' + str(lectureid))
     else:
         form = QuestionForm()
@@ -190,13 +195,15 @@ def register(request):
 def answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
-    
+    a = Api.objects.all().filter(question__exact = question)
+    print(a)
     if request.method == 'POST':
         form = AnswerForm(request.POST, instance=question)
         if form.is_valid():
             answer_question = form.save(commit=False)
             answer_question.lecture_id = lecture.id
             answer_question.save()
+            a.update(answer_set=True)
             return redirect('lectures', lecture.id)
     else:
         form = AnswerForm(instance=question)

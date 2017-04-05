@@ -4,5 +4,6 @@
 	{% for question in all_questions %}
 		<li> Question: {{ question.question }} ({{question.value}})</li>
 		<li> Answer: {{ question.answer }} </li>
+		<li> thoth says: {{ question.api_answer }} </li>
 	{% endfor %}
 </ul>

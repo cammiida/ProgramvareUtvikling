@@ -42,7 +42,17 @@ class Question(models.Model):
     question = models.CharField(max_length=500)
     value = models.IntegerField(default=0)
     answer = models.CharField(max_length=500, default="", blank=True)
+    api_answer = models.CharField(max_length=500, default="", blank=True)
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
-
+    
     def __str__(self):
         return self.question
+
+class Api(models.Model):
+    entity_type = models.CharField(max_length=30)
+    entity_word = models.CharField(max_length=30)
+    answer_set = models.BooleanField(default=False)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    
+     def __str__(self):
+        return (self.question.question)
