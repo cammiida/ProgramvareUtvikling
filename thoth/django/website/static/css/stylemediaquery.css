@@ -17,8 +17,9 @@
   }
 
   #wrapper{
-  	width:80%;
-  	margin: 5%;
+  	width:85%;
+  	margin-left: auto;
+    margin-right: auto;
   }
 
   /*Header tag*/
@@ -122,4 +123,26 @@
   	padding:5px;
   }
 
+
+  #maincontent p{
+  	font-size: auto;
+  }
+
+  #mainside{
+  	width:49%;
+  	float:left;
+  	margin-right:2%;
+  }
+
+  #aside{
+  	float:right;
+  	width:49%;
+  }
+
+  #mainside h1, #aside h1{
+  	border: 1px solid #d1d1d1;
+  	background: #ededed;
+  }
+
+  h1{font-size:auto;}
 }
