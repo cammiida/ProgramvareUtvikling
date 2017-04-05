@@ -5,7 +5,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'thoth'))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "thoth.settings")
 django.setup()
 from django.conf import settings
-from google.cloud import language
+#from google.cloud import language
 import operator
 from website.models import Question, Api
 
