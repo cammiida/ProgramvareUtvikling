@@ -3,6 +3,7 @@
 {% block content %}
 
 <h2>{{lecture.name}} (ID: <span id="lectureid">{{lecture.id}}</span>)</h2>
+<button onclick="location.href='{% url 'lectures' lecture.course.id %}'">TILBAKE TIL OVERSIKT </button>
 <h1>Add new task</h1>
 <div id="addtask">
     <form action="" method="post">
