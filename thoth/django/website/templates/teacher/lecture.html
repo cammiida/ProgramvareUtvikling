@@ -26,6 +26,21 @@
 {% for task in tasks %}
   <div class="lecturelist"> {{task.description}}</div>
 {% endfor %}
+<h1>Questions</h1>
+	{% for question in all_questions %}
+		<div class="questiondiv">
+			{{ question.question }}
+				<span id="questionvalue_{{question.id}}">{{question.value}}</span><br/>
+				</div>
+        <div class="answerdiv">{{ question.answer }}</br>
+        <form action='{% url "delete_answer_question" question.id %}' method="post" )>
+            {% csrf_token %}
+            <input type="submit" value="Answer Question" method="post" name="answer_button">
+            <input type="submit" value="Delete Question" method="post" name="delete_button">
+        </form></br></div>
+
+	{% endfor %}
+
 
 
 {% endblock content %}

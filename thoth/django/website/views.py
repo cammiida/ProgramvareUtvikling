@@ -55,7 +55,7 @@ def lectures(request,course_id):
     return render(request, 'teacher/lectures.html', {'lectures':lectures,'course':course})
 
 def lecture(request,lecture_id):
-    all_questions = Question.objects.filter(lecture = lecture_id).order_by('value')
+    all_questions = Question.objects.filter(lecture = lecture_id).order_by('-timestamp')
     lecture = Lecture.objects.get(id=lecture_id)
     tasks = Task.objects.filter(lecture = lecture)
     #lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
@@ -191,7 +191,10 @@ def answer_question(request, question_id):
             answer_question = form.save(commit=False)
             answer_question.lecture_id = lecture.id
             answer_question.save()
-            return redirect('activelecture')
+            if lecture.active:
+                return redirect('activelecture')
+            else:
+                return redirect('lecture', lecture.id)
     else:
         form = AnswerForm(instance=question)
         return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
@@ -230,7 +233,10 @@ def delete_answer_question(request, question_id):
     if request.POST.get('delete_button'):
         #if request.method == 'POST':
         question.delete()
-        return redirect('activelecture')
+        if lecture.active:
+            return redirect('activelecture')
+        else:
+            return redirect('lecture', lecture.id)
 
 
     return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
