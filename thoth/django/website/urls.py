@@ -25,12 +25,10 @@ urlpatterns = [
     url(r'^student/$', views.student, name='student'),
     url(r'^student/lecture/([0-9]+)?$', views.studentlecture, name='studentlecture'),
     url(r'^student/add_question/([0-9]+)/$', views.add_question, name='add_question'),
-    url(r'^student/question_list/$', views.question_list, name='question_list'),
+    url(r'^student/question_list/([0-9]+)/$', views.question_list, name='question_list'),
 
     #voting a question up or down
     url(r'^student/lecture/vote/(?P<question_id>[0-9]+)$', views.vote, name='vote'),
-    #url(r'^student/question/vote/?P<question_id>[0-9]+)$', views.vote, name='vote'),
-    #url(r'^student/question/([0-9]+)/vote/up$', views.vote, name='up_vote'),
 
     #teacher urls
     url(r'^teacher/$', views.teacher, name='teacher'),
@@ -48,5 +46,6 @@ urlpatterns = [
     url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
     url(r'^registration/$', views.register, name='register'),
     url(r'^teacher/answer_question/(?P<question_id>[0-9]+)/$', views.answer_question, name='answer_question'),
+    url(r'^teacher/delete_answer_question/(?P<question_id>[0-9]+)/$', views.delete_answer_question, name='delete_answer_question'),
 
 ]

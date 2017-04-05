@@ -1,16 +1,11 @@
 {% load staticfiles %}
 <h1>Questions</h1>
-
 	{% for question in all_questions %}
 		<div class="questiondiv">
 			{{ question.question }}
-
-			<form action='{% url "vote" question.id %}' method="post" class="questionvoting">
-				{% csrf_token %}
-				<input type="submit"  class= "questionvotebtn" value=" ^ " name="up_button"/><br/>
-				{{question.value}}<br/>
-				<input type="submit"  class= "questionvotebtn" value=" v " name="down_button"/><br/>
-			</form>
+				<input type="button"  class= "questionvotebtn" value=" ^ " name="up_button" onclick="vote('up_button','{% url 'vote' question.id %}',{{question.id}})"/><br/>
+				<span id="questionvalue_{{question.id}}">{{question.value}}</span><br/>
+				<input type="button"  class= "questionvotebtn" value=" v " name="down_button" onclick="vote('down_button','{% url 'vote' question.id %}', {{question.id}})"/><br/>
 		</div>
 		<div class="answerdiv">{{ question.answer }}</div>
 	{% endfor %}
