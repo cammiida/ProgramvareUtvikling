@@ -1,4 +1,5 @@
-from projectoxford.luis import LuisClient
+# Importering av pakker for å kjøre scriptet. 
+from projectoxford.luis import LuisClient   #   - Denne må lastes ned. Kjør: "pip install projectoxford" i et shell så tror jeg det skal være fikset. 
 import sys, os, django, json
 sys.path.append(os.path.join(os.path.dirname(__file__), 'thoth'))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "thoth.settings")
@@ -8,18 +9,17 @@ from google.cloud import language
 import operator
 from website.models import Question, Api
 
-
 #=================================================================
+# Adressen som refererer til applikasjonen jeg har lagd.
 lc = LuisClient("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/02aedc35-bf24-4785-99b9-a33f1d3ec9e5?subscription-key=23cfce88ff264c91bf16d76242b21f85&timezoneOffset=0.0&verbose=true&q=")
 
+#Synonymer til Action entiteten. bare å legge inn flere synonymer og andre actions man føler er nødvendige.
 handling = {"bruke": ["use", "used", "using", "works", "apply"], "lage": ["make", "create", "generate", "form", "cause", "produce", "prepare"], "virke": ["work", "handle", "apply", "control", "manage", "operate"], "sortere":["sort", "arrange", "catalogue", "classify", "distribute"], "handle": ["do", "achieve", ]}
 
-q = Question.objects.filter(question__startswith='how')
-#print(q[0])
-#if(q[0].answer):
-#    print("her var det et svar")
-print(q[2])
+#Brukes til å teste. Ikke noe å bry seg om
+#q = Question.objects.filter(question__startswith='how')
 
+# Denne metoden finner entitetene i spørsmålet og lagrer dette i api-databasen. Denne har kun to viktige felt: entity_word og entity_type.
 def predict(q):
     question = str(q)
     liste = {}
@@ -27,13 +27,13 @@ def predict(q):
     for i in range(0, len(ents[2])):
         a = Api(entity_word=str(ents[1][i]), entity_type=str(ents[2][i]), question=q)
         a.save()
-    
+        
+# Denne metoden henter ut entiteter allerede lagt inn i databasen. Den vil kun hente ut entiteter som allerede har et svar tilknyttet seg. Dette sjekker den ved å se på answer_set. Denne attributten blir satt når læreren svarer på et spørsmål 
 def fetch(typ, word):
     query = Api.objects.all().filter(entity_type__exact=typ, entity_word__exact=word).exclude(answer_set=False)
     return query
-    
-#print(fetch("QuestionWord", "how")[0].answer)
-    
+
+# Dette er hovedmetoden. Her skjer sammenligningen av spørsmålet som nettopp ble stilt og alle spørsmålene i databasen som har svar. Det meste blir kommentert der det trengst. Også et par kommentarer som brukes av meg for å vite hva jeg har igjen å gjøre.    
 def similar(q):
     question = str(q)
     liste = {}
@@ -70,11 +70,11 @@ def similar(q):
     try:                                                        # - Må ha denne for å sjekke om det faktisk finnes en algoritme i spørsmålet. Hvis ikke må den kjøre en alternativ rute.
         for alg in liste['Algorithm']:
             if(alg in liste['QuestionWord'][0]):                # - Antar her at det kun er et spørreord i hver setning. Velger at hvis et spørsmål handler om en algoritme så må den                                                             algoritmen bli nevnt i det like spørsmålet. 
-                likt_sporsmal[alg] = 1                        # - Spørreord og algoritme er her like
+                likt_sporsmal[alg] = 1                          # - Spørreord og algoritme er her like
                 try:
                     if(alg in liste['ProgrammingLanguages']):   #   - Kan videre teste om programmeringsspråket som brukes i setningen er lik. Hvis det finnes spørsmål som har lik
-                        likt_sporsmal[alg] += 1              #     algoritme,    
-                        print("kommer den hit?")                #     men ingen programmeringsspråk i spørsmålet må disse også være med videre ettersom generelle svar kan hjelpe.
+                        likt_sporsmal[alg] += 1                 #     algoritme, men ingen programmeringsspråk i spørsmålet må disse også være med videre ettersom generelle svar kan hjelpe.
+                        print("kommer den hit?")                     
                                                                 # - Fant ut at det var et likt programmeringsspråk i spørsmålet.
                 except:
                     print("Her var det ingenting!")             # - Altså ingen programmeringsspråk i spørsmålet og derfor ikke vits å sjekke videre på. 
@@ -90,15 +90,17 @@ def similar(q):
                 query = Question.objects.get(question=hoyeste)
                 print(query)
                 q.api_answer = str(query.answer)
-                q.save() 
-                                                            #   - Teste om objektene som brukes i spørsmålet er like. Om de er like kan være vanskelig å sjekke, men kan lage en liste av synonymer, men starter uten.
-                                                            #   - Adjektiver er også noe som kan testes. Vanskelige er synonymer her også. Lister kan virke som beste måte å gå frem her. Vil ikke hjelpe for alle tilfeller, men tror ikke det er nødvendig på dette nivået. 
+                q.save()            
+                                                            #   - Ting å utvide med senere:
+                                                            #   - Teste om objektene som brukes i spørsmålet er like. Om de er like kan være vanskelig å sjekke, men kan lage en liste av       synonymer, men starter uten.
+                                                            #   - Adjektiver er også noe som kan testes. Vanskelige er synonymer her også. Lister kan virke som beste måte å gå frem her. Vil   ikke hjelpe for alle tilfeller, men tror ikke det er nødvendig på dette nivået. 
                                                             #   - Må legge til hva som skjer hvis det er flere spørsmål som er like nok til å gi ut svar!
     except:
         print("finnes ingen algoritme i spørsmålet!")
         
 
-    
+# Dette brukes til testing så ingenting å bry seg om.
+   
 #print(q[2])
 #similar(q[2])
 #predict(q[3])
@@ -126,7 +128,7 @@ def similar(q):
 
 
 
-
+# Tingene i databasene er kun ting som kan være nyttig å bruke senere og som jeg kun har tatt med for å kunne utvide med. Gjør det også lettere for meg å vite hva jeg trenger å huske på med tanke på setningsoppbygning. 
 
 #===============    Databaser   ========================
 #   - Dette er de tradisjonelle spørreordene som brukes. Her er noen veldig generelle, mens andre stiller spesifikke spørsmål om feks personer eller tid. 
@@ -151,5 +153,3 @@ how = ["how much", "how many", "how often", "how far", "how to", "how do"]
 
 #   - Dette er også måter å starte spørsmål på, men er ikke de tradisjonelle ordene man bruker og krever mer logikk for å få til. 
 andre = ["is there", "is it", "could you"]
-
-like = ['']
