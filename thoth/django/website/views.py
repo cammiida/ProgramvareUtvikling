@@ -20,7 +20,7 @@ def index (request):
 
 def student(request):
     #return render(request,'student/question_list.html')
-    return render(request, 'student/index.html')
+    return render(request, 'student/index.html', {'not_show_icon': True})
 
 def studentlecture(request, lecture_id):
     try:

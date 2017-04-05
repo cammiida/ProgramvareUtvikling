@@ -7,16 +7,19 @@
 
 	<div name="navigasjon" id="liste">
 
+
 		<ul>
 			{% if lecture.active %}
 			<li onclick="showfeedback()">
-				Feedback
+				<img src="{% static 'images/feedback.png' %}" class="headerimages"> Feedback
 			</li>
 			{% endif %}
+
 			<li onclick="showquestionlist()">
-				Questions
+				<img src="{% static 'images/question.png' %}" class="headerimages"> Questions
 			</li>
 		</ul>
+
 	</div>
 
 </header>

@@ -16,6 +16,10 @@ html,body {
 	height: 100vh;
   	width:100vw;
 	font-family: 'Kanit','Cormorant Garamond', serif;
+	background-image:  url("/static/images/hieroglyph.png"),url("/static/images/pyramids.png");
+	background-repeat:  repeat,no-repeat;
+	background-size: auto,100%;
+	background-position: bottom;
 	/* bakrunnseffekter: #EDEDED */
 }
 
@@ -30,15 +34,15 @@ html,body {
 header{
 	width: 100%;
 	min-height: 15vw;
-	background:grey;
+	background: #777777;
+	background: linear-gradient(#918f8f, #777777);
 	border-bottom: 1px solid #a0a09f;
 	box-sizing: border-box;
 	padding-left: 1vw;
 }
 
 header img{
-	height: 12vw;;
-	background:grey;
+	height: 12vw;
 	padding: 2vw;
 }
 
@@ -234,4 +238,23 @@ p{
 .questionvotebtn:hover{
 	color:grey;
 	cursor: pointer;
+}
+
+.headerimages{
+	max-height:40px;
+	padding:0px;
+	margin:0px;
+	background:none;
+}
+
+.enter{
+	background:lightgrey;
+	width:70vw;
+	max-width:200px;
+	height:45px;
+	box-sizing: border-box;
+	padding:5px;
+	font-size:18px;
+	text-align: center;
+
 }
