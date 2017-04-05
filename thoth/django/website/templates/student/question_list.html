@@ -8,4 +8,5 @@
 				<input type="button"  class= "questionvotebtn" value=" v " name="down_button" onclick="vote('down_button','{% url 'vote' question.id %}', {{question.id}})"/><br/>
 		</div>
 		<div class="answerdiv">{{ question.answer }}</div>
+		<div class="apiAnswer">{{ question.api_answer }}</div>
 	{% endfor %}
