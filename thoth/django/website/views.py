@@ -118,7 +118,7 @@ def addlecture(request, course_id):
 
 def activelecture(request):
     lecture = Lecture.objects.get(active=True,course__teacher = request.user)
-    all_questions = Question.objects.filter(lecture=lecture.id).order_by('value')
+    all_questions = Question.objects.filter(lecture=lecture.id).order_by('-timestamp')
     tasks = Task.objects.filter(lecture = lecture)
     return render(request,'teacher/activelecture.html',{'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions})
 
@@ -162,7 +162,7 @@ def add_question(request,lectureid):
 
 
 def question_list(request,lecture_id):
-    all_questions = Question.objects.filter(lecture_id=lecture_id).order_by('-value')
+    all_questions = Question.objects.filter(lecture_id=lecture_id).order_by('-timestamp')
     return render(request,'student/question_list.html',{'all_questions' : all_questions})
 
 def register(request):
