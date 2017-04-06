@@ -7,15 +7,20 @@
 <div id="maincontent">
   <div id="topintroduction">
       <h2>Current Lecture: </br>{{lecture.name}} </h2></br>
+  </div>
 
 
+  <div id="idnumber">
+    ID: <br/><span id="lectureid">{{lecture.id}}</span>
+  </div>
+  <div id="studentsconnected">
+    Students online:<br/>
+    0
   </div>
   <div id="endlecture" onclick="endlecture('{% url 'endlecture' %}', {{lecture.id}})">
     End Lecture
   </div>
-  <div id="idnumber">
-    ID: <br/><span id="lectureid">{{lecture.id}}</span>
-  </div>
+
 
 
 
@@ -25,28 +30,34 @@
 
   <div id="mainside">
     <h1>Student Questions</h1>
-      {% for question in all_questions %}
-      <div class="questiondiv">
-        {{ question.question }}
-        ({{question.value}})
-      </div>
-      <div class="answerdiv">
-        {{ question.answer }}
-        {#<!--<button onclick="location.href='{% url 'answer_question' question.id %}'"> Answer question </button></li>-->#}
-        <form action='{% url "delete_answer_question" question.id %}' method="post" )>
-            {% csrf_token %}
-            <input type="submit" value="Answer Question" method="post" name="answer_button">
-            <input type="submit" value="Delete Question" method="post" name="delete_button">
-        </form></br>
-      </div>
-      <div class="apiAnswer">{{ question.api_answer }}</div>
-      {% endfor %}
+    	{% for question in all_questions %}
+    		<div class="questiondiv">
+          <div class="questionpresentation">
+  			  {{ question.question }}
+          </div>
+  				<div id="questionvalue_{{question.id}}" class="idbox">
+            Student votes:<br/> {{question.value}}
+          </div>
+    		</div>
+        <div class="answerdiv">{{ question.answer }}</br>
+          <form action='{% url "delete_answer_question" question.id %}' method="post" )>
+              {% csrf_token %}
+              <input type="submit" value="Answer Question" method="post" name="answer_button" class="button">
+              <input type="submit" value="Delete Question" method="post" name="delete_button" class="button">
+          </form></br>
+        </div>
+        {% if question.api_answer %}
+          <div class="apiAnswer">
+            {{ question.api_answer }}
+          </div>
+        {% endif %}
+    	{% endfor %}
   </div>
 
   <div id="aside">
         <h1>Tasks for this lecture</h1>
         {% for task in tasks %}
-          <div class="lecturelist"> {{task.description}}  <button class="start starttask" onclick="starttask({{task.id}}, {{task.timeout}})">Start Task</button></div>
+          <div class="classlist"> {{task.description}}  <button class="start starttask" onclick="starttask({{task.id}}, {{task.timeout}})">Start Task</button></div>
         {% endfor %}
   </div>
 

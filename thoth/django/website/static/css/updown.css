@@ -16,7 +16,7 @@
   margin-left:2%;
 }
 
-#idnumber,#endlecture{
+#idnumber,#endlecture,#studentsconnected{
   width:12vw;
   height:12vw;
   float:right;
@@ -30,6 +30,8 @@
   padding-top:1vw;
   font-size: 3vw;
 }
+#studentsconnected{font-size: 2.5vw;}
+
 #endlecture:hover{
   cursor:pointer;
   color:white;
@@ -37,7 +39,7 @@
 
 #topintroduction{
   height:150px;
-  width:59vw;
+  width:46vw;
   float:left;
   box-sizing: border-box;
   padding:5%;
@@ -69,7 +71,7 @@
 }
 
 
-#correctanswers,#wronganswers,#timedoutanswers{
+#correctanswers,#wronganswers,#timedoutanswers,#slowdown,#speedup {
   width:40px;
   padding:5px;
   margin:5px;
@@ -77,10 +79,10 @@
   display:inline-block;
 }
 
-#correctanswers{
+#correctanswers,#speedup{
   background: green;
 }
-#wronganswers{
+#wronganswers,#slowdown{
   background: red;
 }
 #timedoutanswers{

@@ -154,17 +154,17 @@
   	height:48px;
   }
 
-  #votingsystem{
+  .votingsystem{
   	width:5%;
   }
 
-  #questionpresentation{
+  .questionpresentation{
   	width:80%;
     height:90px;
     font-size:18px;
   }
 
-  #profilepic{
+  .profilepic{
     display:inline;
   	float:left;
   	width:90px;
@@ -177,7 +177,7 @@
   	height:90px;
   }
 
-  #profilepic img{
+  .profilepic img{
   	padding-top:0px;
   	height:70px;
   }

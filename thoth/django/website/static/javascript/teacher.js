@@ -43,9 +43,9 @@ $(document).ready(function(){
 		var wrongpercentage = (wrong/loggedon)*100;
 		var timedoutnr = (loggedon-correct-wrong);
 		var timedoutpercentage = (timedoutnr/loggedon)*100;
-		$('#correctanswers').html(Math.round(correctpercentage));
-		$('#wronganswers').html(Math.round(wrongpercentage));
-		$('#timedoutanswers').html(Math.round(timedoutpercentage));
+		$('#correctanswers').html(Math.round(correctpercentage) + '%');
+		$('#wronganswers').html(Math.round(wrongpercentage) + '%');
+		$('#timedoutanswers').html(Math.round(timedoutpercentage) + '%');
 		$('#correctanswers').css('height',Math.round(correctpercentage)*3+'px');
 		$('#wronganswers').css('height',Math.round(wrongpercentage)*3+'px');
 		$('#timedoutanswers').css('height',Math.round(timedoutpercentage)*3+'px');
@@ -54,19 +54,23 @@ $(document).ready(function(){
 	/******************************************************
 	                     UPDATE SPEED
 	******************************************************/
+
+
 	socket.on('update',function(data){
-    console.log(data);
-    if (data.students > 0){
-      $('#up').html(Math.round(100*data.faster/data.students) + '%');
-      $('#down').html(Math.round(100*data.slower/data.students) + '%');
-			$('#studentsconnected').html(data.students);
-    }
-    else{
-      $('#up').html(' 0%');
-      $('#down').html(' 0%');
+		console.log(data);
+		if (data.students > 0){
+			$('#speedup').html(Math.round(100*data.faster/data.students) + '%');
+			$('#slowdown').html(Math.round(100*data.slower/data.students) + '%');
+			$('#speedup').css('height',Math.round(100*data.faster/data.students)*3+'px');
+			$('#slowdown').css('height',Math.round(100*data.slower/data.students)*3+'px');
+			$('#studentsconnected').html('Students online: </br>'+data.students);
+		}
+		else{
+			$('#speedup').html(' 0%');
+			$('#slowdown').html(' 0%');
 			$('#studentsconnected').html(0);
-    }
-  });
+		}
+	});
 
 
 	/******************************************************

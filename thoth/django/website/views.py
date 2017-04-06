@@ -72,9 +72,19 @@ def courses(request):
 def lectures(request,course_id):
     course = Course.objects.get(id=course_id)
     lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
+    # checks if the form is posted. If it is, create the object
+    course = Course.objects.get(id=course_id)
+    if request.method == 'POST':
+        form = LectureForm(request.POST)
+        if form.is_valid():
+            lecture = form.save(commit=False)
+            lecture.course_id = course_id
+            lecture.save()
+            return redirect('lectures',course_id)
+    else:
+        form = LectureForm()
 
-
-    return render(request, 'teacher/lectures.html', {'lectures':lectures,'course':course})
+    return render(request, 'teacher/lectures.html', {'lectures':lectures,'course':course,'form':form})
 
 def lecture(request,lecture_id):
     all_questions = Question.objects.filter(lecture = lecture_id).order_by('-timestamp')

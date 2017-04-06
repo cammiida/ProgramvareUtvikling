@@ -2,21 +2,22 @@
 {% load staticfiles %}
 {% block content %}
 
-  {{course.name}}
-  <button onclick="location.href='{% url 'addlecture' course.id %}'"> Add lecture </button>
+  <h1>Lectures in the course {{course.name}}</h1>
 
-  <p>
-		A list of your lectures:
-	</p>
 
+<div id="addnewform">
+  <h3>Add a new Lecture</h3>
+  <form action="" method="post">
+    {% csrf_token %}
+    <button class="addquestion">Add</button>
+    {{form.as_p}}
+
+  </form>
+</div>
   {% for lecture in lectures %}
-    <div class="lecturelist">
+    <div class="classlist" onclick="location.href='{% url 'lecture' lecture.id %}'">
       ID: {{lecture.id}},
-      <a href="{% url 'lecture' lecture.id %}">{{lecture.name}}</a>
-      <button onclick="location.href='{% url 'startlecture' lecture.id %}'" class="start"> 
-        Start lecture
-      </button>
-      <br/>
+        {{lecture.name}}
     </div>
   {% endfor %}
 

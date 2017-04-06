@@ -7,26 +7,24 @@
 	<div name="navigasjon" id="liste">
 		<ul>
 			{% if not request.user.is_authenticated %}
-			<li>
-				<a href="{% url 'register' %}">Register New User</a>
+			<li onclick="location.href='{% url 'register' %}'">
+				Register New User
 			</li>
-			<li>
-				<a href="{% url 'login' %}">Login</a>
+			<li onclick="location.href='{% url 'login' %}'">
+				Login
 			</li>
 			{% endif %}
 			{% if request.user.is_authenticated %}
 
-			<li>
-				<a href="{% url 'courses' %}">Courses</a>
+			<li onclick="location.href='{% url 'courses' %}'">
+				Courses
 			</li>
-			<li>
-				<a href="{% url 'logout' %}">Logout</a>
+			<li onclick="location.href='{% url 'logout' %}'">
+				Logout
 			</li>
-
-
 			 {% endif %}
-			 <li>
- 				<a href="{% url 'about_teacher' %}">About</a>
+			 <li onclick="location.href='{% url 'about_teacher' %}'">
+ 				About
  			</li>
 		</ul>
 	</div>

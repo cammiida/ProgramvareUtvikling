@@ -101,20 +101,22 @@ li:hover{
 ALL THE PAGE BUTTONS
 *************************************************/
 
-button {
+button, .button {
 	height: 40px;
 	min-width: 100px;
 	margin:5px;
-	background-color: lightgrey;
-	border-radius: 10px;
+	color: grey;
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
 	font-size: 18px;
 	padding:5px;
+	border: 1px solid grey;
 	text-decoration: none;
 	box-sizing:border-box;
 }
 
 
-button:hover{
+button:hover,.button:hover{
 	cursor:pointer;
 	background-color: #e4e4e4;
 }
@@ -245,6 +247,7 @@ LIST COLOURATION
 .classlist:hover{
 	color:darkgrey;
 	background:lightgrey;
+	cursor:pointer;
 }
 
 
@@ -467,7 +470,7 @@ QUESTIONS LIST
 	display:flex;
 }
 
-#votingsystem{
+.votingsystem{
 	float:right;
 	width:10%;
 	font-size:18px;
@@ -475,7 +478,7 @@ QUESTIONS LIST
 	box-sizing: border-box;
 }
 
-#questionpresentation{
+.questionpresentation{
 	text-align: center;
 	max-width:90%;
 	width:90%;
@@ -485,7 +488,7 @@ QUESTIONS LIST
 	box-sizing: border-box;
 }
 
-#profilepic{
+.profilepic{
 	display:inline;
 	float:left;
 	width:50px;
@@ -498,7 +501,7 @@ QUESTIONS LIST
 	height:90px;
 }
 
-#profilepic img{
+.profilepic img{
 	padding-top:10px;
 	height:40px;
 }
@@ -547,11 +550,21 @@ COURSE LIST
 	background: rgba(0, 0, 0, 0.1);
 	font-size:20px;
 }
-#id_name{
+#id_name, {
 	margin-left:10px;
 	margin-top:5px;
 	border-radius: 5px;
 	max-width:50%;
 	width:50%;
 	font-size:18px;
+}
+
+.idbox{
+	background: rgba(255, 255, 255, 0.5);
+	width:70px;
+	height:70px;
+	border-radius:  5px;
+	font-size:16px;
+	float:right;
+	margin-top:10px;
 }
