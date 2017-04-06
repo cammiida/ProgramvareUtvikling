@@ -14,7 +14,7 @@ from website.models import Question, Api
 lc = LuisClient("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/02aedc35-bf24-4785-99b9-a33f1d3ec9e5?subscription-key=23cfce88ff264c91bf16d76242b21f85&timezoneOffset=0.0&verbose=true&q=")
 
 #Synonymer til Action entiteten. bare å legge inn flere synonymer og andre actions man føler er nødvendige.
-handling = {"bruke": ["use", "used", "using", "works", "apply"], "lage": ["make", "create", "generate", "form", "cause", "produce", "prepare"], "virke": ["work", "handle", "apply", "control", "manage", "operate"], "sortere":["sort", "arrange", "catalogue", "classify", "distribute"], "handle": ["do", "achieve", ]}
+handling = {"bruke": ["use", "used", "using", "works", "apply", "work"], "lage": ["make", "create", "generate", "form", "cause", "produce", "prepare", "write"], "virke": ["work", "handle", "apply", "control", "manage", "operate"], "sortere":["sort", "arrange", "catalogue", "classify", "distribute"], "handle": ["do", "achieve", ]}
 
 #Brukes til å teste. Ikke noe å bry seg om
 #q = Question.objects.filter(question__startswith='how')
@@ -66,7 +66,7 @@ def similar(q):
         print(liste[d])
         print("\n")
         
-    sprWord = ents[1][ents[2].index("QuestionWord")]            # - Skal brukes senere til å sjekke opp hvilke spørreord som kan brukes om hverandre (som synonymer)
+                                                                # - Skal brukes senere til å sjekke opp hvilke spørreord som kan brukes om hverandre (som synonymer)
     try:                                                        # - Må ha denne for å sjekke om det faktisk finnes en algoritme i spørsmålet. Hvis ikke må den kjøre en alternativ rute.
         for alg in liste['Algorithm']:
             if(alg in liste['QuestionWord'][0]):                # - Antar her at det kun er et spørreord i hver setning. Velger at hvis et spørsmål handler om en algoritme så må den                                                             algoritmen bli nevnt i det like spørsmålet. 
@@ -85,7 +85,8 @@ def similar(q):
                         likt_sporsmal[alg] += 1
                 except:
                     print("fantes ingen action å ta av!")
-    
+
+                # Dette finner det spørsmålet som har flest like elementer og setter dette som svaret fra API. 
                 hoyeste = max(likt_sporsmal.items(), key=operator.itemgetter(1))[0]    
                 query = Question.objects.get(question=hoyeste)
                 print(query)
@@ -96,13 +97,23 @@ def similar(q):
                                                             #   - Adjektiver er også noe som kan testes. Vanskelige er synonymer her også. Lister kan virke som beste måte å gå frem her. Vil   ikke hjelpe for alle tilfeller, men tror ikke det er nødvendig på dette nivået. 
                                                             #   - Må legge til hva som skjer hvis det er flere spørsmål som er like nok til å gi ut svar!
     except:
-        print("finnes ingen algoritme i spørsmålet!")
-        
+        for question in liste['QuestionWord']:
+            try:
+                if(question in liste['Action']):
+                    likt_sporsmal[question] = 1
+                    try:
+                        if(question in liste['Objects']):
+                            likt_sporsmal[question] += 1
+                    except:
+                        continue
+            except:
+                print("var ingen actions i setningen!")
+            
 
 # Dette brukes til testing så ingenting å bry seg om.
    
 #print(q[2])
-#similar(q[2])
+#similar("How to sort a list of objects?")
 #predict(q[3])
 #predict(q[0])
 #predict(q[2])

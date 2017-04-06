@@ -216,7 +216,7 @@ p{
 	border: 1px solid #d6d4d4;
 	min-height: 90px;
 }
-.answerdiv{
+.answerdiv, .apiAnswer{
 	width:100%;
 	background:#f2efef;
 	color:#8e8e8e;
