@@ -22,11 +22,12 @@
 			<li>
 				<a href="{% url 'logout' %}">Logout</a>
 			</li>
-			<li>
-				 logged inn as {{ user.get_username }}
-			</li>
-			 {% endif %}
 
+
+			 {% endif %}
+			 <li>
+ 				<a href="{% url 'about_teacher' %}">About</a>
+ 			</li>
 		</ul>
 	</div>
 </header>

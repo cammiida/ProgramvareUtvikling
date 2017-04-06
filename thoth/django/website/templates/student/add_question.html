@@ -1,6 +1,6 @@
 {% load staticfiles %}
 
-
+<h1>Questions for this lecture</h1>
 <form action="{% url 'add_question' lecture.id %}" method="post" id="addquestionform">
     {% csrf_token %}
       <button class="addquestion">ASK</button>

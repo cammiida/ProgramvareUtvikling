@@ -11,6 +11,7 @@ AND DISPLAYING THEM
 	$('#feedback').show();
  	$('#addquestion').hide();
  	$('#questionlist').hide();
+  $('#loadabout').hide();
   if($(window).width() < 769)
     $('#liste').hide();
  }
@@ -18,6 +19,15 @@ AND DISPLAYING THEM
 	$('#feedback').hide();
 	$('#addquestion').show();
 	$('#questionlist').show();
+  $('#loadabout').hide();
+  if($(window).width() < 769)
+    $('#liste').hide();
+ }
+ function showabout(){
+ $('#feedback').hide();
+ $('#addquestion').hide();
+ $('#questionlist').hide();
+ $('#loadabout').show();
   if($(window).width() < 769)
     $('#liste').hide();
  }
@@ -77,6 +87,7 @@ $(document).ready(function(){
 	$('#feedback').hide();
 	$('#addquestion').hide();
 	$('#questionlist').hide();
+  $('#loadabout').hide();
 
 
   /***************************************************

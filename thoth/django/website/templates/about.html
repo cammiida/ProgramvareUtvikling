@@ -1,0 +1,31 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <TITLE> Thoth - The Ancient God of Wisdom At Your Service </TITLE>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/stylemediaquery.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<body>
+
+{% if teacher %}
+  {% include 'teacher/header.html' %}
+
+{% else %}
+<header>
+  <div class="contentalignment">
+      <a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}"></a>
+    <img src="{% static 'images/title.png' %}">
+  </div>
+</header>
+{% endif %}
+
+  <div id="wrapper">
+
+    {% include 'aboutcontent.html' %}
+
+
+  </div>
+</body>
+</html>

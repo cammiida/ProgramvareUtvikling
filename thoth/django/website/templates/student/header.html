@@ -11,12 +11,15 @@
 			<ul>
 				{% if lecture.active %}
 				<li onclick="showfeedback()">
-					<img src="{% static 'images/feedback.png' %}" class="headerimages"> Feedback
+					<img src="{% static 'images/feedbackicon.png' %}" class="headerimages"> Feedback
 				</li>
 				{% endif %}
 
 				<li onclick="showquestionlist()">
 					<img src="{% static 'images/question.png' %}" class="headerimages"> Questions
+				</li>
+				<li onclick="showabout()">
+					<img src="{% static 'images/abouticon.png' %}" class="headerimages"> About
 				</li>
 			</ul>
 		</div>

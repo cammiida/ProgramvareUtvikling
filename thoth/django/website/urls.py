@@ -20,6 +20,8 @@ from . import views
 urlpatterns = [
     #r'^/*$'
     url(r'^$', views.index, name='index'),
+    url(r'^about/$', views.about, name='about'),
+    url(r'^teacher/about/$', views.about_teacher, name='about_teacher'),
 
     #student urls
     url(r'^student/$', views.student, name='student'),

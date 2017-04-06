@@ -21,6 +21,12 @@ import API2 as apis
 def index (request):
     return render(request, 'index.html')
 
+def about_teacher (request):
+    return render(request, 'about.html',{'teacher': True})
+
+def about (request):
+    return render(request, 'about.html')
+
 def student(request):
     #return render(request,'student/question_list.html')
     return render(request, 'student/index.html', {'not_show_icon': True})
