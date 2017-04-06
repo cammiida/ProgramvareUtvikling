@@ -54,7 +54,20 @@ def teacher(request):
 
 def courses(request):
     courses = Course.objects.filter(teacher=request.user)
-    return render(request, 'teacher/courses.html', {'courses':courses})
+    # checks if the form is posted. If it is, create the object
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            # add course from form, but dont add it to db just yet.
+            course = form.save(commit=False)
+            # Now add current user to the course
+            course.teacher = request.user
+            # now add it to db since we now have all our stuffs
+            course.save()
+            return redirect('courses')
+    else:
+        form = CourseForm()
+    return render(request, 'teacher/courses.html', {'courses':courses,'form':form})
 
 def lectures(request,course_id):
     course = Course.objects.get(id=course_id)

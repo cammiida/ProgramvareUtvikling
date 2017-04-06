@@ -231,13 +231,15 @@ LIST COLOURATION
 }
 
 .classlist{
-	width:90%;
-	background:grey;
+	width:100%;
+	background: rgba(229, 224, 211, 0.5);
+	border:1px solid #d1d1d1;
 	padding:20px;
+	box-sizing: border-box;
 }
 
 .classlist:nth-of-type(2n){
-	background:white;
+	background: rgba(226, 213, 208, 0.5);
 }
 
 .classlist:hover{
@@ -436,7 +438,7 @@ ASK QUESTIONS FORM
 	width:100%;
 }
 
-#addquestionform label{
+#addquestionform label, #addnewform label{
 	display:none;
 }
 
@@ -511,4 +513,45 @@ QUESTIONS LIST
 	border-radius:50%;
 	margin-top:15px;
 
+}
+
+/***************************************
+COURSE LIST
+***************************************/
+
+#addnewform{
+	text-align:center;
+	box-sizing: border-box;
+	margin-bottom:5px;
+	margin-left: auto;
+	margin-right: auto;
+	height:120px;
+	width:100%;
+	background: rgba(0, 0, 0, 0.1);
+	border-radius:5px;
+	border: 1px solid grey;
+}
+
+#addnewform p{
+	margin:0px;
+	padding:0px;
+	margin-top:10px;
+}
+
+#addnewform .addquestion{
+	margin-top:-5px;
+}
+
+#addnewform h3{
+	width:100%;
+	background: rgba(0, 0, 0, 0.1);
+	font-size:20px;
+}
+#id_name{
+	margin-left:10px;
+	margin-top:5px;
+	border-radius: 5px;
+	max-width:50%;
+	width:50%;
+	font-size:18px;
 }
