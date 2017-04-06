@@ -1,17 +1,53 @@
-
-#receivebox{
-  width:100%;
+.graphpresentation, #tasksummarybox{
+  width:49%;
+  box-sizing: border-box;
   background:lightgrey;
+  background: rgba(0, 0, 0, 0.1);
   border-radius:5px;
   margin-top:5px;
   padding:5px;
   text-align:center;
   font-style: italic;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+#tasksummarybox{
+  margin-left:2%;
+}
+
+#idnumber,#endlecture{
+  width:12vw;
+  height:12vw;
+  float:right;
+  box-sizing: border-box;
+  background:lightgrey;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius:5px;
+  padding:2px;
+  margin-left:1vw;
+
+  padding-top:1vw;
+  font-size: 3vw;
+}
+#endlecture:hover{
+  cursor:pointer;
+  color:white;
+}
+
+#topintroduction{
+  height:150px;
+  width:59vw;
+  float:left;
+  box-sizing: border-box;
+  padding:5%;
+
+  float: left;
 }
 
 #down, #up{
-  width:20vw;
-  height:20vw;
+  width:10vw;
+  height:10vw;
   padding-top:5vw;
   border-radius: 55%;
   box-sizing:border-box;
