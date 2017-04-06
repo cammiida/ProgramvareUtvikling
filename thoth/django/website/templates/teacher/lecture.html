@@ -14,27 +14,37 @@
 
     <div id="addtask">
     <h1>Create new task</h1>
-        <form action="" method="post">
-          {% csrf_token %}
-          <br/>
-        <input id="id_description" maxlength="500" name="description" type="text" required placeholder="Question or task description"/><br/>
-        Choose between making a text-answer OR options,
-        as the page currently only support one at the time.
-        <input id="id_textanswer" maxlength="500" name="textanswer" type="text"  placeholder="Textanswer"/><br/>
-        For options, check the checkbox next to the correct options. Several options can be correct.<br/>
-        <input id="id_option1" maxlength="500" name="option1" type="text" placeholder="Add an Option"  />
-        <input id="id_option1_correct" name="option1_correct" type="checkbox" />
-        <input id="id_option2" maxlength="500" name="option2" type="text"  placeholder="Add an Option"/>
-        <input id="id_option2_correct" name="option2_correct" type="checkbox" /><br/>
-        <input id="id_option3" maxlength="500" name="option3" type="text" placeholder="Add an Option" />
-        <input id="id_option3_correct" name="option3_correct" type="checkbox" />
-        <input id="id_option4" maxlength="500" name="option4" type="text"  placeholder="Add an Option"/>
-        <input id="id_option4_correct" name="option4_correct" type="checkbox" /><br/>
-        Timeout, or how many seconds the students have to complete the task once it
+        <form action="" method="post">{% csrf_token %}
+        <div id="taskname">
+          <h2>Name or description for your task</h2>
+          <input id="id_description" maxlength="500" name="description" type="text" required placeholder="write here"/><br/>
+        </div>
+        <div id="timer">
+          <h2>Time-out </h2>
+          How many seconds the students have to complete the task once it
           has been activated. <br/>
-        <input id="id_timeout" min="0" name="timeout" type="number" value="30" required="required"  /><br/>
-        Default is set to 30 seconds.You can add several tasks to one lecture, and
-        will be able to activate them when you wish when a lecture is started.</br>
+          <input id="id_timeout" min="0" name="timeout" type="number" value="30" required="required"  /><br/>
+        </div>
+        <div id="addtextanswer" >Add text answer</div>
+        <div id="addoptions" >Add Options</div>
+        <br/>
+        <div id="textanswerfield">
+            <h2>Text Answer </h2>
+          <input id="id_textanswer" maxlength="500" name="textanswer" type="text"  placeholder="write here"/><br/>
+        </div>
+        <div id="optionsfield">
+          <h2>Options</h2>
+          For options, check the checkbox next to the correct options. Several options can be correct.<br/>
+          <input id="id_option1" maxlength="500" name="option1" type="text" placeholder="Add an Option"  />
+          <input id="id_option1_correct" name="option1_correct" type="checkbox" />
+          <input id="id_option2" maxlength="500" name="option2" type="text"  placeholder="Add an Option"/>
+          <input id="id_option2_correct" name="option2_correct" type="checkbox" /><br/>
+          <input id="id_option3" maxlength="500" name="option3" type="text" placeholder="Add an Option" />
+          <input id="id_option3_correct" name="option3_correct" type="checkbox" />
+          <input id="id_option4" maxlength="500" name="option4" type="text"  placeholder="Add an Option"/>
+          <input id="id_option4_correct" name="option4_correct" type="checkbox" /><br/>
+        </div>
+
         <button>Submit</button>
         </form>
     </div>
