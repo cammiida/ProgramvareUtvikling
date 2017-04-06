@@ -21,6 +21,7 @@ function starttask(taskid,timeout){
 ******************************************************/
 $(document).ready(function(){
 
+
 	// Starts up socket.io. Creates connection.
 	console.log('node er på.');
   	socket = io.connect('http://localhost:3000');

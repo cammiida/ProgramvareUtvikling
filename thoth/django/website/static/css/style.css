@@ -7,7 +7,10 @@
 	padding: 0px;
 }
 
-/* General background and setup for the entire page*/
+
+/*************************************************
+General background and setup for the entire page
+*************************************************/
 html,body {
 	background: #F7F7F7;
 	font-size: 7vw;
@@ -30,12 +33,16 @@ html,body {
 	box-sizing: border-box;
 }
 
-/*Header tag*/
+h1{font-size:40px;}
+
+/*************************************************
+HEADER
+*************************************************/
 header{
 	width: 100%;
 	min-height: 15vw;
 	background: #777777;
-	background: linear-gradient(#918f8f, #777777);
+	background: linear-gradient(rgba(0, 0, 0, 0.1), #777777);
 	border-bottom: 1px solid #a0a09f;
 	box-sizing: border-box;
 	padding-left: 1vw;
@@ -46,7 +53,11 @@ header img{
 	padding: 2vw;
 }
 
-/*Navigation field that contains dropdown menu button*/
+
+/*************************************************
+DROP DOWN MENU
+Navigation field that contains dropdown menu button
+*************************************************/
 #dropDownBtn{
 	float:right;
 }
@@ -86,7 +97,10 @@ li:hover{
 #liste{
 	display:none;
 }
-/* All the buttons on the page */
+
+/*************************************************
+ALL THE PAGE BUTTONS
+*************************************************/
 
 button {
 	height: 40px;
@@ -106,6 +120,45 @@ button:hover{
 	background-color: #e4e4e4;
 }
 
+.frontpagebutton {
+  height: 20vw;
+  min-width: 80vw;
+	margin:5px;
+  background-color: lightgrey;
+  border-radius: 10px;
+  font-size: 5vw;
+  text-decoration: none;
+}
+
+.addnew{
+  width:100px;
+  height:50px;
+  float:right;
+  box-sizing: border-box;
+  background:lightgrey;
+  background: rgba(0, 0, 0, 0.1);
+	background-image:  url("/static/images/add.png");
+	background-repeat: no-repeat;
+	background-size:contain;
+  border-radius:5px;
+  padding:2px;
+	padding-left:40px;
+  margin:5px;
+  font-size: 16px;
+	border: 1px solid grey;
+}
+.addnew:hover{
+  cursor:pointer;
+  color:white;
+	background:darkgrey;
+	background-image:  url("/static/images/addhover.png");
+	background-repeat: no-repeat;
+	background-size:contain;
+}
+
+/*************************************************
+Various things
+*************************************************/
 #message{
 	display:none;
 }
@@ -121,8 +174,28 @@ p{
 	margin:5vw;
 }
 
+.start{
+	width:20px;
+	height:40px;
+	border-radius: 0%;
+	float:right;
+	margin-top:0px;
+}
 
+.enter{
+	background:lightgrey;
+	width:70vw;
+	max-width:200px;
+	height:45px;
+	box-sizing: border-box;
+	padding:5px;
+	font-size:18px;
+	text-align: center;
+}
 
+/*************************************************
+LIST COLOURATION
+*************************************************/
 .lecturelist{
 	background:#ededed;
 	padding:20px;
@@ -137,43 +210,8 @@ p{
 	border:1px solid #d1d1d1;
 }
 
-#addtask{
-	background:#e8e5e5;
-	min-height:20px;
-	border:1px solid #d1d1d1;
-	box-sizing: border-box;
-	padding:5px;
-}
-
-#id_description, #id_textanswer, #id_option1, #id_option2, #id_option3, #id_option4{
-	margin-left: auto;
-	margin-right: auto;
-	min-height:40px;
-	font-size: 20px;
-	padding-left:5px;
-	background:none;
-	border-top:none;
-	border-left: none;
-	border-right:none;
-}
-
-#id_description, #id_textanswer{
-	width:90%;
-}
-
-
 .studenttasks{
 	display:none;
-}
-
-.frontpagebutton {
-  height: 20vw;
-  min-width: 80vw;
-	margin:5px;
-  background-color: lightgrey;
-  border-radius: 10px;
-  font-size: 5vw;
-  text-decoration: none;
 }
 
 .classlist{
@@ -191,14 +229,11 @@ p{
 	background:lightgrey;
 }
 
-.start{
-	width:20px;
-	height:40px;
-	border-radius: 0%;
-	float:right;
-	margin-top:0px;
-}
 
+
+/***************************************
+Student page grey header
+***************************************/
 #topinfo{
 	width:100%;
 	padding:5px;
@@ -210,6 +245,9 @@ p{
 	box-sizing: border-box;
 }
 
+/***************************************
+QUESTIONS
+***************************************/
 .questiondiv{
 	width:100%;
 	background:#e8e5e5;
@@ -254,16 +292,11 @@ p{
 	background:none;
 }
 
-.enter{
-	background:lightgrey;
-	width:70vw;
-	max-width:200px;
-	height:45px;
-	box-sizing: border-box;
-	padding:5px;
-	font-size:18px;
-	text-align: center;
-}
+
+/***************************************
+LECTURE and ACTIVE LEVCTURE
+:content placers
+***************************************/
 
 #maincontent{
 	min-width:100%;
@@ -299,9 +332,45 @@ p{
 	margin-bottom:10px;
 }
 
-#mainside h1, #aside h1{
+#mainside h1, #aside h1, #maincontent h1{
 	border: 1px solid #d1d1d1;
-	background: #ededed;
+  background: rgba(0, 0, 0, 0.1);
+	width:100%;
 }
 
-h1{font-size:40px;}
+/***************************************
+TASK FORM CONTENT
+***************************************/
+
+
+
+#addtask{
+	 background: rgba(0, 0, 0, 0.1);
+	min-height:20px;
+	border:1px solid #d1d1d1;
+}
+
+#addtask h1{
+	margin:0px;
+	padding:0px;
+}
+
+#addtask{
+	display:none;
+}
+
+#id_description, #id_textanswer, #id_option1, #id_option2, #id_option3, #id_option4{
+	margin-left: auto;
+	margin-right: auto;
+	min-height:40px;
+	font-size: 20px;
+	padding-left:5px;
+	background:none;
+	border-top:none;
+	border-left: none;
+	border-right:none;
+}
+
+#id_description, #id_textanswer{
+	width:90%;
+}

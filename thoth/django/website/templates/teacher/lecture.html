@@ -10,9 +10,10 @@
     your answer. If you choose the options, they will be presented with buttons to
     choose from.
   </p>
-  <div id="mainside">
-  <h1>Create new task</h1>
+  <p>
+
     <div id="addtask">
+    <h1>Create new task</h1>
         <form action="" method="post">
           {% csrf_token %}
           <br/>
@@ -21,7 +22,6 @@
         as the page currently only support one at the time.
         <input id="id_textanswer" maxlength="500" name="textanswer" type="text"  placeholder="Textanswer"/><br/>
         For options, check the checkbox next to the correct options. Several options can be correct.<br/>
-
         <input id="id_option1" maxlength="500" name="option1" type="text" placeholder="Add an Option"  />
         <input id="id_option1_correct" name="option1_correct" type="checkbox" />
         <input id="id_option2" maxlength="500" name="option2" type="text"  placeholder="Add an Option"/>
@@ -38,39 +38,40 @@
         <button>Submit</button>
         </form>
     </div>
+  </p>
+
+  <div id="mainside">
+    <h1>Questions</h1>
+    	{% for question in all_questions %}
+    		<div class="questiondiv">
+    			{{ question.question }}
+    				<span id="questionvalue_{{question.id}}">{{question.value}}</span><br/>
+    				</div>
+            <div class="answerdiv">{{ question.answer }}</br>
+            <form action='{% url "delete_answer_question" question.id %}' method="post" )>
+                {% csrf_token %}
+                <input type="submit" value="Answer Question" method="post" name="answer_button">
+                <input type="submit" value="Delete Question" method="post" name="delete_button">
+            </form></br></div>
+    	{% endfor %}
+
+
+
   </div>
   <div id="aside">
-    <h1>Your tasks</h1>
+    <h1>Your tasks <div class="addnew" id="toggleaddtask">Add task</div></h1>
     {% for task in tasks %}
       <div class="lecturelist"> {{task.description}}</div>
     {% endfor %}
   </div>
 </div>
 
-<h1>Tasks for this lecture</h1>
-{% for task in tasks %}
-  <div class="lecturelist"> {{task.description}}</div>
-{% endfor %}
-<h1>Questions</h1>
-	{% for question in all_questions %}
-		<div class="questiondiv">
-			{{ question.question }}
-				<span id="questionvalue_{{question.id}}">{{question.value}}</span><br/>
-				</div>
-        <div class="answerdiv">{{ question.answer }}</br>
-        <form action='{% url "delete_answer_question" question.id %}' method="post" )>
-            {% csrf_token %}
-            <input type="submit" value="Answer Question" method="post" name="answer_button">
-            <input type="submit" value="Delete Question" method="post" name="delete_button">
-        </form></br></div>
-
-	{% endfor %}
 
 
 <button onclick="location.href='{% url 'lectures' lecture.course.id %}'">
   Back to all lectures
 </button>
-<button onclick="location.href='{% url 'startlecture' lecture.id %}'"> 
+<button onclick="location.href='{% url 'startlecture' lecture.id %}'">
   Start lecture
 </button>
 
