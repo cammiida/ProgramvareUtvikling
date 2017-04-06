@@ -11,7 +11,7 @@ from website.models import Question, Api
 
 #=================================================================
 # Adressen som refererer til applikasjonen jeg har lagd.
-lc = LuisClient("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/02aedc35-bf24-4785-99b9-a33f1d3ec9e5?subscription-key=23cfce88ff264c91bf16d76242b21f85&timezoneOffset=0.0&verbose=true&q=")
+lc = LuisClient("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/02aedc35-bf24-4785-99b9-a33f1d3ec9e5?subscription-key=23cfce88ff264c91bf16d76242b21f85&staging=true&timezoneOffset=0.0&verbose=true&q=")
 
 #Synonymer til Action entiteten. bare å legge inn flere synonymer og andre actions man føler er nødvendige.
 handling = {"bruke": ["use", "used", "using", "works", "apply", "work"], "lage": ["make", "create", "generate", "form", "cause", "produce", "prepare", "write"], "virke": ["work", "handle", "apply", "control", "manage", "operate"], "sortere":["sort", "arrange", "catalogue", "classify", "distribute"], "handle": ["do", "achieve", ]}
@@ -42,7 +42,17 @@ def similar(q):
     ents = lc.query(question)
     for i in range(0, len(ents[2])):
         
-   
+        if(ents[2][i] == "QuestionWord" and ents[1][i] == "what"):
+            ls2 = fetch(ents[2][i], "how")
+            print(ls)
+            ls = fetch(ents[2][i], ents[1][i])
+            liste[str(ents[2][i])] = []
+            for l in ls:
+                liste[str(ents[2][i])].append(str(l))
+            for l in ls2:
+                liste[str(ents[2][i])].append(str(l))
+            continue
+                
         if(ents[2][i] == "Action"):                         #   - Gjør det slik at man kan bruke synonymene jeg har lagret i handlingsdictionarien for actions 
             for name, age in handling.items():              #   - Dette gjør at man ikke trenger å bruke nøyaktig de samme ordene, men programmet finner uanseett
                 if(str(ents[1][i]) in str(age)):            #   - hva du mente med spørsmålet basert på synonyer av ordet du brukte. Disse må stå i handlingslisten
