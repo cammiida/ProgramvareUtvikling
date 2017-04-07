@@ -241,6 +241,7 @@ LIST COLOURATION
 	border:1px solid #d1d1d1;
 	padding:20px;
 	box-sizing: border-box;
+	height:auto;
 }
 
 .classlist:nth-of-type(2n){
@@ -253,7 +254,13 @@ LIST COLOURATION
 	cursor:pointer;
 }
 
-
+.classlist .addquestion{
+	margin-top:-5px;
+	width:70px;
+	height:40px;
+	border-radius:20%;
+	margin-right: -10px;
+}
 
 /***************************************
 Student page grey header
@@ -337,12 +344,7 @@ LECTURE and ACTIVE LEVCTURE
 #maincontent{
 	min-width:100%;
 	height:auto;
-	display:-webkit-flex;
-	display:-ms-flexbox;
-	display:flex;
-	-webkit-flex-wrap: wrap;
-	    -ms-flex-wrap: wrap;
-	        flex-wrap: wrap;
+
 	margin:0px;
 	padding:0px;
 	font-size:18px;
@@ -584,4 +586,17 @@ Student frontpage things to HIDE
 ***************************************/
 #feedback, #addquestion, #questionlist, #loadabout{
 	display:none;
+}
+
+
+
+
+
+#taskhistory, #feedbackhistory{
+	width:100%;
+	background: rgba(0, 0, 0, 0.05);
+}
+
+#taskhistory:hover{
+	cursor:pointer;
 }

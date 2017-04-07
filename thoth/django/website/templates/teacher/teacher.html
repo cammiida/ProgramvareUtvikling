@@ -24,12 +24,10 @@
     {% if not request.user.is_authenticated %}
       <strong>You are currently not logged in </strong>
     {% else %}
-      <strong>Logged inn as </strong>{{ user.get_username }} |
-      <strong>Your active Lectures:</strong>  | NONE /
-      <strong>Lecture ID:</strong> NONE /<span id="lectureid">{{lecture.id}}</span>
+      <strong>Logged inn as </strong>{{ user.get_username }} 
     {% endif %}
   </div>
-  
+
   <div id="wrapper">
   {% block content %}{% endblock %}
   </div>

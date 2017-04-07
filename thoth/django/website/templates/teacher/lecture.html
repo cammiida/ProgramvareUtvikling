@@ -18,16 +18,24 @@
       Start lecture
     </button>
   </p>
-  <p>
-    <div id="taskhistory">
-    </div>
-  </p>
+
 
   <p>
     <div id="feedbackhistory">
+      <h1> Speed Feedback History </h1>
+      This box collects information about lecture speed from each
+      push notification sent during this lecture.
+
       {% for entry in feedbackhistory %}
-        {{entry.timestamp}} | {{entry.up}} | {{entry.down}} | {{entry.none}} <br/>
+      <div class="classlist">
+         Speed up votes: {{entry.up}} | Slow down votes {{entry.down}} | Students not voting: {{entry.none}}
+         <br/>{{entry.timestamp}}
+      </div>
       {% endfor %}
+    </div>
+  </p>
+  <p>
+    <div id="taskhistory">
     </div>
   </p>
 
@@ -97,7 +105,12 @@
   <div id="aside">
     <h1>Your tasks <div class="addnew" id="toggleaddtask">Add task</div></h1>
     {% for task in tasks %}
-      <div class="classlist"> {{task.description}} <button class="addquestion" onclick="showhistory('{% url 'taskhistory' task.id %}')">History</button></div>
+      <div class="classlist">
+        <button class="addquestion" onclick="showhistory('{% url 'taskhistory' task.id %}')">
+          History
+        </button>
+        {{task.description}}
+      </div>
     {% endfor %}
   </div>
 </div>
