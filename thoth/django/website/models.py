@@ -64,3 +64,10 @@ class TaskHistory(models.Model):
     correct_answers = models.IntegerField()
     wrong_answers = models.IntegerField()
     timeout_answers = models.IntegerField()
+
+class FeedbackHistory(models.Model):
+    lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
+    up = models.IntegerField()
+    down = models.IntegerField()
+    none = models.IntegerField()

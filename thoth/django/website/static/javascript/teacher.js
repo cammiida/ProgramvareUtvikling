@@ -135,13 +135,29 @@ $(document).ready(function(){
       if (slowerPercent >= 0.4){
         if (canCall){
           showNotification("too slow " + slowerPercent*100 + "% means this", "/static/images/thoth.png");
-          canCall = false;
+					// Want to do an ajax post to save the history into the database
+					// for later use.
+					$.post('/savefeedback/',{
+						lectureid:lectureid,
+						up:data.slower,
+						down:data.faster,
+						none:(data.students-data.slower-data.faster),
+					});
+					canCall = false;
           setTimeout(function() {canCall = true;}, 10000);}
         $('#fast_slow').html('the lecture speed is too slow');}
       else if (fasterPercent >= 0.4){
         if (canCall){
           showNotification("too fast " + fasterPercent*100 + "% means this", "/static/images/thoth.png");
           canCall = false;
+					// Want to do an ajax post to save the history into the database
+					// for later use.
+					$.post('/savefeedback/',{
+						lectureid:lectureid,
+						up:data.slower,
+						down:data.faster,
+						none:(data.students-data.slower-data.faster),
+					});
           setTimeout(function() {canCall = true;}, 10000);}
         $('#fast_slow').html('the lecture speed is too fast');}
       else{

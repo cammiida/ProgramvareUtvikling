@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^teacher/about/$', views.about_teacher, name='about_teacher'),
     url(r'^savetaskhistory/$', views.savetaskhistory),
     url(r'^taskhistory/([0-9]+)?$', views.taskhistory, name='taskhistory'),
+    url(r'^savefeedback/$', views.savefeedback),
+    url(r'^feedbackhistory/([0-9]+)?$', views.feedbackhistory, name='feedbackhistory'),
 
     #student urls
     url(r'^student/$', views.student, name='student'),

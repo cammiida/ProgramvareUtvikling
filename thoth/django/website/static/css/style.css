@@ -579,3 +579,9 @@ COURSE LIST
 	float:right;
 	margin-top:10px;
 }
+/***************************************
+Student frontpage things to HIDE
+***************************************/
+#feedback, #addquestion, #questionlist, #loadabout{
+	display:none;
+}

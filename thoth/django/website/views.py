@@ -90,6 +90,7 @@ def lecture(request,lecture_id):
     all_questions = Question.objects.filter(lecture = lecture_id).order_by('-timestamp')
     lecture = Lecture.objects.get(id=lecture_id)
     tasks = Task.objects.filter(lecture = lecture)
+    feedbackhistory = FeedbackHistory.objects.filter(lecture = lecture)
     #lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -104,7 +105,7 @@ def lecture(request,lecture_id):
             return redirect('lecture', lecture_id)
     else:
         form = TaskForm()
-    return render(request, 'teacher/lecture.html', {'lecture':lecture, 'form':form, 'tasks':tasks, 'all_questions':all_questions})
+    return render(request, 'teacher/lecture.html', {'lecture':lecture, 'form':form, 'tasks':tasks, 'all_questions':all_questions, 'feedbackhistory':feedbackhistory})
 
 def addcourse(request):
     # checks if the form is posted. If it is, create the object
@@ -167,6 +168,26 @@ def savetaskhistory(request):
     else:
         print('ERROR')
     return HttpResponse('OK')
+
+def savefeedback(request):
+    if request.method == 'POST':
+        print('POSTING STUFF')
+        history = FeedbackHistory()
+        history.up = request.POST['up']
+        history.down = request.POST['down']
+        history.none = request.POST['none']
+        history.lecture_id = request.POST['lectureid']
+        history.save()
+        print('STUFF POSTED')
+    else:
+        print('ERROR')
+    return HttpResponse('OK')
+
+def feedbackhistory(request,lectureid):
+    entries = FeedbackHistory.objects.filter(lecture_id=lectureid)
+    return render(request,'teacher/taskhistory.html',{
+        'entries':entries,
+    })
 
 def taskhistory(request,taskid):
     taskentries = TaskHistory.objects.filter(task_id=taskid)

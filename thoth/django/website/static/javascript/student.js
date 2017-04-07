@@ -84,11 +84,6 @@ $(document).ready(function(){
                LOADING AND HIDING LECTURE CONTENT
   ***************************************************/
   $('#questionlist').load('/student/question_list/'+$('#lectureid').html()+'/');
-	$('#feedback').hide();
-	$('#addquestion').hide();
-	$('#questionlist').hide();
-  $('#loadabout').hide();
-
 
   /***************************************************
           FROM THE WEB TO HANDLE COOKIE
