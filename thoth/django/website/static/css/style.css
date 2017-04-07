@@ -270,7 +270,7 @@ Student page grey header
 	padding:5px;
 	padding-left: 2%;
 	padding-right:2%;
-	background:lightgrey;
+	background: rgba(0,0,0, 0.2);
 	font-size:14px;
 	height:auto;
 	box-sizing: border-box;
