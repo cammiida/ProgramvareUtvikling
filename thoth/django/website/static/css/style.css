@@ -25,12 +25,14 @@ html,body {
 	background-position: bottom;
 }
 
-#wrapper{
+#wrapper,.errormessage{
 	width:90%;
 	margin: 5%;
 	text-align: center;
 	box-sizing: border-box;
 }
+
+.errormessage{color:darkred;}
 
 h1{font-size:40px;}
 
@@ -191,6 +193,7 @@ Various things
 p{
 	margin:5vw;
 }
+
 
 .start{
 	width:20px;
