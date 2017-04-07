@@ -18,8 +18,10 @@
       Start lecture
     </button>
   </p>
-
   <p>
+    <div id="taskhistory">
+    </div>
+  </p>
 
     <div id="addtask">
     <h1>Create new task</h1>
@@ -57,7 +59,7 @@
         <button>Submit</button>
         </form>
     </div>
-  </p>
+
 
   <div id="mainside">
     <h1>Student Questions</h1>
@@ -87,7 +89,7 @@
   <div id="aside">
     <h1>Your tasks <div class="addnew" id="toggleaddtask">Add task</div></h1>
     {% for task in tasks %}
-      <div class="classlist"> {{task.description}}</div>
+      <div class="classlist"> {{task.description}} <button class="addquestion" onclick="showhistory('{% url 'taskhistory' task.id %}')">History</button></div>
     {% endfor %}
   </div>
 </div>

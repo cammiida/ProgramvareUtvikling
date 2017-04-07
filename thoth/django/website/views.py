@@ -168,6 +168,24 @@ def savetaskhistory(request):
         print('ERROR')
     return HttpResponse('OK')
 
+def taskhistory(request,taskid):
+    taskentries = TaskHistory.objects.filter(task_id=taskid)
+    total_correct_answers = 0
+    total_wrong_answers = 0
+    total_timeout_answers = 0
+    for entry in taskentries:
+        total_correct_answers += entry.correct_answers
+        total_wrong_answers += entry.wrong_answers
+        total_timeout_answers += entry.timeout_answers
+    task = Task.objects.get(id=taskid)
+    return render(request,'teacher/taskhistory.html',{
+        'taskentries':taskentries,
+        'task':task,
+        'total_correct_answers':total_correct_answers,
+        'total_wrong_answers':total_wrong_answers,
+        'total_timeout_answers':total_timeout_answers
+    })
+
 
 def endlecture(request):
     lecture = Lecture.objects.get(active=True,course__teacher = request.user)

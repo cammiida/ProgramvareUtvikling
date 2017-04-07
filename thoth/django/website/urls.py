@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^about/$', views.about, name='about'),
     url(r'^teacher/about/$', views.about_teacher, name='about_teacher'),
     url(r'^savetaskhistory/$', views.savetaskhistory),
+    url(r'^taskhistory/([0-9]+)?$', views.taskhistory, name='taskhistory'),
 
     #student urls
     url(r'^student/$', views.student, name='student'),

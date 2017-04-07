@@ -1,3 +1,10 @@
+
+function showhistory(url){
+	$('#taskhistory').load(url);
+};
+
+
+
 $(document).ready(function(){
 	$('#optionsfield').hide();
 	$('#textanswerfield').hide();

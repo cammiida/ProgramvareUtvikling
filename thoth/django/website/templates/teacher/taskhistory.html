@@ -1,0 +1,14 @@
+<h1>Task history </h1>
+
+Task: {{task.description}}<br/>
+{% for entry in taskentries %}
+  {{entry.correct_answers}}
+  {{entry.wrong_answers}}
+  {{entry.timeout_answers}}
+  {{entry.timestamp}}
+ |
+{%endfor%}
+
+  {{total_correct_answers}}
+  {{total_wrong_answers}}
+  {{total_timeout_answers}}
