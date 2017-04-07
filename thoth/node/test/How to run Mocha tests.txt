@@ -1,0 +1,10 @@
+How to run node.js tests:
+
+1. You need to have Mocha, Chai, socket installed (perhaps some other moduels as well). Install these by entering the node folder and write 
+	- npm install mocha
+	- npm install chai
+	- npm install socket.io
+	
+2. open a shell or some form of terminal. Run this command:
+	mocha test
+It should now run the test and you should see the different tests with a check mark next to it. 

@@ -32,4 +32,10 @@ og du kan fÂ eventuelle konflikter. FÂr du konflikt: fiks denne f¯r du gÂr vider
 > Last opp til alle andre/stuff det inn i grenen du jobber pÂ:
 Git push
 
+> For å lage en ny grein og gå inn i denne grenen
+git -b checkout <navn på gren>
+
+> For å merge sammen grener. Gå inn i grenen du vil merge inn i. skriv så:
+git merge <navn på gren du vil merge inn i grenen du er i>
+
 
