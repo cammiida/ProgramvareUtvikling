@@ -54,6 +54,13 @@ class Api(models.Model):
     entity_word = models.CharField(max_length=30)
     answer_set = models.BooleanField(default=False)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return (self.question.question)
+
+class TaskHistory(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
+    correct_answers = models.IntegerField()
+    wrong_answers = models.IntegerField()
+    timeout_answers = models.IntegerField()

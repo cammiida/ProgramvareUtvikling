@@ -16,11 +16,49 @@ function starttask(taskid,timeout){
 	socket.emit('starttask',taskid,timeout);
 }
 
+/***************************************************
+						 FROM THE WEB TO HANDLE COOKIES
+***************************************************/
+function getCookie(name) {
+		var cookieValue = null;
+		if (document.cookie && document.cookie != '') {
+				var cookies = document.cookie.split(';');
+				for (var i = 0; i < cookies.length; i++) {
+						var cookie = jQuery.trim(cookies[i]);
+						// Does this cookie string begin with the name we want?
+						if (cookie.substring(0, name.length + 1) == (name + '=')) {
+								cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+								break;
+						}
+				}
+		}
+		return cookieValue;
+}
+
+/***************************************************
+						 FROM THE WEB TO HANDLE HTTP STUFF
+***************************************************/
+function csrfSafeMethod(method) {
+		// these HTTP methods do not require CSRF protection
+		return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+
 /******************************************************
                   DOCUMENT IS RUNNING
 ******************************************************/
 $(document).ready(function(){
-
+	/***************************************************
+					FROM THE WEB TO HANDLE COOKIE
+	***************************************************/
+	var csrftoken = getCookie('csrftoken');
+	$.ajaxSetup({
+			beforeSend: function(xhr, settings) {
+					if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+							xhr.setRequestHeader("X-CSRFToken", csrftoken);
+					}
+			}
+		});
 
 	// Starts up socket.io. Creates connection.
 	console.log('node er på.');
@@ -38,11 +76,19 @@ $(document).ready(function(){
 	                     RECEIVE TASK SUMMARY
 	******************************************************/
 	socket.on('sendtasksummay',function(taskid,correct,wrong, loggedon){
-		alert(correct+' out of '+loggedon+' students answered correctly to task '+taskid+' while '+wrong+' answered wrongly.')
+		var timedoutnr = (loggedon-correct-wrong);
 		var correctpercentage = (correct/loggedon)*100;
 		var wrongpercentage = (wrong/loggedon)*100;
-		var timedoutnr = (loggedon-correct-wrong);
 		var timedoutpercentage = (timedoutnr/loggedon)*100;
+		// Want to do an ajax post to save the history into the database
+		// for later use.
+		$.post('/savetaskhistory/',{
+			taskid:taskid,
+			correct:correct,
+			wrong:wrong,
+			timedoutnr:timedoutnr,
+		});
+		alert(correct+' out of '+loggedon+' students answered correctly to task '+taskid+' while '+wrong+' answered wrongly.')
 		$('#correctanswers').html(Math.round(correctpercentage) + '%');
 		$('#wronganswers').html(Math.round(wrongpercentage) + '%');
 		$('#timedoutanswers').html(Math.round(timedoutpercentage) + '%');

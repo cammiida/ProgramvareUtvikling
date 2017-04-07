@@ -154,6 +154,21 @@ def activelecture(request):
     tasks = Task.objects.filter(lecture = lecture)
     return render(request,'teacher/activelecture.html',{'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions})
 
+def savetaskhistory(request):
+    if request.method == 'POST':
+        print('POSTING STUFF')
+        history = TaskHistory()
+        history.correct_answers = request.POST['correct']
+        history.wrong_answers = request.POST['wrong']
+        history.timeout_answers = request.POST['timedoutnr']
+        history.task_id = request.POST['taskid']
+        history.save()
+        print('STUFF POSTED')
+    else:
+        print('ERROR')
+    return HttpResponse('OK')
+
+
 def endlecture(request):
     lecture = Lecture.objects.get(active=True,course__teacher = request.user)
     lecture.active = False
