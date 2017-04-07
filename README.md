@@ -21,7 +21,7 @@ or tasks for use within lectures, with automatic validation and a
 summary of student performance.
     
 ## Technologies
-The Thoth website coded in HTML, CSS, JavaScript, uses the django framework with a sqlite database, and the node framework for real-time interactions.Question logic is enhanced using an open source natural language processing API.
+The Thoth website coded in HTML, CSS, JavaScript, uses the django framework with a sqlite database, and the node framework for real-time interactions.Question logic is enhanced using Language Understanding Intelligent Service (LUIS.ai) API from microsoft.  
 
 ## Thoth
 Thoth was the ancient egyptian god of scholars, teachers, learning and balance.
@@ -30,7 +30,7 @@ namebringer for the project.
 
 
 # HOW TO RUN THE PAGE
-After installing all the django and node things you need:
+After installing all the django and node things you need as well as installing the projectoxford package from microsoft:
 
 ## Open a power shell/git shell:
 1) Go inside the django folder
