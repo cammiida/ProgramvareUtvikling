@@ -241,8 +241,11 @@ def add_question(request,lectureid):
             addquestion = form.save(commit=False)
             addquestion.lecture_id = lectureid
             addquestion.save()
-            apis.predict(addquestion)
-            apis.similar(addquestion)
+            try:
+                apis.predict(addquestion)
+                apis.similar(addquestion)
+            except:
+                pass
             return redirect('/student/lecture/?lectureid=' + str(lectureid))
     else:
         form = QuestionForm()
