@@ -44,7 +44,6 @@ def similar(q):
         
         if(ents[2][i] == "QuestionWord" and ents[1][i] == "what"):
             ls2 = fetch(ents[2][i], "how")
-            print(ls)
             ls = fetch(ents[2][i], ents[1][i])
             liste[str(ents[2][i])] = []
             for l in ls:
@@ -61,7 +60,7 @@ def similar(q):
             liste[str(ents[2][i])] = []
             for n in handling[navn]:
                 ls = fetch(ents[2][i], n)
-                print(ls)
+                #print(ls)
                 for l in ls:
                     liste[str(ents[2][i])].append(str(l))
         else:
@@ -71,10 +70,6 @@ def similar(q):
                 liste[str(ents[2][i])].append(str(l))
             
 #  Dette kjører hvis det ikke er en action. Vil da ikke gå inn i handlingsdictionarien og kjøre synonymer. Alt annet vil derfor ikke sjekke om synonymer av ordene enda. 
-    for d in liste:
-        print(d)
-        print(liste[d])
-        print("\n")
         
                                                                 # - Skal brukes senere til å sjekke opp hvilke spørreord som kan brukes om hverandre (som synonymer)
     try:                                                        # - Må ha denne for å sjekke om det faktisk finnes en algoritme i spørsmålet. Hvis ikke må den kjøre en alternativ rute.
@@ -83,23 +78,21 @@ def similar(q):
                 likt_sporsmal[alg] = 1                          # - Spørreord og algoritme er her like
                 try:
                     if(alg in liste['ProgrammingLanguages']):   #   - Kan videre teste om programmeringsspråket som brukes i setningen er lik. Hvis det finnes spørsmål som har lik
-                        likt_sporsmal[alg] += 1                 #     algoritme, men ingen programmeringsspråk i spørsmålet må disse også være med videre ettersom generelle svar kan hjelpe.
-                        print("kommer den hit?")                     
+                        likt_sporsmal[alg] += 1                 #     algoritme, men ingen programmeringsspråk i spørsmålet må disse også være med videre ettersom generelle svar kan hjelpe.                    
                                                                 # - Fant ut at det var et likt programmeringsspråk i spørsmålet.
                 except:
-                    print("Her var det ingenting!")             # - Altså ingen programmeringsspråk i spørsmålet og derfor ikke vits å sjekke videre på. 
+                    pass                                        # - Altså ingen programmeringsspråk i spørsmålet og derfor ikke vits å sjekke videre på. 
                                                                 # - Skal her hente ut svaret fra dette spørsmålet og gi det tilbake til brukeren (Eller fortsette å teste videre...)
-                print("kjører denne?")
                 try:
                     if(alg in str(liste['Action'])):
                         likt_sporsmal[alg] += 1
                 except:
-                    print("fantes ingen action å ta av!")
+                    continue
 
                 # Dette finner det spørsmålet som har flest like elementer og setter dette som svaret fra API. 
                 hoyeste = max(likt_sporsmal.items(), key=operator.itemgetter(1))[0]    
                 query = Question.objects.get(question=hoyeste)
-                print(query)
+               #print(query)
                 q.api_answer = str(query.answer)
                 q.save()            
                                                             #   - Ting å utvide med senere:
