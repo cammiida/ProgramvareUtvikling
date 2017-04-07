@@ -16,19 +16,20 @@
 }
 
 #idnumber,#studentsconnected{
-
   box-sizing: border-box;
   background:lightgrey;
   background: rgba(0, 0, 0, 0.1);
   border-radius:5px;
   padding:2px;
   margin-left:1vw;
-  padding-top:1vw;
-  font-size: 3vw;
+
   marign-right:0px;
   max-height:160px;
-  font-size: 18px;
   margin-bottom: 5px;
+}
+
+#idnumber{
+  padding-top:1vw;
 }
 
 #topintroduction{

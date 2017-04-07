@@ -77,7 +77,19 @@
     </div>
 
 
+
   <div id="mainside">
+    <h1>Your tasks <div class="addnew" id="toggleaddtask">Add task</div></h1>
+    {% for task in tasks %}
+      <div class="classlist">
+        <button class="addquestion" onclick="showhistory('{% url 'taskhistory' task.id %}')">
+          History
+        </button>
+        {{task.description}}
+      </div>
+    {% endfor %}
+  </div>
+  <div id="aside">
     <h1>Student Questions</h1>
     	{% for question in all_questions %}
     		<div class="questiondiv">
@@ -101,17 +113,6 @@
           </div>
         {% endif %}
     	{% endfor %}
-  </div>
-  <div id="aside">
-    <h1>Your tasks <div class="addnew" id="toggleaddtask">Add task</div></h1>
-    {% for task in tasks %}
-      <div class="classlist">
-        <button class="addquestion" onclick="showhistory('{% url 'taskhistory' task.id %}')">
-          History
-        </button>
-        {{task.description}}
-      </div>
-    {% endfor %}
   </div>
 </div>
 

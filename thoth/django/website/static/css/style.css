@@ -589,9 +589,6 @@ Student frontpage things to HIDE
 }
 
 
-
-
-
 #taskhistory, #feedbackhistory{
 	width:100%;
 	background: rgba(0, 0, 0, 0.05);
@@ -599,4 +596,51 @@ Student frontpage things to HIDE
 
 #taskhistory:hover{
 	cursor:pointer;
+}
+
+#aside img{
+	width:100%;
+}
+
+#fixbox{
+	margin-top:100px;
+	display:flex;
+	flex-wrap:wrap;
+}
+
+.thothmg{
+	width:100%;
+	margin-right:none;
+	margin-bottom:10px;
+	padding:10px;
+}
+
+#fixbox h1, .flexdiv h1:first-child{
+	border: 1px solid #d1d1d1;
+  background: rgba(0, 0, 0, 0.1);
+}
+#fixbox h3{
+	border: 0px;
+  background: none;
+	font-size:50px;
+	margin-top:-20px;
+	margin-bottom: 10px;
+}
+
+#fixbox h2{
+	font-size:30px;
+	margin-bottom: 20px;
+}
+
+#fixbox p{
+	font-size:20px;
+}
+
+.flexdiv{
+	flex:1;
+}
+
+.flexdiv2{
+	flex:1;
+	min-width:100%;
 }

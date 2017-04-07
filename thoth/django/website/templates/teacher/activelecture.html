@@ -25,6 +25,19 @@
 
 <div id="maincontent">
   <div id="mainside">
+    {% include 'teacher/tasksummary.html' %}
+        <h1>Tasks for this lecture</h1>
+        {% for task in tasks %}
+          <div class="classlist">
+            <button class="start starttask" onclick="starttask({{task.id}},{{task.timeout}})">
+              Start Task
+            </button>
+            {{task.description}}
+
+          </div>
+        {% endfor %}
+  </div>
+  <div id="aside">
   {% include 'teacher/lecturespeed.html' %}
     <h1>Student Questions</h1>
     	{% for question in all_questions %}
@@ -51,19 +64,7 @@
     	{% endfor %}
   </div>
 
-  <div id="aside">
-    {% include 'teacher/tasksummary.html' %}
-        <h1>Tasks for this lecture</h1>
-        {% for task in tasks %}
-          <div class="classlist">
-            <button class="start starttask" onclick="starttask({{task.id}},{{task.timeout}})">
-              Start Task
-            </button>
-            {{task.description}}
 
-          </div>
-        {% endfor %}
-  </div>
 
 
 
