@@ -1,31 +1,123 @@
 {% extends 'teacher/teacher.html' %}
 {% load staticfiles %}
 {% block content %}
+<h1>Lecture: {{lecture.name}} (ID: <span id="lectureid">{{lecture.id}}</span>)</h1>
 
-<h2>{{lecture.name}} (ID: <span id="lectureid">{{lecture.id}}</span>)</h2>
-<h1>Add new task</h1>
-<div id="addtask">
-    <form action="" method="post">
-      {% csrf_token %}
-      <br/>
-    <input id="id_description" maxlength="500" name="description" type="text" required placeholder="Write your question or task description here"/><br/>
-    <input id="id_textanswer" maxlength="500" name="textanswer" type="text"  placeholder="If you want a textanswer fill in this field"/><br/>
-    <input id="id_option1" maxlength="500" name="option1" type="text" placeholder="option 1"  />
-    <input id="id_option1_correct" name="option1_correct" type="checkbox" />
-    <input id="id_option2" maxlength="500" name="option2" type="text"  placeholder="option 2"/>
-    <input id="id_option2_correct" name="option2_correct" type="checkbox" /><br/>
-    <input id="id_option3" maxlength="500" name="option3" type="text" placeholder="option 3" />
-    <input id="id_option3_correct" name="option3_correct" type="checkbox" />
-    <input id="id_option4" maxlength="500" name="option4" type="text"  placeholder="option 4"/>
-    <input id="id_option4_correct" name="option4_correct" type="checkbox" /><br/>
-    <input id="id_timeout" min="0" name="timeout" type="number"  /><br/>
-    <button>Submit</button>
-    </form>
+<div id="maincontent">
+  <p>
+    Here you can add tasks for your students. A task may be a simple question,
+    a programming task, or a quiz. If you choose a text-answer, the students will have to write in a text in a field which will be checked towards
+    your answer. If you choose the options, they will be presented with buttons to
+    choose from.
+  </p>
+  <p>
+    <button onclick="location.href='{% url 'lectures' lecture.course.id %}'">
+      Back to all lectures
+    </button>
+    <button onclick="location.href='{% url 'startlecture' lecture.id %}'">
+      Start lecture
+    </button>
+  </p>
+
+
+  <p>
+    <div id="feedbackhistory">
+      <h1> Speed Feedback History </h1>
+      This box collects information about lecture speed from each
+      push notification sent during this lecture.
+
+      {% for entry in feedbackhistory %}
+      <div class="classlist">
+         Speed up votes: {{entry.up}} | Slow down votes {{entry.down}} | Students not voting: {{entry.none}}
+         <br/>{{entry.timestamp}}
+      </div>
+      {% endfor %}
+    </div>
+  </p>
+  <p>
+    <div id="taskhistory">
+    </div>
+  </p>
+
+    <div id="addtask">
+    <h1>Create new task</h1>
+        <form action="" method="post">{% csrf_token %}
+        <div id="taskname">
+          <h2>Name or description for your task</h2>
+          <input id="id_description" maxlength="500" name="description" type="text" required placeholder="write here"/><br/>
+        </div>
+        <div id="timer">
+          <h2>Time-out </h2>
+          How many seconds the students have to complete the task once it
+          has been activated. <br/>
+          <input id="id_timeout" min="0" name="timeout" type="number" value="30" required="required"  /><br/>
+        </div>
+        <div id="addtextanswer" >Add text answer</div>
+        <div id="addoptions" >Add Options</div>
+        <br/>
+        <div id="textanswerfield">
+            <h2>Text Answer </h2>
+          <input id="id_textanswer" maxlength="500" name="textanswer" type="text"  placeholder="write here"/><br/>
+        </div>
+        <div id="optionsfield">
+          <h2>Options</h2>
+          For options, check the checkbox next to the correct options. Several options can be correct.<br/>
+          <input id="id_option1" maxlength="500" name="option1" type="text" placeholder="Add an Option"  />
+          <input id="id_option1_correct" name="option1_correct" type="checkbox" />
+          <input id="id_option2" maxlength="500" name="option2" type="text"  placeholder="Add an Option"/>
+          <input id="id_option2_correct" name="option2_correct" type="checkbox" /><br/>
+          <input id="id_option3" maxlength="500" name="option3" type="text" placeholder="Add an Option" />
+          <input id="id_option3_correct" name="option3_correct" type="checkbox" />
+          <input id="id_option4" maxlength="500" name="option4" type="text"  placeholder="Add an Option"/>
+          <input id="id_option4_correct" name="option4_correct" type="checkbox" /><br/>
+        </div>
+
+        <button>Submit</button>
+        </form>
+    </div>
+
+
+
+  <div id="mainside">
+    <h1>Your tasks <div class="addnew" id="toggleaddtask">Add task</div></h1>
+    {% for task in tasks %}
+      <div class="classlist">
+        <button class="addquestion" onclick="showhistory('{% url 'taskhistory' task.id %}')">
+          History
+        </button>
+        {{task.description}}
+      </div>
+    {% endfor %}
+  </div>
+  <div id="aside">
+    <h1>Student Questions</h1>
+    	{% for question in all_questions %}
+    		<div class="questiondiv">
+          <div class="questionpresentation">
+  			  {{ question.question }}
+          </div>
+  				<div id="questionvalue_{{question.id}}" class="idbox">
+            Student votes:<br/> {{question.value}}
+          </div>
+    		</div>
+        <div class="answerdiv">{{ question.answer }}</br>
+          <form action='{% url "delete_answer_question" question.id %}' method="post" )>
+              {% csrf_token %}
+              <input type="submit" value="Answer Question" method="post" name="answer_button" class="button">
+              <input type="submit" value="Delete Question" method="post" name="delete_button" class="button">
+          </form></br>
+        </div>
+        {% if question.api_answer %}
+          <div class="apiAnswer">
+            {{ question.api_answer }}
+          </div>
+        {% endif %}
+    	{% endfor %}
+  </div>
 </div>
-<h1>Tasks for this lecture</h1>
-{% for task in tasks %}
-  <div class="lecturelist"> {{task.description}}</div>
-{% endfor %}
+
+
+
 
 
 {% endblock content %}

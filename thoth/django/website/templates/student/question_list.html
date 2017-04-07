@@ -1,8 +1,37 @@
 {% load staticfiles %}
-<h3>Questions</h3>
-<ul>
+
 	{% for question in all_questions %}
-		<li> Question: {{ question.question }} ({{question.value}})</li>
-		<li> Answer: {{ question.answer }} </li>
+
+		<div class="questiondiv">
+			<div class="profilepic">
+				<img src="{% static 'images/studenticon.png' %}"><br/>Student
+			</div>
+			<div class="questionpresentation">
+				{{ question.question }}
+			</div>
+			<div class="votingsystem">
+				<input type="button"  class= "questionvotebtn" value=" &#x25B2; " name="up_button" onclick="vote('up_button','{% url 'vote' question.id %}',{{question.id}})"/><br/>
+				<span id="questionvalue_{{question.id}}">{{question.value}}</span><br/>
+				<input type="button"  class= "questionvotebtn" value=" &#x25BC " name="down_button" onclick="vote('down_button','{% url 'vote' question.id %}', {{question.id}})"/><br/>
+			</div>
+		</div>
+
+		{% if question.answer %}
+		<div class="answerdiv">
+			<div class="profilepic">
+				<img src="{% static 'images/teachericon.png' %}"><br/>Lecturer
+			</div>
+			{{ question.answer }}
+		</div>
+		{% endif %}
+
+		{% if question.api_answer %}
+		<div class="apiAnswer">
+			<div class="profilepic">
+				<img src="{% static 'images/thothicon.png' %}"><br/>Thoth
+			</div>
+			{{ question.api_answer }}
+		</div>
+		{% endif %}
+
 	{% endfor %}
-</ul>

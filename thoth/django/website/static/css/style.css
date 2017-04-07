@@ -7,7 +7,10 @@
 	padding: 0px;
 }
 
-/* General background and setup for the entire page*/
+
+/*************************************************
+General background and setup for the entire page
+*************************************************/
 html,body {
 	background: #F7F7F7;
 	font-size: 7vw;
@@ -16,33 +19,46 @@ html,body {
 	height: 100vh;
   	width:100vw;
 	font-family: 'Kanit','Cormorant Garamond', serif;
-	/* bakrunnseffekter: #EDEDED */
+	background-image:  url("/static/images/hieroglyph.png"),url("/static/images/pyramids.png");
+	background-repeat:  repeat,no-repeat;
+	background-size: auto,100%;
+	background-position: bottom;
 }
 
-#wrapper{
+#wrapper,.errormessage{
 	width:90%;
 	margin: 5%;
 	text-align: center;
 	box-sizing: border-box;
 }
 
-/*Header tag*/
+.errormessage{color:darkred;}
+
+h1{font-size:40px;}
+
+/*************************************************
+HEADER
+*************************************************/
 header{
 	width: 100%;
 	min-height: 15vw;
-	background:grey;
+	background: #777777;
+	background: linear-gradient(rgba(0, 0, 0, 0.1), #777777);
 	border-bottom: 1px solid #a0a09f;
 	box-sizing: border-box;
 	padding-left: 1vw;
 }
 
 header img{
-	height: 12vw;;
-	background:grey;
+	height: 12vw;
 	padding: 2vw;
 }
 
-/*Navigation field that contains dropdown menu button*/
+
+/*************************************************
+DROP DOWN MENU
+Navigation field that contains dropdown menu button
+*************************************************/
 #dropDownBtn{
 	float:right;
 }
@@ -70,19 +86,44 @@ li{
 	text-align:center;
 	background-color:#e4e4e4;
 	list-style-type:none;
+	margin-left:-5px;
 }
 
 li:hover{
 	background-color:#F7F7F7;
+	cursor:pointer;
 }
 
 
 #liste{
 	display:none;
 }
-/* All the buttons on the page */
 
-button {
+/*************************************************
+ALL THE PAGE BUTTONS
+*************************************************/
+
+button, .button {
+	height: 40px;
+	min-width: 100px;
+	margin:5px;
+	color: grey;
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	font-size: 18px;
+	padding:5px;
+	border: 1px solid grey;
+	text-decoration: none;
+	box-sizing:border-box;
+}
+
+
+button:hover,.button:hover{
+	cursor:pointer;
+	background-color: #e4e4e4;
+}
+
+.frontpagebutton {
   height: 20vw;
   min-width: 80vw;
 	margin:5px;
@@ -92,11 +133,52 @@ button {
   text-decoration: none;
 }
 
-button:hover{
-	cursor:pointer;
-	background-color: #e4e4e4;
+.addnew{
+  width:100px;
+  height:50px;
+  float:right;
+	font-size: 16px;
+	padding:2px;
 }
 
+#addtextanswer,#addoptions{
+  width:300px;
+  height:50px;
+	display:inline-block;
+	font-size:20px;
+	padding:5px;
+}
+
+.addnew,
+#addtextanswer,
+#addoptions{
+	box-sizing: border-box;
+  background:lightgrey;
+  background: rgba(0, 0, 0, 0.1);
+	background-image:  url("/static/images/add.png");
+	background-repeat: no-repeat;
+	background-size:contain;
+  border-radius:5px;
+	padding-left:40px;
+  margin:5px;
+	border: 1px solid grey;
+}
+.addnew:hover,
+#addtextanswer:hover,
+#addoptions:hover{
+  cursor:pointer;
+  color:white;
+	background:darkgrey;
+	background-image:  url("/static/images/addhover.png");
+	background-repeat: no-repeat;
+	background-size:contain;
+}
+
+
+
+/*************************************************
+Various things
+*************************************************/
 #message{
 	display:none;
 }
@@ -112,6 +194,7 @@ p{
 	margin:5vw;
 }
 
+
 .start{
 	width:20px;
 	height:40px;
@@ -120,33 +203,444 @@ p{
 	margin-top:0px;
 }
 
+.enter{
+	background:lightgrey;
+	width:70vw;
+	max-width:200px;
+	height:45px;
+	box-sizing: border-box;
+	padding:5px;
+	font-size:18px;
+	text-align: center;
+}
+
+/*************************************************
+LIST COLOURATION
+*************************************************/
 .lecturelist{
-	background:grey;
+	background:#ededed;
 	padding:20px;
 	width:100%;
+	border:1px solid #d1d1d1;
+	max-width:100%;
+	box-sizing: border-box;
 }
 
 .lecturelist:nth-child(even){
-	background:white;
+	background:#dbdbdb;
+	border:1px solid #d1d1d1;
+}
+
+.studenttasks{
+	display:none;
+}
+
+.classlist{
+	width:100%;
+	background: rgba(229, 224, 211, 0.5);
+	border:1px solid #d1d1d1;
+	padding:20px;
+	box-sizing: border-box;
+	height:auto;
+}
+
+.classlist:nth-of-type(2n){
+	background: rgba(226, 213, 208, 0.5);
+}
+
+.classlist:hover{
+	color:darkgrey;
+	background:lightgrey;
+	cursor:pointer;
+}
+
+.classlist .addquestion{
+	margin-top:-5px;
+	width:70px;
+	height:40px;
+	border-radius:20%;
+	margin-right: -10px;
+}
+
+/***************************************
+Student page grey header
+***************************************/
+#topinfo{
+	width:100%;
+	padding:5px;
+	padding-left: 2%;
+	padding-right:2%;
+	background: rgba(0,0,0, 0.2);
+	font-size:14px;
+	height:auto;
+	box-sizing: border-box;
+}
+
+/***************************************
+QUESTIONS
+***************************************/
+.questiondiv{
+	width:100%;
+	background: rgba(222,230,232, 0.5);
+	border: 1px solid #d6d4d4;
+	min-height: 90px;
+	height:auto;
+	max-height: auto;
+	margin-top:5px;
+}
+.answerdiv, .apiAnswer{
+	width:100%;
+	color:#8e8e8e;
+	border:1px solid #d8d6d6;
+	border-top:none;
+	min-height: 90px;
+	height:auto;
+	max-height: auto;
+	font-size:18px;
+}
+
+.answerdiv{
+	background: rgba(223,229,213, 0.5);
+}
+
+.apiAnswer{
+	background: rgba(234,232,227, 0.5);
+}
+
+.questionvoting{
+	float:right;
+	min-height:90px;
+	margin-right:0px;
+	padding:0px;
+	font-size:15px;
+}
+
+.questionvotebtn{
+	margin:0px;
+	padding:5px;
+	background:none;
+	border:none;
+	font-weight:bold;
+}
+
+.questionvotebtn:hover{
+	color:grey;
+	cursor: pointer;
+}
+
+.headerimages{
+	max-height:40px;
+	padding:0px;
+	margin:0px;
+	background:none;
+}
+
+
+/***************************************
+LECTURE and ACTIVE LEVCTURE
+:content placers
+***************************************/
+
+#maincontent{
+	min-width:100%;
+	height:auto;
+
+	margin:0px;
+	padding:0px;
+	font-size:18px;
+}
+
+#maincontent p{
+	min-width:100%;
+	-webkit-flex:1;
+	    -ms-flex:1;
+	        flex:1;
+	margin:0px;
+	padding:0px;
+	margin-bottom: 10px;
+	font-size:18px;
+}
+
+
+#mainside{
+	width:100%;
+	float:none;
+	margin-right:none;
+	margin-bottom:10px;
+}
+
+#aside{
+	width:100%;
+	float:none;
+	margin-right:none;
+	margin-bottom:10px;
+}
+
+#mainside h1, #aside h1, #maincontent h1{
+	border: 1px solid #d1d1d1;
+  background: rgba(0, 0, 0, 0.1);
+	width:100%;
+}
+
+/***************************************
+TASK FORM CONTENT
+***************************************/
+
+
+
+#addtask{
+	width:100%;
+	background: rgba(0, 0, 0, 0.1);
+	min-height:20px;
+	border:1px solid #d1d1d1;
+}
+
+
+#addtask h1{
+	margin:0px;
+	padding:0px;
 }
 
 #addtask{
-	background:grey;
-	min-height:20px
+	display:none;
 }
 
-#id_description, #id_textanswer, #id_option1, #id_option2, #id_option3, #id_option4{
+#optionsfield, #textanswerfield, #timer,#taskname,#addquestionform{
+	margin-bottom:5px;
+	margin-top:10px;
+	width:80%;
+	margin-left: auto;
+	margin-right: auto;
+	box-sizing: border-box;
+	background:lightgrey;
+	background: rgba(0, 0, 0, 0.1);
+	border-radius:5px;
+	padding:5px;
+	border: 1px solid grey;
+}
+
+
+#id_question,#id_description, #id_textanswer, #id_option1, #id_option2, #id_option3, #id_option4{
+	max-width:80%;
 	margin-left: auto;
 	margin-right: auto;
 	min-height:40px;
 	font-size: 20px;
 	padding-left:5px;
-	background:none;
-	border-top:none;
-	border-left: none;
-	border-right:none;
+	background: rgba(255, 255, 255, 0.5);
+	border-color: darkgrey;
+	text-align:center;
+	margin-top: 5px;
 }
 
 #id_description, #id_textanswer{
+	width:80%;
+}
+
+
+#addtask p{
+	min-width:80%;
+	max-width:80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+/***************************************
+ASK QUESTIONS FORM
+***************************************/
+#addquestionform{
+	height:100px;
+	width:100%;
+}
+
+#addquestionform label, #addnewform label{
+	display:none;
+}
+
+#addquestionform p{
+	margin:0px;
+	padding:0px;
+}
+
+#id_question{
+	margin-top:20px;
+	border-radius: 5px;
+	max-width:55vw;
+	height:48px;
+	font-size:18px;
+
+}
+
+#addquestionform .addnew{
+	margin-top:20px;
+}
+/***************************************
+QUESTIONS LIST
+***************************************/
+.questiondiv{
+	height:auto;
+	display:-webkit-flex;
+	display:-ms-flexbox;
+	display:flex;
+}
+
+.votingsystem{
+	float:right;
+	width:10%;
+	font-size:18px;
+	height:90px;
+	box-sizing: border-box;
+}
+
+.questionpresentation{
+	text-align: center;
+	max-width:90%;
 	width:90%;
+	font-size:18px;
+	padding:10px;
+	margin:0px;
+	box-sizing: border-box;
+}
+
+.profilepic{
+	display:inline;
+	float:left;
+	width:50px;
+	font-size:12px;
+	padding-top:7px;
+	line-height: 10px;
+	box-sizing: border-box;
+	padding-left:5px;
+	padding-right:5px;
+	height:90px;
+}
+
+.profilepic img{
+	padding-top:10px;
+	height:40px;
+}
+
+.addquestion{
+	width: 50px;
+	min-width:50px;
+	height: 50px;
+	float: right;
+	font-size: 16px;
+	padding: 5px;
+	border-radius:50%;
+	margin-top:15px;
+
+}
+
+/***************************************
+COURSE LIST
+***************************************/
+
+#addnewform{
+	text-align:center;
+	box-sizing: border-box;
+	margin-bottom:5px;
+	margin-left: auto;
+	margin-right: auto;
+	height:120px;
+	width:100%;
+	background: rgba(0, 0, 0, 0.1);
+	border-radius:5px;
+	border: 1px solid grey;
+}
+
+#addnewform p{
+	margin:0px;
+	padding:0px;
+	margin-top:10px;
+}
+
+#addnewform .addquestion{
+	margin-top:-5px;
+}
+
+#addnewform h3{
+	width:100%;
+	background: rgba(0, 0, 0, 0.1);
+	font-size:20px;
+}
+#id_name, {
+	margin-left:10px;
+	margin-top:5px;
+	border-radius: 5px;
+	max-width:50%;
+	width:50%;
+	font-size:18px;
+}
+
+.idbox{
+	background: rgba(255, 255, 255, 0.5);
+	width:70px;
+	height:70px;
+	border-radius:  5px;
+	font-size:16px;
+	float:right;
+	margin-top:10px;
+}
+/***************************************
+Student frontpage things to HIDE
+***************************************/
+#feedback, #addquestion, #questionlist, #loadabout{
+	display:none;
+}
+
+
+#taskhistory, #feedbackhistory{
+	width:100%;
+	background: rgba(0, 0, 0, 0.05);
+}
+
+#taskhistory:hover{
+	cursor:pointer;
+}
+
+#aside img{
+	width:100%;
+}
+
+#fixbox{
+	margin-top:100px;
+	display:flex;
+	flex-wrap:wrap;
+}
+
+.thothmg{
+	width:100%;
+	margin-right:none;
+	margin-bottom:10px;
+	padding:10px;
+}
+
+#fixbox h1, .flexdiv h1:first-child{
+	border: 1px solid #d1d1d1;
+  background: rgba(0, 0, 0, 0.1);
+}
+#fixbox h3{
+	border: 0px;
+  background: none;
+	font-size:50px;
+	margin-top:-20px;
+	margin-bottom: 10px;
+}
+
+#fixbox h2{
+	font-size:30px;
+	margin-bottom: 20px;
+}
+
+#fixbox p{
+	font-size:20px;
+}
+
+.flexdiv{
+	flex:1;
+}
+
+.flexdiv2{
+	flex:1;
+	min-width:100%;
 }

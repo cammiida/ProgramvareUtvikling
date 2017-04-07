@@ -4,15 +4,71 @@
 
 
 <script type="text/javascript" src="{% static 'javascript/teacher.js' %}"></script>
-<h2>Current Lecture</h2>
-<h1>ID: <span id="lectureid">{{lecture.id}}</span></h1>
-{% include 'teacher/lecturespeed.html' %}
-<button onclick="endlecture('{% url 'endlecture' %}', {{lecture.id}})">End Lecture</button>
+<h1>Current active lecture: {{lecture.name}} </h1></br>
+<div id="topintroduction">
+    <div id="idnumber">
+      ID: <br/><span id="lectureid">{{lecture.id}}</span>
+    </div>
+    <div id="studentsconnected">
+      Students online:<br/>
+      0
+    </div>
+    <button onclick="endlecture('{% url 'endlecture' %}', {{lecture.id}})">
+      End Lecture
+    </button>
+    <button onclick="endlecture('{% url 'lecture' lecture.id %}')">
+      Back to Lecture
+    </button>
+
+</div>
 
 
-<h1>Tasks for this lecture</h1>
-{% for task in tasks %}
-  <div class="lecturelist"> {{task.description}}</div>
-{% endfor %}
+<div id="maincontent">
+  <div id="mainside">
+    {% include 'teacher/tasksummary.html' %}
+        <h1>Tasks for this lecture</h1>
+        {% for task in tasks %}
+          <div class="classlist">
+            <button class="start starttask" onclick="starttask({{task.id}},{{task.timeout}})">
+              Start Task
+            </button>
+            {{task.description}}
+
+          </div>
+        {% endfor %}
+  </div>
+  <div id="aside">
+  {% include 'teacher/lecturespeed.html' %}
+    <h1>Student Questions</h1>
+    	{% for question in all_questions %}
+    		<div class="questiondiv">
+          <div class="questionpresentation">
+  			  {{ question.question }}
+          </div>
+  				<div id="questionvalue_{{question.id}}" class="idbox">
+            Student votes:<br/> {{question.value}}
+          </div>
+    		</div>
+        <div class="answerdiv">{{ question.answer }}</br>
+          <form action='{% url "delete_answer_question" question.id %}' method="post" )>
+              {% csrf_token %}
+              <input type="submit" value="Answer Question" method="post" name="answer_button" class="button">
+              <input type="submit" value="Delete Question" method="post" name="delete_button" class="button">
+          </form></br>
+        </div>
+        {% if question.api_answer %}
+          <div class="apiAnswer">
+            {{ question.api_answer }}
+          </div>
+        {% endif %}
+    	{% endfor %}
+  </div>
+
+
+
+
+
+
+</div>
 
 {% endblock content %}

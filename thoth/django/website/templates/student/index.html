@@ -1,11 +1,12 @@
 {% extends 'student/student.html' %}
 {% load staticfiles %}
 {% block content %}
+<div id="wrapper">
 	<p>
-		Speak friend and...<br/>
+		Enter a lecture by using the ID provided by your lecturer.<br/>
 		<form method='get' action='{% url 'studentlecture' %}'>
 			{% csrf_token %}
-			<input type='text' name='lectureid'>
+			<input type='text' name='lectureid' class="enter" placeholder="ID HERE"></br>
 			<button> Enter </button>
 		</form>
 	</p>

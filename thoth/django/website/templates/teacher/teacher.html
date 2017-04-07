@@ -15,14 +15,23 @@
     <script type="text/javascript" src="{% static 'javascript/loginmessage.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascript/header.js' %}"></script>
 	<script type="text/javascript" src="{% static 'javascript/choice.js' %}"></script>
-	
+  <script type="text/javascript" src="{% static 'javascript/teacherfunctions.js' %}"></script>
+
 </head>
 <body>
 	{% include 'teacher/header.html' %}
-  <div id="wrapper">
 
-  {% block content %}{% endblock %}
-
+  <div id="topinfo">
+    {% if not request.user.is_authenticated %}
+      <strong>You are currently not logged in </strong>
+    {% else %}
+      <strong>Logged inn as </strong>{{ user.get_username }} 
+    {% endif %}
   </div>
+
+  <div id="wrapper">
+  {% block content %}{% endblock %}
+  </div>
+
 </body>
 </html>

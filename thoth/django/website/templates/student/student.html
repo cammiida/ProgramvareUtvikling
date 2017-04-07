@@ -17,10 +17,8 @@
 </head>
 <body>
 	{% include 'student/header.html' %}
-	<div id="wrapper">
-		{{ error }}
 	{% block content %}{% endblock %}
-
+<span class="errormessage">{{ error }}</span>
 </div>
 </body>
 </html>

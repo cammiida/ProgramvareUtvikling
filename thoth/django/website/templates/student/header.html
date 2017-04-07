@@ -3,23 +3,26 @@
 	<div class="contentalignment"></div>
 	<a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}"></a>
 	<img src="{% static 'images/title.png' %}">
-	<img src="{% static 'images/DropDownBtn.png' %}" id="dropDownBtn">
 
-	<div name="navigasjon" id="liste">
+	{% if not_show_icon %}
+	{% else %}
+		<img src="{% static 'images/DropDownBtn.png' %}" id="dropDownBtn">
+		<div name="navigasjon" id="liste">
+			<ul>
+				{% if lecture.active %}
+				<li onclick="showfeedback()">
+					<img src="{% static 'images/feedbackicon.png' %}" class="headerimages"> Feedback
+				</li>
+				{% endif %}
 
-		<ul>
-			{% if lecture.active %}
-			<li onclick="showfeedback()">
-				Feedback
-			</li>
-			{% endif %}
-			<li onclick="showaddquestion()">
-				Ask a question
-			</li>
-			<li onclick="showquestionlist()">
-				Questions
-			</li>
-		</ul>
-	</div>
+				<li onclick="showquestionlist()">
+					<img src="{% static 'images/question.png' %}" class="headerimages"> Questions
+				</li>
+				<li onclick="showabout()">
+					<img src="{% static 'images/abouticon.png' %}" class="headerimages"> About
+				</li>
+			</ul>
+		</div>
+	{% endif %}
 
 </header>

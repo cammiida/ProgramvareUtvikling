@@ -13,6 +13,10 @@ var options = {
 			var util = require('util');
 
 describe('sockets', function(){
+	beforeEach(function(){
+		teacher = io.connect(socketUrl, options);
+		student = io.connect(socketUrl, options);
+	})
 	afterEach(function(){
 		student.disconnect();
 		teacher.disconnect();
@@ -20,46 +24,52 @@ describe('sockets', function(){
 	
 	
 	
-	it('should connect as a teacher, to connect as student and update connected students', function(done){
-		teacher = io.connect(socketUrl, options);
+	it('should connect as a teacher and a new lecture should be created', function(done){
+		
 		teacher.on('connect', function(){
 			teacher.emit('usertype', 'teacher', 1);
 		});
-		student = io.connect(socketUrl, options);
+		teacher.on('update',function(array){
+			expect(array['students']).to.equal(0)
+			done();
+		});
+	});
+	
+	it('should connect as a student on an existing lecture', function(done){
+		teacher.on('connect', function(){
+			teacher.emit('usertype', 'teacher', 1);
+		});
 		student.on('connect', function(){
 			student.emit('usertype', 'student', 1);
 		});
 		teacher.once('update', function(array){
-			teacher.on('update', function(array){
-				expect(array['students']).to.equal(1);	
+			expect(array['students']).to.equal(0)
+			teacher.once('update', function(array){
+				expect(array['students']).to.equal(1);
 				done();
 			});
 		});
 	});
 	
-	it('Should know update slower if student pushed slower', function(done){
-		teacher = io.connect(socketUrl, options);
-		student = io.connect(socketUrl, options);
-		teacher.on('connect', function(){
-			teacher.emit('usertype', 'teacher', 2);
-		});
-		student.on('connect', function(){
-			student.emit('usertype', 'student', 2);
-			student.emit('slower');
-		});
-		teacher.once('update', function(){
+	it('Should update slower-array when student push the slower button', function(done){
+			teacher.on('connect', function(){
+				teacher.emit('usertype', 'teacher', 2);
+			});
+			student.on('connect', function(){
+				student.emit('usertype', 'student', 2);
+				student.emit('slower');
+			});
 			teacher.once('update', function(){
-				teacher.on('update', function(array){
-					expect(array['slower']).to.equal(1);
-					done();
+				teacher.once('update', function(){
+					teacher.on('update', function(array){
+						expect(array['slower']).to.equal(1);
+						done();
+					});
 				});
 			});
-		});
-	});
+	});	
 	
 	it('should update when student log out', function(done){
-		teacher = io.connect(socketUrl, options);
-		student = io.connect(socketUrl, options);
 		teacher.on('connect', function(){
 			teacher.emit('usertype', 'teacher', 3);
 		});
@@ -78,15 +88,22 @@ describe('sockets', function(){
 		});
 	});
 	
-	it('should be able to start up existing lecture', function(done){
-		teacher = io.connect(socketUrl, options);
+	it('should be possible for a teacher to start a task', function(done){
+		this.timeout(4000)
 		teacher.on('connect', function(){
-			teacher.emit('usertype', 'teacher', 1);
-		});
-		teacher.on('update', function(array){
-			console.log(util.inspect(array))
-			expect(array['students']).to.equal(0);
+			teacher.emit('usertype', 'teacher', 1)
+		})
+		student.on('connect', function(){
+			student.emit('usertype', 'student', 1)
+		})
+		teacher.emit('starttask', 1, 1)
+		student.on('starttask', function(task){
+			student.emit('studentanswer', true, 1)
+		})
+		teacher.on('sendtasksummay', function(taskid,correct,wrong, loggedon){
+			expect(correct).to.equal(1)
 			done();
-		});
-	});
+		})
+		
+	})
 });

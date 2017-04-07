@@ -2,6 +2,84 @@
 @media only screen and (min-width: 1160px) {
 }
 
+@media only screen and (max-width: 769px) {
+  #topintroduction{
+    min-height:150px;
+  }
+
+  #topintroduction button{
+    float:none;
+    margin-top:0px;
+  }
+  #idnumber,#studentsconnected{
+    float:none;
+    width:99%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    background:lightgrey;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius:5px;
+    padding:2px;
+    margin-left:1vw;
+    padding-top:1vw;
+    font-size: 3vw;
+    marign-right:0px;
+    max-height:160px;
+    font-size:40px;
+    margin-bottom: 5px;
+
+  }
+  #topintroduction button{
+    float:none;
+    margin-top:50px;
+  }
+
+
+  #fixbox{
+  	margin-top:100px;
+  	display:flex;
+  	flex-wrap:wrap;
+  }
+
+  .thothmg{
+  	width:100%;
+  	margin-right:none;
+  	margin-bottom:10px;
+  	padding:10px;
+  }
+
+  #fixbox h1, .flexdiv h1:first-child{
+  	border: 1px solid #d1d1d1;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  #fixbox h3{
+  	border: 0px;
+    background: none;
+  	font-size:50px;
+  	margin-top:-20px;
+  	margin-bottom: 10px;
+  }
+
+  #fixbox h2{
+  	font-size:30px;
+  	margin-bottom: 20px;
+  }
+
+  #fixbox p{
+  	font-size:20px;
+  }
+
+  .flexdiv{
+  	width:100%;
+  }
+
+
+
+
+}
+
+
 
 /* MEDIUM SKJERMER OG PADDER */
 @media only screen and (min-width: 769px) {
@@ -12,11 +90,14 @@
   	font-size: 18px;
   	height: 100vh;
     width:100vw;
+    background-position: top;
+
   }
 
   #wrapper{
-  	width:80%;
-  	margin: 5%;
+  	width:85%;
+  	margin-left: auto;
+    margin-right: auto;
   }
 
   /*Header tag*/
@@ -27,7 +108,6 @@
 
   header img{
   	height: 60px;
-  	background:grey;
   	padding: 10px;
   }
 
@@ -67,12 +147,12 @@
   #liste li{
     display:inline-block;
     width:100px;
-    height:60px;
+    height:67px;
     float:left;
   }
   /* All the buttons on the page */
 
-  button {
+  .frontpagebutton{
     height: 150px;
     min-width: 150px;
   	margin:5px;
@@ -100,4 +180,139 @@
   }
 
 
+  .classlist{
+  	width:100%;
+  }
+
+  .start{
+  	width:20px;
+  	height:40px;
+  	border-radius: 0%;
+  	float:right;
+  	margin-top:0px;
+  }
+  #topinfo{
+  	height:30px;
+    text-align: center;
+  }
+
+  .questionvoting{
+  	height:auto;
+  	margin-right:10px;
+  	padding:5px;
+  }
+
+
+  #maincontent p{
+  	font-size: auto;
+  }
+
+  #mainside{
+  	width:49%;
+  	float:left;
+  	margin-right:2%;
+  }
+
+  #aside{
+  	float:right;
+  	width:49%;
+  }
+
+  #mainside h1, #aside h1{
+  	border: 1px solid #d1d1d1;
+  }
+
+  h1{font-size:auto;}
+
+
+  #id_question{
+  	margin-top:20px;
+  	border-radius: 5px;
+    width:85%;
+  	max-width:80%;
+  	height:48px;
+  }
+
+  .votingsystem{
+  	width:5%;
+  }
+
+  .questionpresentation{
+  	width:80%;
+    height:90px;
+    font-size:18px;
+  }
+
+  .profilepic{
+    display:inline;
+  	float:left;
+  	width:90px;
+  	font-size:12px;
+  	padding-top:7px;
+  	line-height: 10px;
+  	box-sizing: border-box;
+  	padding-left:5px;
+  	padding-right:5px;
+  	height:90px;
+  }
+
+  .profilepic img{
+  	padding-top:0px;
+  	height:70px;
+  }
+
+  #id_question{
+  	max-width:90%;
+  }
+
+  .addquestion{
+  	width: 60px;
+  	height: 60px;
+  	padding: 2px;
+  }
+
+  #topintroduction h1{
+    font-size:auto;
+  }
+
+  #studentsconnected{
+      font-size: 18px;
+  }
+  #idnumber{
+      font-size: 20px;
+  }
+
+  #topintroduction{
+    height:110px;
+    width:100%;
+    box-sizing: border-box;
+  }
+
+  .toptextbox{
+    width:70%;
+    float:left;
+    height:auto;
+  }
+
+  #topintroduction h1{
+    font-size: 40px;
+  }
+
+  #studentsconnected{
+    float:right;
+
+
+  }
+  #idnumber{
+    float:right;
+  }
+
+  #idnumber,#studentsconnected{
+    width:90px;
+    height:90px;
+  }
+  #topintroduction button{
+    float:left;
+    margin-top:50px;
+  }
 }
