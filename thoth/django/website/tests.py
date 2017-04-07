@@ -5,8 +5,6 @@ from django.utils import timezone
 from django.urls import reverse
 from .models import *
 from django.contrib.auth.models import User
-sys.path.insert(0, '/Users/hakongrov/Documents/INDØK/2.År/2.Semester/Programvareutvikling/GIT/ProgramvareUtviklingGroup50/thoth/django')
-import API2 as apis
 
 # (resp.status_code, 200) MEANS THINGS ARE OK
 # self.assertRedirects(response,'url') CHECKS REDIRECT
