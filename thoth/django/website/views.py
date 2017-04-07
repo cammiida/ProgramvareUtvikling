@@ -14,7 +14,6 @@ from django.views.generic import View
 from django.http import HttpResponse
 from django.template import loader
 import sys
-sys.path.insert(0, '/Users/hakongrov/Documents/INDØK/2.År/2.Semester/Programvareutvikling/GIT/ProgramvareUtviklingGroup50/thoth/django')
 import API2 as apis
 
 
