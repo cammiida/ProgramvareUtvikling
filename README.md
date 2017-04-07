@@ -1,8 +1,11 @@
-# ProgramvareUtvikling
+# THOTH
+
+## A webproject by  Group 50 in the course TDT4140 Software Engineering at NTNU, 2017
 The Thoth website aims to connect students and lecturers using real-time feedback,
 allowing teachers to optimise lectures to meet the academic level of the students.
 
-The projet is availiable at http://thoth.helemork.com/. The master branch settings are thus differently from those
+The projet is availiable at http://thoth.helemork.com/. 
+The master branch settings are thus differently from those
 in the dev and other branches, which are made to run locally. If you clone the project, make sure to use the local settings.
 
 ## Students
