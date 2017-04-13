@@ -70,7 +70,8 @@ $(document).ready(function(){
 /******************************************************
                 CONNECTS THE STUDENTS
 ******************************************************/
-socket = io.connect('http://thothnode.helemork.com');
+//socket = io.connect('http://thothnode.helemork.com');
+socket = io.connect('127.0.0.1');
  var lectureid = $('#lectureid').html();
  console.log('asd'+lectureid);
  socket.emit('usertype','student', lectureid);
@@ -101,8 +102,8 @@ socket = io.connect('http://thothnode.helemork.com');
                       UP AND DOWN BUTTONS
  ******************************************************/
  /*Speed up and down buttons with animation*/
- var toSlow = 0;
- var toFast = 0;
+ var tooSlow = 0;
+ var tooFast = 0;
  $("#down").mouseout(function(){
    $("#down").css("background-color","#d1c0c0");
  });
@@ -136,24 +137,23 @@ socket = io.connect('http://thothnode.helemork.com');
   ******************************************************/
 /*Fade functionality and feedback from buttons.*/
  $("#down").click(function(){
-   toFast += 1;
+   tooFast += 1;
    // Counter on page
    $("#message").text("You pressed the too fast button")
-   $("#toFast").text(toFast);
+   $("#tooFast").text(tooFast);
    $("#message").fadeIn("slow");
    setTimeout(function(){
      $("#message").fadeOut("slow");
-   }
-   ,2000);
+   },2000);
    // sending message to the server:
    socket.emit('slower');
  });
 
  $("#up").click(function(){
-   toSlow += 1;
+   tooSlow += 1;
    // Counter on page
    $("#message").text("You pressed the too slow button");
-   $("#toSlow").text(toSlow);
+   $("#tooSlow").text(tooSlow);
    $("#message").fadeIn("slow");
    setTimeout(function(){
      $("#message").fadeOut("slow");

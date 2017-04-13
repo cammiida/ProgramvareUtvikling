@@ -62,7 +62,8 @@ $(document).ready(function(){
 
 	// Starts up socket.io. Creates connection.
 	console.log('node er på.');
-	socket = io.connect('http://thothnode.helemork.com');
+	//socket = io.connect('http://thothnode.helemork.com');
+	socet = io.connect('127.0.0.1');
 
 	var lectureid = $('#lectureid').html();
 

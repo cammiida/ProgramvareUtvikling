@@ -125,13 +125,15 @@ def addcourse(request):
 
 def startlecture(request, lecture_id):
     lectures = Lecture.objects.filter(course__teacher = request.user)
+    print(lectures)
     for lecture in lectures:
         lecture.active = False
         lecture.save()
-    lecture = Lecture.objects.get(id=lecture_id)
+    lecture = Lecture.objects.get(id=lecture_id, course__teacher = request.user)
     lecture.active = True
     lecture.save()
-    return redirect('activelecture')
+    print('lecture started')
+    return redirect('activelecture', lecture.id)
 
 def addlecture(request, course_id):
     # checks if the form is posted. If it is, create the object
@@ -148,10 +150,12 @@ def addlecture(request, course_id):
     return render(request,'teacher/addlecture.html',{'form':form, 'course':course})
 
 
-def activelecture(request):
-    lecture = Lecture.objects.get(active=True,course__teacher = request.user)
-    all_questions = Question.objects.filter(lecture=lecture.id).order_by('-timestamp')
+def activelecture(request, lecture_id):
+    lecture = Lecture.objects.get(id = lecture_id,course__teacher = request.user)
+    lecture.active = True
+    all_questions = Question.objects.filter(lecture=lecture_id).order_by('-timestamp')
     tasks = Task.objects.filter(lecture = lecture)
+    print('This lecture is active')
     return render(request,'teacher/activelecture.html',{'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions})
 
 def savetaskhistory(request):
@@ -208,10 +212,15 @@ def taskhistory(request,taskid):
 
 
 def endlecture(request):
-    lecture = Lecture.objects.get(active=True,course__teacher = request.user)
-    lecture.active = False
-    lecture.save()
-    return  redirect('lectures',lecture.course.id)
+    lectures = Lecture.objects.filter(course__teacher = request.user)
+    #lecture = Lecture.objects.get(active=True,course__teacher = request.user)
+    for lecture in lectures:
+        print(lecture.active)
+        lecture.active = False
+        lecture.save()
+        print(lecture.active)
+    print('lecture ended')
+    return redirect('lectures',lecture.course.id)
 
 
 def lecturespeed(request):
@@ -240,15 +249,16 @@ def add_question(request,lectureid):
             addquestion = form.save(commit=False)
             addquestion.lecture_id = lectureid
             addquestion.save()
+            form = QuestionForm()
             try:
                 apis.predict(addquestion)
                 apis.similar(addquestion)
             except:
                 pass
-            return redirect('/student/lecture/?lectureid=' + str(lectureid))
     else:
         form = QuestionForm()
-    return render(request, 'student/add_question.html', {'form': form})
+
+    return redirect('/student/lecture/?lectureid=' + str(lectureid), {'form': form})
 
 
 def question_list(request,lecture_id):
@@ -324,10 +334,11 @@ def delete_answer_question(request, question_id):
     if request.POST.get('delete_button'):
         #if request.method == 'POST':
         question.delete()
-        if lecture.active:
+        if lecture.active == True:
             return redirect('activelecture')
         else:
             return redirect('lecture', lecture.id)
 
 
     return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
+

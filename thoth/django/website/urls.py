@@ -39,19 +39,23 @@ urlpatterns = [
 
     #teacher urls
     url(r'^teacher/$', views.teacher, name='teacher'),
+    # Login urls
+    url(r'^registration/$', views.register, name='register'),
     url(r'^login/$', views.login1, name="login"),
     url(r'^logout/$', views.logout_view, name="logout"),
-    #url(r'^register/$', views.UserFormView.as_view(), name='register'),
     url(r'^lecturespeed/$', views.lecturespeed, name='lecturespeed'),
+    # Course urls
     url(r'^addcourse/$', views.addcourse, name='addcourse'),
+    url(r'^courses/$', views.courses, name='courses'),
+    # Lecture urls
+    url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
+    url(r'^lecture/(?P<lecture_id>[0-9]+)/$', views.lecture, name='lecture'),
     url(r'^addlecture/([0-9]+)/$', views.addlecture, name='addlecture'),
     url(r'^startlecture/([0-9]+)/$', views.startlecture, name='startlecture'),
-    url(r'^lecture/([0-9]+)/$', views.lecture, name='lecture'),
-    url(r'^courses/$', views.courses, name='courses'),
-    url(r'^activelecture/$', views.activelecture, name='activelecture'),
+    url(r'^activelecture/(?P<lecture_id>[0-9]+)$', views.activelecture, name='activelecture'),
     url(r'^endlecture/$', views.endlecture, name='endlecture'),
-    url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
-    url(r'^registration/$', views.register, name='register'),
+
+    # Question urls
     url(r'^teacher/answer_question/(?P<question_id>[0-9]+)/$', views.answer_question, name='answer_question'),
     url(r'^teacher/delete_answer_question/(?P<question_id>[0-9]+)/$', views.delete_answer_question, name='delete_answer_question'),
 
