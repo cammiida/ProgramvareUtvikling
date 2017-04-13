@@ -8,6 +8,8 @@ from django.conf import settings
 #from google.cloud import language
 import operator
 from website.models import Question, Api
+from django.dispatch import receiver
+from django.db.models.signals import pre_save, post_save
 
 #=================================================================
 # Adressen som refererer til applikasjonen jeg har lagd.
@@ -111,8 +113,21 @@ def similar(q):
                         continue
             except:
                 print("var ingen actions i setningen!")
-            
+  
 
+def update(sprs, svar):
+        q = Question.objects.get(question=sprs).answer
+        spr = Question.objects.filter(api_answer=q)
+        for p in spr:
+            p.api_answer = svar
+            p.save()
+
+#@receiver(post_save, sender=Question)
+#def update2(sender, **kwargs):
+ #   for q in spr:
+  #      print(q)
+    
+    
 # Dette brukes til testing så ingenting å bry seg om.
    
 #print(q[2])
