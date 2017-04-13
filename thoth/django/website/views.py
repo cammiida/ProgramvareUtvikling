@@ -35,12 +35,9 @@ def studentlecture(request, lecture_id):
     try:
         # TODO: use LectureForm fra forms.py
         lecture = Lecture.objects.get(id=request.GET['lectureid'])
-    except OperationalError:
-        message =   "You have entered an incorrect ID"
-        return render(request, 'student/index.html', {'error': message})
     except:
         message =   "You have entered an incorrect ID"
-        return render(request, 'student/index.html', {'error': message})
+        return render(request, 'student/index.html', {'not_show_icon':True, 'error': message})
     all_questions = Question.objects.filter(lecture=lecture).order_by('value')
     tasks = Task.objects.filter(lecture=lecture)
     form = QuestionForm()
