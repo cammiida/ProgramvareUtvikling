@@ -14,6 +14,7 @@ from django.views.generic import View
 from django.http import HttpResponse
 from django.template import loader
 import sys
+#sys.path.insert(0, '/Users/hakongrov/Documents/INDØK/2.År/2.Semester/Programvareutvikling/GIT/ProgramvareUtviklingGroup50/thoth/django')
 import API2 as apis
 
 
@@ -34,12 +35,9 @@ def studentlecture(request, lecture_id):
     try:
         # TODO: use LectureForm fra forms.py
         lecture = Lecture.objects.get(id=request.GET['lectureid'])
-    except OperationalError:
-        message =   "You have entered an incorrect ID"
-        return render(request, 'student/index.html', {'error': message})
     except:
         message =   "You have entered an incorrect ID"
-        return render(request, 'student/index.html', {'error': message})
+        return render(request, 'student/index.html', {'not_show_icon':True, 'error': message})
     all_questions = Question.objects.filter(lecture=lecture).order_by('value')
     tasks = Task.objects.filter(lecture=lecture)
     form = QuestionForm()
@@ -298,6 +296,7 @@ def answer_question(request, question_id):
         if form.is_valid():
             answer_question = form.save(commit=False)
             answer_question.lecture_id = lecture.id
+            apis.update(answer_question.question, answer_question.answer)
             answer_question.save()
             a.update(answer_set=True)
             if lecture.active:
@@ -346,7 +345,6 @@ def delete_answer_question(request, question_id):
             return redirect('activelecture')
         else:
             return redirect('lecture', lecture.id)
-
 
     return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
 
