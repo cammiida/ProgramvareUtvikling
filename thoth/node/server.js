@@ -209,8 +209,8 @@ function feedbackcalculator(lectureid){
                       STARTS SERVER
 ******************************************************/
 // Starts the server on port 3000.
-/*http.listen(3000, function(){
-  console.log('listening on *:3000');*/
+httpServer.listen(3000, function(){
+  console.log('listening on *:3000');
 
 /*
 http.createServer(function (req, res) {
@@ -219,7 +219,7 @@ http.createServer(function (req, res) {
 }).listen(3000, '127.0.0.1');
 */
 
-app.get('/', function (req, res) {
+/*app.get('/', function (req, res) {
   res.send('hi');
 });
 
@@ -230,5 +230,5 @@ const server = http.createServer(app).listen(3000, function(err) {
     const host = server.address().address;
     const port = server.address().port;
     console.log(`Server listening on ${host}:${port}`);
-  }
+  }*/
 });

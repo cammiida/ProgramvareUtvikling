@@ -90,12 +90,12 @@ def lecture(request,lecture_id):
     lecture = Lecture.objects.get(id=lecture_id)
     tasks = Task.objects.filter(lecture = lecture)
     feedbackhistory = FeedbackHistory.objects.filter(lecture = lecture).order_by('timestamp')
-    area_chart_array = [['Time', 'Speed up', 'Speed down', 'Not voting']]
+    line_chart_array = []
     for entry in feedbackhistory:
         date = entry.timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
         entry_array = [date, entry.up, entry.down, entry.none]
-        area_chart_array.append(entry_array)
-    print(area_chart_array)
+        line_chart_array.append(entry_array)
+
 
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -112,7 +112,7 @@ def lecture(request,lecture_id):
         form = TaskForm()
     return render(request, 'teacher/lecture.html', {'lecture':lecture, 'form':form, 'tasks':tasks,
                                                     'all_questions':all_questions, 'feedbackhistory':feedbackhistory,
-                                                    'area_chart_array':area_chart_array})
+                                                    'line_chart_array':line_chart_array})
 
 def addcourse(request):
     # checks if the form is posted. If it is, create the object

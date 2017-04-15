@@ -35,26 +35,18 @@
       This box collects information about lecture speed from each
       push notification sent during this lecture.
 
-
-    {% for entry in feedbackhistory %}
-        <script>
-            upVotes += {{entry.up}};
-            downVotes += {{entry.down}};
-            nonVotes += {{entry.none}};
-        </script>
-    {% endfor %}
-
-    <div id="chart_wrapper" >
-            <div id="pie_chart_div"></div>
-            <div id="line_chart_div" ></div>
+    <div id="chart_wrapper" style="width: 100%">
+        <div id="pie_chart_div" style="alignment: left"></div>
+        <div id="line_chart_div" ></div>
     </div>
+
 
       {% for entry in feedbackhistory %}
         <div class="classlist">
          Speed up votes: {{entry.up}} | Slow down votes {{entry.down}} | Students not voting: {{entry.none}}
          <br/>{{entry.timestamp}}
 
-     </div>
+        </div>
 
         {% endfor %}
     </div>
@@ -143,6 +135,13 @@
 </body>
 
 
+    {% for entry in feedbackhistory %}
+    <script>
+        upVotes += {{entry.up}};
+        downVotes += {{entry.down}};
+        nonVotes += {{entry.none}};
+    </script>
+    {% endfor %}
 
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -192,17 +191,15 @@
       *******************************************************/
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawLineChart);
-
-      var js_area_chart_array = line_chart_array
+        var js_line_chart_array = {{line_chart_array|safe}}
 
       function drawLineChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Time');
+          data.addColumn('number', 'Speed up');
+          data.addColumn('number', 'Speed down');
+          data.addColumn('number', 'Not voting');
+          data.addRows(js_line_chart_array);
 
 
         var options = {
