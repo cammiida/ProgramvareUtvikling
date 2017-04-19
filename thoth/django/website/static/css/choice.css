@@ -65,13 +65,11 @@
     background: #d9d9d9;
     border-radius: 2em;
     padding: 2px;
-    -webkit-transition: all .4s ease;
     transition: all .4s ease;
 }
 .tgl-sw-light + .btn-switch:after {
     border-radius: 50%;
     background: #fff;
-    -webkit-transition: all .2s ease;
     transition: all .2s ease;
 }
 .tgl-sw-light-checked + .btn-switch {
@@ -81,4 +79,3 @@
 	float:left;
 	display:inline;
 }
-

@@ -1,17 +1,54 @@
-
-#receivebox{
+.graphpresentation, #tasksummarybox{
   width:100%;
   background:lightgrey;
+  background: rgba(0, 0, 0, 0.1);
   border-radius:5px;
   margin-top:5px;
   padding:5px;
   text-align:center;
   font-style: italic;
+  box-sizing: border-box;
+  margin-left: 0px;
+  margin-right: 0px;
+  box-sizing: border-box;
+  min-height:150px;
+  margin-bottom: 10px;
+}
+
+#idnumber,#studentsconnected{
+  box-sizing: border-box;
+  background:lightgrey;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius:5px;
+  padding:2px;
+  margin-left:1vw;
+
+  marign-right:0px;
+  max-height:160px;
+  margin-bottom: 5px;
+}
+
+#idnumber{
+  padding-top:1vw;
+}
+
+#topintroduction{
+  width:100%;
+  box-sizing: border-box;
+}
+
+#topintroduction button{
+  margin-top:50px;
+}
+
+.toptextbox{
+  float:left;
+  height:auto;
 }
 
 #down, #up{
-  width:20vw;
-  height:20vw;
+  width:30vw;
+  height:30vw;
   padding-top:5vw;
   border-radius: 55%;
   box-sizing:border-box;
@@ -33,7 +70,7 @@
 }
 
 
-#correctanswers,#wronganswers,#timedoutanswers{
+#correctanswers,#wronganswers,#timedoutanswers,#slowdown,#speedup {
   width:40px;
   padding:5px;
   margin:5px;
@@ -41,10 +78,10 @@
   display:inline-block;
 }
 
-#correctanswers{
+#correctanswers,#speedup{
   background: green;
 }
-#wronganswers{
+#wronganswers,#slowdown{
   background: red;
 }
 #timedoutanswers{

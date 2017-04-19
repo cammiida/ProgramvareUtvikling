@@ -7,6 +7,7 @@
     <strong>Lecture:</strong> {{lecture.name}} |
     <strong>Lecture ID:</strong> <span id="lectureid">{{lecture.id}}</span> |
 
+
     <script src="{% static 'javascript/student.js' %}"></script>
     {% if lecture.active %}
     <script src="{% static 'javascript/realtimestudent.js' %}"></script>
@@ -17,8 +18,11 @@
 </div>
 
 
+
 <div id="wrapper">
+{% include 'student/tasks.html' %}
 <div id="feedback">{% include 'student/speedfeedback.html' %}</div>
 <div id="addquestion">{% include 'student/add_question.html' %}</div>
 <div id="questionlist"></div>
+<div id="loadabout">{% include 'aboutcontent.html' %}</div>
 {% endblock %}

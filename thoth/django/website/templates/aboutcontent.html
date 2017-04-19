@@ -1,0 +1,52 @@
+{% load staticfiles %}
+
+<div id="fixbox">
+  <h3>The Thoth Webpage</h3>
+  <h2>The Thoth website aims to connect students and lecturers using real-time feedback,
+    allowing teachers to optimise lectures to meet the academic level of the students.</h2>
+  <div class="flexdiv">
+    <h1>Students</h1>
+    <p>
+      You can log in to the lecture assistant using the unique lecture-ID on the
+      Thoth website. There you can rate the lecture speed and quality,
+      post anonymous questions, rate other students´ questions,
+      and participate in questionnaires or tasks by the lecturer.
+    </p>
+    <h1>Lecturers</h1>
+    <p>
+      Log in to receive real-time notifications about your lecturing speed and
+      read (and answer) student questions. You can also create questionnaires
+      or tasks for use within lectures, with automatic validation and a
+      summary of student performance.
+    </p>
+  </div>
+  <div class="flexdiv">
+    <img src="{% static 'images/thoth_fullsize.png' %}" class="thothmg">
+  </div>
+
+  <div class="flexdiv2">
+    <h1>Technologies</h1>
+    <p>The Thoth website coded in HTML, CSS, JavaScript, uses the django framework
+      with a sqlite database, and the node framework for real-time interactions.
+      Question logic is enhanced using an open source natural language processing API.
+    </p>
+    <h1>Thoth</h1>
+    <p>
+      Thoth was the ancient egyptian god of scholars, teachers, learning and balance.
+      As the website aims to bring balance into the classrom, he became an inspiration and
+      namebringer for the project.
+    </p>
+
+    <h1>About The Team</h1>
+    <p>
+    The team came together as a part of the course TDT4140 Software Engineering at NTNU.
+    </>
+    <img src="{% static 'images/aboutus.png' %}" width="100%">
+    <p>The group consists of four members with different focus areas from three different study programs.
+    Everyone worked on several parts and features of the site in addition to their bigger tasks.</p>
+    <p><b>Helene</b> (Informatics) - Team leader, Design, Node and django-setup, Task system </p>
+    <p><b>Camilla</b> (Computer Science) - Question system and database </p>
+    <p><b>Håkon</b> (Industrial Economics and Technology Management) - Testing and native learning API </p>
+    <p><b>Brynjar</b> (Industrial Economics and Technology Management) - Login system/authentification, push notifications </p>
+  </div>
+</div>

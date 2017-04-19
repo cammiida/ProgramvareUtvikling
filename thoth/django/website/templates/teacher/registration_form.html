@@ -5,7 +5,9 @@
     <div class="row">
         <div class="col-sm-12 col md-7">
             <div class="panel panel-default">
-
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
                 <form class="form-horizontal" action="" method="post">
                     {% csrf_token %}
                     {% include 'teacher/form-template.html' %}

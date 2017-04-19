@@ -1,0 +1,22 @@
+<h1>Task history </h1>
+
+<h2>"{{task.description}}"</h2>
+This shows a summary of all the times you have activated the task
+"{{task.description}}" for your students, as well as a pooled total result.
+{% for entry in taskentries %}
+<div class="classlist">
+  Correct answers: {{entry.correct_answers}} |
+  Wrong answers: {{entry.wrong_answers}} |
+  Timed out answers: {{entry.timeout_answers}}
+  <br/>{{entry.timestamp}}
+</div>
+{%endfor%}
+  Total for this task: <br/>
+
+  <div id="correctanswers"></div>
+  <div id="wronganswers"></div>
+  <div id="timedoutanswers"></div><br/>
+  Correct: <span id="corran">{{total_correct_answers}}</span> |
+  Wrong: <span id="worngan">{{total_wrong_answers}}</span> |
+  Timed out: <span id="timeoan">{{total_timeout_answers}}</span>
+  <br/>

@@ -3,9 +3,20 @@
 {% block content %}
 
 
-  <h2>Your Courses <button onclick="location.href='{% url 'addcourse' %}'"> Add course </button></h2>
+  <h1>Your Courses </h1>
+  <div id="addnewform">
+    <h3>Add a new Course</h3>
+    <form action="" method="post">
+      {% csrf_token %}
+      <button class="addquestion">Add</button>
+      {{form.as_p}}
+
+    </form>
+  </div>
   {% for course in courses %}
-    <a href="{% url 'lectures' course.id %}" class="classlist">{{course.name}}</a><br/>
+    <a href="{% url 'lectures' course.id %}" class="classlist">
+      {{course.name}}
+    </a><br/>
   {% endfor %}
 
 
