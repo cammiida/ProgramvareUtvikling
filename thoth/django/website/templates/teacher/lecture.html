@@ -172,13 +172,19 @@
         ]);
 
         // Set chart options
-        var options = {'title':'Student feedback',
+        var options = {'title':'Pie chart of summarized student feedback',
+                        titleTextStyle: {
+                                color: '#666666',    // any HTML string color ('red', '#cc00cc')
+                                fontName: 'Kanit', // i.e. 'Times New Roman'
+                                fontSize: 12, // 12, 18 whatever you want (don't specify px)
+                          },
                        'width':400,
                        'height':200,
                        'backgroundColor': {
                          'fill':'transparent'
                         },
-                        colors: ['#81D787', '#EC8F6E', '#C0C3C0'],
+                        colors: ['#81D787', '#EC8F6E', '#75777A'],
+
         };
 
         // Instantiate and draw our chart, passing in some options.
@@ -189,7 +195,6 @@
       /*******************************************************
                             LINE CHART
       *******************************************************/
-      google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawLineChart);
         var js_line_chart_array = {{line_chart_array|safe}}
 
@@ -203,11 +208,18 @@
 
 
         var options = {
-          title: 'Student feedback',
+          title: 'Line chart of summarized student feedback',
+          titleTextStyle: {
+                color: '#666666',    // any HTML string color ('red', '#cc00cc')
+                fontName: 'Kanit', // i.e. 'Times New Roman'
+                fontSize: 12, // 12, 18 whatever you want (don't specify px)
+          },
           legend: { position: 'bottom' },
           'backgroundColor': {
                          'fill':'transparent'
                         },
+          legend: 'none',
+          colors: ['#81D787', '#EC8F6E', '#75777A'],
         };
 
         var lineChart = new google.visualization.LineChart(document.getElementById('line_chart_div'));

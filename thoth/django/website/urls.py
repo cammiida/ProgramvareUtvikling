@@ -52,7 +52,7 @@ urlpatterns = [
     url(r'^lecture/(?P<lecture_id>[0-9]+)/$', views.lecture, name='lecture'),
     url(r'^addlecture/([0-9]+)/$', views.addlecture, name='addlecture'),
     url(r'^startlecture/([0-9]+)/$', views.startlecture, name='startlecture'),
-    url(r'^activelecture/(?P<lecture_id>[0-9]+)$', views.activelecture, name='activelecture'),
+    url(r'^activelecture/(?P<lecture_id>[0-9]+)/$', views.activelecture, name='activelecture'),
     url(r'^endlecture/$', views.endlecture, name='endlecture'),
 
     # Question urls

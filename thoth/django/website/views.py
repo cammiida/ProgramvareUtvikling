@@ -162,7 +162,7 @@ def activelecture(request, lecture_id):
     all_questions = Question.objects.filter(lecture=lecture_id).order_by('-timestamp')
     tasks = Task.objects.filter(lecture = lecture)
     print('This lecture is active')
-    return render(request,'teacher/activelecture.html',{'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions})
+    return render(request,'teacher/activelecture.html', {'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions})
 
 def savetaskhistory(request):
     if request.method == 'POST':
@@ -300,7 +300,7 @@ def answer_question(request, question_id):
             answer_question.save()
             a.update(answer_set=True)
             if lecture.active:
-                return redirect('activelecture')
+                return redirect('activelecture', lecture.id)
             else:
                 return redirect('lecture', lecture.id)
     else:
@@ -333,7 +333,6 @@ def delete_answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
     all_questions = Question.objects.filter(lecture=lecture.id).order_by('value')
-
     if request.POST.get('answer_button'):
         form = QuestionForm()
         #if request.method == 'POST':
@@ -342,7 +341,7 @@ def delete_answer_question(request, question_id):
         #if request.method == 'POST':
         question.delete()
         if lecture.active == True:
-            return redirect('activelecture')
+            return redirect('activelecture', lecture.id)
         else:
             return redirect('lecture', lecture.id)
 
