@@ -13,12 +13,14 @@
       Students online:<br/>
       0
     </div>
-    <button onclick="endlecture('{% url 'endlecture' %}', {{lecture.id}})">
+    <p>
+    <button onclick="location.href='{% url 'endlecture' %}', {{lecture.id}}">
       End Lecture
     </button>
-    <button onclick="endlecture('{% url 'lecture' lecture.id %}')">
+    <button onclick="location.href='{% url 'lecture' lecture.id %}'">
       Back to Lecture
     </button>
+    </p>
 
 </div>
 
@@ -40,6 +42,14 @@
   <div id="aside">
   {% include 'teacher/lecturespeed.html' %}
     <h1>Student Questions</h1>
+      <p>
+    <button onclick="location.href='{% url 'endlecture' %}', {{lecture.id}}">
+      Sort by value
+    </button>
+    <button onclick="location.href='{% url 'lecture' lecture.id %}'">
+      Sort by time
+    </button>
+    </p>
     	{% for question in all_questions %}
     		<div class="questiondiv">
           <div class="questionpresentation">

@@ -3,6 +3,12 @@
 {% block content %}
 <h1>Lecture: {{lecture.name}} (ID: <span id="lectureid">{{lecture.id}}</span>)</h1>
 
+<script>
+    var upVotes = 0;
+    var downVotes = 0;
+    var nonVotes = 0;
+
+</script>
 <div id="maincontent">
   <p>
     Here you can add tasks for your students. A task may be a simple question,
@@ -19,25 +25,36 @@
     </button>
   </p>
 
-
-  <p>
+<p>
     <div id="feedbackhistory">
+    <button class="" onclick="showfeedbackhistory('{% url 'feedbackhistory' %}')">
+          History
+        </button>
+
       <h1> Speed Feedback History </h1>
       This box collects information about lecture speed from each
       push notification sent during this lecture.
 
+    <div id="chart_wrapper" style="width: 100%">
+        <div id="pie_chart_div" style="alignment: left"></div>
+        <div id="line_chart_div" ></div>
+    </div>
+
+
       {% for entry in feedbackhistory %}
-      <div class="classlist">
+        <div class="classlist">
          Speed up votes: {{entry.up}} | Slow down votes {{entry.down}} | Students not voting: {{entry.none}}
          <br/>{{entry.timestamp}}
-      </div>
-      {% endfor %}
+
+        </div>
+
+        {% endfor %}
     </div>
-  </p>
-  <p>
+
+</p>
+
     <div id="taskhistory">
     </div>
-  </p>
 
     <div id="addtask">
     <h1>Create new task</h1>
@@ -115,8 +132,102 @@
     	{% endfor %}
   </div>
 </div>
+</body>
 
 
+    {% for entry in feedbackhistory %}
+    <script>
+        upVotes += {{entry.up}};
+        downVotes += {{entry.down}};
+        nonVotes += {{entry.none}};
+    </script>
+    {% endfor %}
+
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      /*******************************************************
+                            PIE CHART
+      *******************************************************/
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(drawPieChart);
+
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+
+      function drawPieChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Vote');
+        data.addColumn('number', 'Number');
+        data.addRows([
+          ['Speed up', upVotes],
+          ['Slow down', downVotes],
+          ['Not voting', nonVotes],
+        ]);
+
+        // Set chart options
+        var options = {'title':'Pie chart of summarized student feedback',
+                        titleTextStyle: {
+                                color: '#666666',    // any HTML string color ('red', '#cc00cc')
+                                fontName: 'Kanit', // i.e. 'Times New Roman'
+                                fontSize: 12, // 12, 18 whatever you want (don't specify px)
+                          },
+                       'width':400,
+                       'height':200,
+                       'backgroundColor': {
+                         'fill':'transparent'
+                        },
+                        colors: ['#81D787', '#EC8F6E', '#75777A'],
+
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var pie_chart = new google.visualization.PieChart(document.getElementById('pie_chart_div'));
+        pie_chart.draw(data, options);
+      }
+
+      /*******************************************************
+                            LINE CHART
+      *******************************************************/
+      google.charts.setOnLoadCallback(drawLineChart);
+        var js_line_chart_array = {{line_chart_array|safe}}
+
+      function drawLineChart() {
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Time');
+          data.addColumn('number', 'Speed up');
+          data.addColumn('number', 'Speed down');
+          data.addColumn('number', 'Not voting');
+          data.addRows(js_line_chart_array);
+
+
+        var options = {
+          title: 'Line chart of summarized student feedback',
+          titleTextStyle: {
+                color: '#666666',    // any HTML string color ('red', '#cc00cc')
+                fontName: 'Kanit', // i.e. 'Times New Roman'
+                fontSize: 12, // 12, 18 whatever you want (don't specify px)
+          },
+          legend: { position: 'bottom' },
+          'backgroundColor': {
+                         'fill':'transparent'
+                        },
+          legend: 'none',
+          colors: ['#81D787', '#EC8F6E', '#75777A'],
+        };
+
+        var lineChart = new google.visualization.LineChart(document.getElementById('line_chart_div'));
+
+        lineChart.draw(data, options);
+      }
+
+      </script>
 
 
 
