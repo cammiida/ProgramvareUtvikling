@@ -3,11 +3,8 @@ var express = require('express');
 var cors = require('cors');
 var app = require('express')();
 app.use(cors());
-//var http = require('http').Server(app);
-var http = require('http');
-var httpServer = http.Server(app);
+var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var path = require('path');
 
 var lectures = {};
 
@@ -77,7 +74,7 @@ io.on('connection',function(socket){
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
         // ADDED CODE
         setTimeout(function() {
-          resetTimer(lectureid, socket);}, 300000);
+          resetTimer(lectureid, socket);}, 3000);
       });
       socket.on('faster',function(){
         console.log('Student pressed faster button');
@@ -162,13 +159,6 @@ io.on('connection',function(socket){
         // her må vi først lagre dataene våre sånn at de ikke forsvinner.
         // dvs stuffe inn i db før delete.
         //delete lectures[lectureid];
-        console.log('Lecture has ended '+lectureid);
-        // SEND ENDMESSAGELECTURE TO OUR STUDENTS
-        var connectedstudents = lectures[lectureid].students;
-        for (var i = 0; i<connectedstudents.length;i++){
-          var student = connectedstudents[i];
-            io.to(student.id).emit('endlecture');
-            }
       });
     }
   });
@@ -209,26 +199,6 @@ function feedbackcalculator(lectureid){
                       STARTS SERVER
 ******************************************************/
 // Starts the server on port 3000.
-httpServer.listen(3000, function(){
+http.listen(3000, function(){
   console.log('listening on *:3000');
-
-/*
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end(index);
-}).listen(3000, '127.0.0.1');
-*/
-
-/*app.get('/', function (req, res) {
-  res.send('hi');
-});
-
-const server = http.createServer(app).listen(3000, function(err) {
-  if (err) {
-    console.log(err);
-  } else {
-    const host = server.address().address;
-    const port = server.address().port;
-    console.log(`Server listening on ${host}:${port}`);
-  }*/
 });
