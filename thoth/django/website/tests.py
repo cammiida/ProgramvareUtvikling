@@ -53,6 +53,31 @@ class TaskTest(TestCase):
         response = self.client.get(reverse('taskhistory',args=[1] ))
         self.assertEqual(response.status_code, 200)
 
+class FeedbackTest(TestCase):
+    def setUp(self):
+        # PROBLEM HERE: THIS REQUIRES LOGIN TO BE TESTED.
+        # Solution: create fake login.
+        self.user = User.objects.create_user(username='testuser',email=None,password='testpassword')
+        self.client.login(username='testuser',password='testpassword')
+        #add a course to db
+        self.course = Course.objects.create(name='TDT4140',teacher=self.user)
+        self.lecture = Lecture.objects.create(name='Introduction',course=self.course)
+
+    def test_feedback(self):
+
+        # save feedback
+        dict={
+        'up':1,'down':4,'none':2,'lectureid':1
+        }
+
+        response = self.client.post(reverse('savefeedback'),dict)
+        self.assertEqual(response.status_code, 200)
+
+        #  feedbackhistory
+        response = self.client.get(reverse('feedbackhistory',args=[1] ))
+        self.assertEqual(response.status_code, 200)
+
+
 
 
 class LectureTest(TestCase):
