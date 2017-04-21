@@ -284,9 +284,7 @@ def register(request):
 
 
 def answer_question(request, question_id):
-    questions = Question.objects.filter(id = question_id)
-    question = questions.first()
-    print(question)
+    question = Question.objects.get(id = question_id)
     lecture = question.lecture
     a = Api.objects.all().filter(question__exact = question)
     if request.method == 'POST':
