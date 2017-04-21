@@ -69,6 +69,8 @@ def courses(request):
 def lectures(request,course_id):
     course = Course.objects.get(id=course_id)
     lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
+    for lecture in lectures:
+        lecture.active = False
     # checks if the form is posted. If it is, create the object
     course = Course.objects.get(id=course_id)
     if request.method == 'POST':
@@ -90,9 +92,10 @@ def lecture(request,lecture_id):
     feedbackhistory = FeedbackHistory.objects.filter(lecture = lecture).order_by('timestamp')
     line_chart_array = []
     for entry in feedbackhistory:
-        date = entry.timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
+        date = entry.timestamp.strftime("%Y-%m-%d %H:%M:%S")
         entry_array = [date, entry.up, entry.down, entry.none]
         line_chart_array.append(entry_array)
+    feedbackhistory = FeedbackHistory.objects.filter(lecture=lecture).order_by('-timestamp')
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -224,7 +227,7 @@ def endlecture(request):
         lecture.save()
         print(lecture.active)
     print('lecture ended')
-    return redirect('lectures',lecture.course.id)
+    return redirect('lecture',lecture.id)
 
 def login1(request):
     form = LoginForm(request.POST or None)
@@ -281,7 +284,9 @@ def register(request):
 
 
 def answer_question(request, question_id):
-    question = Question.objects.get(id = question_id)
+    questions = Question.objects.filter(id = question_id)
+    question = questions.first()
+    print(question)
     lecture = question.lecture
     a = Api.objects.all().filter(question__exact = question)
     if request.method == 'POST':

@@ -116,6 +116,7 @@
           </div>
     		</div>
         <div class="answerdiv">{{ question.answer }}</br>
+
           <form action='{% url "delete_answer_question" question.id %}' method="post" )>
               {% csrf_token %}
               <input type="submit" value="Answer Question" method="post" name="answer_button" class="button">
