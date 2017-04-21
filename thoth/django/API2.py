@@ -19,7 +19,7 @@ lc = LuisClient("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/02aed
 handling = {"bruke": ["use", "used", "using", "works", "apply", "work"], "lage": ["make", "create", "generate", "form", "cause", "produce", "prepare", "write"], "virke": ["work", "handle", "apply", "control", "manage", "operate"], "sortere":["sort", "arrange", "catalogue", "classify", "distribute"], "handle": ["do", "achieve", ]}
 
 #Brukes til å teste. Ikke noe å bry seg om
-#q = Question.objects.filter(question__startswith='how')
+q = Question.objects.filter(question__startswith='What')
 
 # Denne metoden finner entitetene i spørsmålet og lagrer dette i api-databasen. Denne har kun to viktige felt: entity_word og entity_type.
 def predict(q):
@@ -42,8 +42,9 @@ def similar(q):
     likt_sporsmal = {}
     navn = ""
     ents = lc.query(question)
+    print(ents)
     for i in range(0, len(ents[2])):
-        
+        #Må alltid være et spørsmålsord. 
         if(ents[2][i] == "QuestionWord" and ents[1][i] == "what"):
             ls2 = fetch(ents[2][i], "how")
             ls = fetch(ents[2][i], ents[1][i])
@@ -53,6 +54,12 @@ def similar(q):
             for l in ls2:
                 liste[str(ents[2][i])].append(str(l))
             continue
+        
+        elif(ents[2][i] == "QuestionWord"):
+            ls = fetch(ents[2][i], ents[1][i])
+            liste[str(ents[2][i])] = []
+            for l in ls:
+                liste[str(ents[2][i]).append(str(l))]
                 
         if(ents[2][i] == "Action"):                         #   - Gjør det slik at man kan bruke synonymene jeg har lagret i handlingsdictionarien for actions 
             for name, age in handling.items():              #   - Dette gjør at man ikke trenger å bruke nøyaktig de samme ordene, men programmet finner uanseett
@@ -69,12 +76,13 @@ def similar(q):
             ls = fetch(ents[2][i], ents[1][i])
             liste[str(ents[2][i])] = []
             for l in ls:
-                liste[str(ents[2][i])].append(str(l))
-            
+                liste[str(ents[2][i])].append(str(l))    
+    
+    
 #  Dette kjører hvis det ikke er en action. Vil da ikke gå inn i handlingsdictionarien og kjøre synonymer. Alt annet vil derfor ikke sjekke om synonymer av ordene enda. 
-        
+    print(liste) 
                                                                 # - Skal brukes senere til å sjekke opp hvilke spørreord som kan brukes om hverandre (som synonymer)
-    try:                                                        # - Må ha denne for å sjekke om det faktisk finnes en algoritme i spørsmålet. Hvis ikke må den kjøre en alternativ rute.
+    try:                                                        # - Må ha denne for å sjekke om det faktisk finnes en algoritme i spørsmålet. Hvis ikke må den kjøre en alternativ                                                                  rute.
         for alg in liste['Algorithm']:
             if(alg in liste['QuestionWord'][0]):                # - Antar her at det kun er et spørreord i hver setning. Velger at hvis et spørsmål handler om en algoritme så må den                                                             algoritmen bli nevnt i det like spørsmålet. 
                 likt_sporsmal[alg] = 1                          # - Spørreord og algoritme er her like
@@ -83,7 +91,14 @@ def similar(q):
                         likt_sporsmal[alg] += 1                 #     algoritme, men ingen programmeringsspråk i spørsmålet må disse også være med videre ettersom generelle svar kan hjelpe.                    
                                                                 # - Fant ut at det var et likt programmeringsspråk i spørsmålet.
                 except:
-                    pass                                        # - Altså ingen programmeringsspråk i spørsmålet og derfor ikke vits å sjekke videre på. 
+                    pass   
+                try:
+                    if(alg in liste['Spesification::Verb']):
+                        likt_sporsmal[alg] += 1    
+                
+                except:
+                    pass
+                                                                # - Altså ingen programmeringsspråk i spørsmålet og derfor ikke vits å sjekke videre på. 
                                                                 # - Skal her hente ut svaret fra dette spørsmålet og gi det tilbake til brukeren (Eller fortsette å teste videre...)
                 try:
                     if(alg in str(liste['Action'])):
@@ -92,28 +107,42 @@ def similar(q):
                     continue
 
                 # Dette finner det spørsmålet som har flest like elementer og setter dette som svaret fra API. 
-                hoyeste = max(likt_sporsmal.items(), key=operator.itemgetter(1))[0]    
-                query = Question.objects.get(question=hoyeste)
-               #print(query)
-                q.api_answer = str(query.answer)
-                q.save()            
+
+                hoyeste = max(likt_sporsmal.items(), key=operator.itemgetter(1))[0]   
+                if(likt_sporsmal[hoyeste] > 0): 
+                    query = Question.objects.exclude(answer="").get(question=hoyeste)
+                    q.api_answer = str(query.answer)
+                    q.save()            
                                                             #   - Ting å utvide med senere:
                                                             #   - Teste om objektene som brukes i spørsmålet er like. Om de er like kan være vanskelig å sjekke, men kan lage en liste av       synonymer, men starter uten.
                                                             #   - Adjektiver er også noe som kan testes. Vanskelige er synonymer her også. Lister kan virke som beste måte å gå frem her. Vil   ikke hjelpe for alle tilfeller, men tror ikke det er nødvendig på dette nivået. 
                                                             #   - Må legge til hva som skjer hvis det er flere spørsmål som er like nok til å gi ut svar!
     except:
         for question in liste['QuestionWord']:
+            likt_sporsmal[question] = 0
             try:
-                if(question in liste['Action']):
-                    likt_sporsmal[question] = 1
+                if(question in liste['objects']):
                     try:
-                        if(question in liste['Objects']):
-                            likt_sporsmal[question] += 1
+                        if(question in liste['Action']):
+                            likt_sporsmal[question] += 2
+                            if(question in liste['Spesification::Verb']):
+                                likt_sporsmal[question] += 1
+            
                     except:
-                        continue
+                        if(question in liste['Spesification::Verb']):
+                            likt_sporsmal[question] += 2
+                                            
             except:
-                print("var ingen actions i setningen!")
-  
+                pass
+        hoyeste = max(likt_sporsmal.items(), key=operator.itemgetter(1))[0]  
+        print(likt_sporsmal)
+        if(likt_sporsmal[hoyeste] > 0):  
+            query = Question.objects.exclude(answer="").get(question=hoyeste)
+            q.api_answer = str(query.answer)
+            q.save()
+
+
+
 
 def update(sprs, svar):
         q = Question.objects.get(question=sprs).answer
@@ -130,9 +159,10 @@ def update(sprs, svar):
     
 # Dette brukes til testing så ingenting å bry seg om.
    
-#print(q[2])
+#print(q[1])
 #similar("How to sort a list of objects?")
-#predict(q[3])
+#predict(q[1])
+#similar(q[1])
 #predict(q[0])
 #predict(q[2])
 #print(fetch("Algorithm", "merge sort"))
