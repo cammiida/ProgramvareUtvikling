@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^about/$', views.about, name='about'),
     url(r'^teacher/about/$', views.about_teacher, name='about_teacher'),
-    url(r'^savetaskhistory/$', views.savetaskhistory),
+    url(r'^savetaskhistory/$', views.savetaskhistory, name='savetaskhistory'),
     url(r'^taskhistory/([0-9]+)?$', views.taskhistory, name='taskhistory'),
     url(r'^savefeedback/$', views.savefeedback),
     url(r'^feedbackhistory/([0-9]+)?$', views.feedbackhistory, name='feedbackhistory'),
@@ -43,7 +43,7 @@ urlpatterns = [
     url(r'^registration/$', views.register, name='register'),
     url(r'^login/$', views.login1, name="login"),
     url(r'^logout/$', views.logout_view, name="logout"),
-    url(r'^lecturespeed/$', views.lecturespeed, name='lecturespeed'),
+
     # Course urls
     url(r'^addcourse/$', views.addcourse, name='addcourse'),
     url(r'^courses/$', views.courses, name='courses'),

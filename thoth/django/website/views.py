@@ -93,8 +93,6 @@ def lecture(request,lecture_id):
         date = entry.timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
         entry_array = [date, entry.up, entry.down, entry.none]
         line_chart_array.append(entry_array)
-
-
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -228,11 +226,6 @@ def endlecture(request):
     print('lecture ended')
     return redirect('lectures',lecture.course.id)
 
-
-def lecturespeed(request):
-    return render(request, 'teacher/lecturespeed.html')
-
-
 def login1(request):
     form = LoginForm(request.POST or None)
     if request.POST and form.is_valid():
@@ -346,4 +339,3 @@ def delete_answer_question(request, question_id):
             return redirect('lecture', lecture.id)
 
     return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
-
