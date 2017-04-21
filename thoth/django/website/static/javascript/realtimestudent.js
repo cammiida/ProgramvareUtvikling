@@ -71,7 +71,7 @@ $(document).ready(function(){
                 CONNECTS THE STUDENTS
 ******************************************************/
 //socket = io.connect('http://thothnode.helemork.com');
-socket = io.connect('127.0.0.1');
+socket = io.connect('localhost:3000');
  var lectureid = $('#lectureid').html();
  console.log('asd'+lectureid);
  socket.emit('usertype','student', lectureid);
