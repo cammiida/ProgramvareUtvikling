@@ -26,31 +26,29 @@
   </p>
 
 <p>
+    {% if feedbackhistory %}
     <div id="feedbackhistory">
-    <button class="" onclick="showfeedbackhistory('{% url 'feedbackhistory' %}')">
-          History
-        </button>
-
       <h1> Speed Feedback History </h1>
       This box collects information about lecture speed from each
       push notification sent during this lecture.
 
-    <div id="chart_wrapper" style="width: 100%">
-        <div id="pie_chart_div" style="alignment: left"></div>
+    <div id="chart_wrapper">
+        <div id="pie_chart_div"></div>
         <div id="line_chart_div" ></div>
     </div>
 
-
-      {% for entry in feedbackhistory %}
-        <div class="classlist">
-         Speed up votes: {{entry.up}} | Slow down votes {{entry.down}} | Students not voting: {{entry.none}}
-         <br/>{{entry.timestamp}}
-
-        </div>
-
+      <button id="detailsbutton"> Show Details </button>
+      <div id="detailsbox">
+        {% for entry in feedbackhistory %}
+          <div class="classlist">
+           Speed up votes: {{entry.up}} | Slow down votes {{entry.down}} | Students not voting: {{entry.none}}
+           <br/>{{entry.timestamp}}
+          </div>
         {% endfor %}
-    </div>
+      </div>
 
+    </div>
+    {% endif %}
 </p>
 
     <div id="taskhistory">

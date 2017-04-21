@@ -1,6 +1,8 @@
 
 
 function showhistory(url){
+
+
 	$('#taskhistory').load(url,function(){
 		// Collects the total number of students of each type
 		var corran = $('#corran').text();
@@ -34,6 +36,11 @@ function showhistory(url){
 
 
 $(document).ready(function(){
+
+	$('#detailsbutton').click(function(){
+		$('#detailsbox').toggle();
+	});
+
 
 	$('#taskhistory').click(function(){
 		$('#taskhistory').hide();
