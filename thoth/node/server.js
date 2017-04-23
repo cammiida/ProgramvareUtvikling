@@ -1,8 +1,8 @@
 // Importing libraries
 var express = require('express');
-var cors = require('cors');
+//var cors = require('cors');
 var app = require('express')();
-app.use(cors());
+//app.use(cors());
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
