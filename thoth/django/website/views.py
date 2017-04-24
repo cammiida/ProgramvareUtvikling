@@ -137,23 +137,8 @@ def lecture(request,lecture_id):
                                                     'all_questions':all_questions, 'feedbackhistory':feedbackhistory,
                                                     'line_chart_array':line_chart_array})
 
-def addcourse(request):
-    # checks if the form is posted. If it is, create the object
-    if request.method == 'POST':
-        form = CourseForm(request.POST)
-        if form.is_valid():
-            # add course from form, but dont add it to db just yet.
-            course = form.save(commit=False)
-            # Now add current user to the course
-            course.teacher = request.user
-            # now add it to db since we now have all our stuffs
-            course.save()
-
-            return redirect('courses')
-    else:
-        form = CourseForm()
-    return render(request,'teacher/addcourse.html',{'form':form})
-
+# @desc Starts a lecture. Directs the user to the active lecture
+# @return integer - lecture id as primary key of that table in the database
 def startlecture(request, lecture_id):
     lectures = Lecture.objects.filter(course__teacher = request.user)
     print(lectures)
@@ -166,21 +151,9 @@ def startlecture(request, lecture_id):
     print('lecture started')
     return redirect('activelecture', lecture.id)
 
-def addlecture(request, course_id):
-    # checks if the form is posted. If it is, create the object
-    course = Course.objects.get(id=course_id)
-    if request.method == 'POST':
-        form = LectureForm(request.POST)
-        if form.is_valid():
-            lecture = form.save(commit=False)
-            lecture.course_id = course_id
-            lecture.save()
-            return redirect('lectures',course_id)
-    else:
-        form = LectureForm()
-    return render(request,'teacher/addlecture.html',{'form':form, 'course':course})
-
-
+# @desc Shows active lecture page.
+# @param The active lecture's id
+# @return object - the active lecture, query set - tasks relatet to this lecture and query set - questions related to this lecture
 def activelecture(request, lecture_id):
     lecture = Lecture.objects.get(id = lecture_id,course__teacher = request.user)
     lecture.active = True
@@ -189,6 +162,7 @@ def activelecture(request, lecture_id):
     print('This lecture is active')
     return render(request,'teacher/activelecture.html', {'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions})
 
+# @desc Saves the task history when a task is completed
 def savetaskhistory(request):
     if request.method == 'POST':
         print('POSTING STUFF')
@@ -203,6 +177,7 @@ def savetaskhistory(request):
         print('ERROR')
     return HttpResponse('OK')
 
+# @desc Saves the speed feedback from students every time a push notification is sent to the teacher
 def savefeedback(request):
     if request.method == 'POST':
         print('POSTING STUFF')
@@ -216,6 +191,7 @@ def savefeedback(request):
     else:
         print('ERROR')
     return HttpResponse('OK')
+
 
 def feedbackhistory(request,lectureid):
     entries = FeedbackHistory.objects.filter(lecture_id=lectureid)
