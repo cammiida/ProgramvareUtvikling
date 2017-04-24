@@ -32,25 +32,41 @@ namebringer for the project.
 # HOW TO RUN THE PAGE
 After installing all the django and node things you need as well as installing the projectoxford package from microsoft:
 
-## Open a power shell/git shell:
-1) Go inside the django folder
-2) activate the environment by writing;
+##Requirements:
+1) Python 3
+2) Node
+3) Git 
+
+##Branch (IMPORTANT!):
+Checkout dev branch to run locally. The master branch has settings specific for the web-edition. If running locally, run from the dev branch.
+
+## How to start the project:
+1) clone this repository
+2) Install django with pip install django (1.10)
+3) enter django folder
+4) activate the environment by writing;
 
 **environment\Scripts\activate.ps1**
 
+5) create database by writing 
 
-3) Run the django server by writing:
-	
+**python manage.py migrate**
+
+6) start development server: 
+
 **python.exe manage.py runserver**
 
-
 ## Open a new power shell/git-shell
-4) go into the node folder
-5) run the nodeserver by writing:
+7) go into the node folder
+8) Install required packages (express, socket.io, cors, projectoxford: 
+
+**npm install <package>**
+
+9) run the nodeserver by writing:
 
 **node server.js**
 
-6) GO INTO YOUR LOCALHOST in your preferred web browser by typing:
+10) GO INTO YOUR LOCALHOST in your preferred web browser by typing:
 
 **localhost:8000**
 
