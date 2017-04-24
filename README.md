@@ -29,16 +29,15 @@ As the website aims to bring balance into the classrom, he became an inspiration
 namebringer for the project.
 
 
-# HOW TO RUN THE PAGE
-After installing all the django and node things you need as well as installing the projectoxford package from microsoft:
+# SETUP
 
-##Requirements:
+## Requirements:
 1) Python 3
 2) Node
 3) Git 
 
-##Branch (IMPORTANT!):
-Checkout dev branch to run locally. The master branch has settings specific for the web-edition. If running locally, run from the dev branch.
+## Branch (IMPORTANT!):
+Checkout dev branch to run locally. The master branch has deployment specific settings specific. If running locally, run from the dev branch.
 
 ## How to start the project:
 1) clone this repository
@@ -66,7 +65,7 @@ Checkout dev branch to run locally. The master branch has settings specific for 
 
 **node server.js**
 
-10) GO INTO YOUR LOCALHOST in your preferred web browser by typing:
+10) Access the webpage at LOCALHOST in your preferred web browser by typing:
 
 **localhost:8000**
 
