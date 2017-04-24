@@ -1,10 +1,12 @@
 
 
 function showhistory(url){
+
+
 	$('#taskhistory').load(url,function(){
 		// Collects the total number of students of each type
 		var corran = $('#corran').text();
-		var worngan = $('#worngan').text();
+		var worngan = $('#worngan').text(); //typo, but afraid to not find everything to change
 		var timeoan = $('#timeoan').text();
 		// Turns strings into numbers
 		corran = parseInt(corran);
@@ -34,6 +36,11 @@ function showhistory(url){
 
 
 $(document).ready(function(){
+
+	$('#detailsbutton').click(function(){
+		$('#detailsbox').toggle();
+	});
+
 
 	$('#taskhistory').click(function(){
 		$('#taskhistory').hide();

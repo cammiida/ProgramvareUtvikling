@@ -1,6 +1,8 @@
 // Importing libraries
 var express = require('express');
+var cors = require('cors');
 var app = require('express')();
+app.use(cors());
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
@@ -72,7 +74,7 @@ io.on('connection',function(socket){
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
         // ADDED CODE
         setTimeout(function() {
-          resetTimer(lectureid, socket);}, 3000);
+          resetTimer(lectureid, socket);}, 300000);
       });
       socket.on('faster',function(){
         console.log('Student pressed faster button');

@@ -644,3 +644,26 @@ Student frontpage things to HIDE
 	flex:1;
 	min-width:100%;
 }
+
+#chart_wrapper{
+	margin: 0;
+	width: 100%;
+	border:none;
+}
+
+#pie_chart_div{
+	height: 225px;
+	width: 30%;
+	float: left;
+	alignment: left;
+}
+
+#line_chart_div{
+	height: 225px;
+	width: 70%;
+	float: left;
+}
+
+#detailsbox{
+	display:none;
+}

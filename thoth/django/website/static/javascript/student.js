@@ -1,4 +1,6 @@
-/***************************************************
+
+/*
+**************************************************
 AT THIS TIME THE ONLY THING THIS DOES IS THE buttons
 AND DISPLAYING THEM
 ***************************************************/
@@ -80,6 +82,10 @@ AND DISPLAYING THEM
  ***************************************************/
 $(document).ready(function(){
 
+  // Quickfix to remove wrong validaton look upon submitting and emptying the question field.
+  $('#id_question').removeAttr('required');
+
+
   /***************************************************
                LOADING AND HIDING LECTURE CONTENT
   ***************************************************/
@@ -105,16 +111,22 @@ $(document).ready(function(){
       var formData = {
         'question' : $('#id_question').val(),
       };
+      //Stop the page from normally refreshing and disconnecting our students:
+      event.preventDefault();
+      if(formData.question == ''){
+        return;
+      }
+
 
       var url = $('#addquestionform').attr('action');
+      $('#id_question').val('');
       $.post(url,formData)
       // when this function has posted the question with ajax, we want to
       // reload the question div but not the page. That's why we use ajax.
       .done(function(data){
           $('#questionlist').load('/student/question_list/'+$('#lectureid').html()+'/');
       });
-      //Stop the page from normally refreshing and disconnecting our students:
-      event.preventDefault();
+
     });
 
 });

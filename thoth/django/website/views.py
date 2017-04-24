@@ -15,6 +15,7 @@ from django.http import HttpResponse
 from django.template import loader
 import sys
 #sys.path.insert(0, '/Users/hakongrov/Documents/INDØK/2.År/2.Semester/Programvareutvikling/GIT/ProgramvareUtviklingGroup50/thoth/django')
+# Importing the natural language API script
 import API2 as apis
 
 
@@ -69,6 +70,8 @@ def courses(request):
 def lectures(request,course_id):
     course = Course.objects.get(id=course_id)
     lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
+    for lecture in lectures:
+        lecture.active = False
     # checks if the form is posted. If it is, create the object
     course = Course.objects.get(id=course_id)
     if request.method == 'POST':
@@ -87,8 +90,13 @@ def lecture(request,lecture_id):
     all_questions = Question.objects.filter(lecture = lecture_id).order_by('-timestamp')
     lecture = Lecture.objects.get(id=lecture_id)
     tasks = Task.objects.filter(lecture = lecture)
-    feedbackhistory = FeedbackHistory.objects.filter(lecture = lecture)
-    #lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
+    feedbackhistory = FeedbackHistory.objects.filter(lecture = lecture).order_by('timestamp')
+    line_chart_array = []
+    for entry in feedbackhistory:
+        date = entry.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        entry_array = [date, entry.up, entry.down, entry.none]
+        line_chart_array.append(entry_array)
+    feedbackhistory = FeedbackHistory.objects.filter(lecture=lecture).order_by('-timestamp')
     if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
@@ -102,7 +110,9 @@ def lecture(request,lecture_id):
             return redirect('lecture', lecture_id)
     else:
         form = TaskForm()
-    return render(request, 'teacher/lecture.html', {'lecture':lecture, 'form':form, 'tasks':tasks, 'all_questions':all_questions, 'feedbackhistory':feedbackhistory})
+    return render(request, 'teacher/lecture.html', {'lecture':lecture, 'form':form, 'tasks':tasks,
+                                                    'all_questions':all_questions, 'feedbackhistory':feedbackhistory,
+                                                    'line_chart_array':line_chart_array})
 
 def addcourse(request):
     # checks if the form is posted. If it is, create the object
@@ -123,13 +133,15 @@ def addcourse(request):
 
 def startlecture(request, lecture_id):
     lectures = Lecture.objects.filter(course__teacher = request.user)
+    print(lectures)
     for lecture in lectures:
         lecture.active = False
         lecture.save()
-    lecture = Lecture.objects.get(id=lecture_id)
+    lecture = Lecture.objects.get(id=lecture_id, course__teacher = request.user)
     lecture.active = True
     lecture.save()
-    return redirect('activelecture')
+    print('lecture started')
+    return redirect('activelecture', lecture.id)
 
 def addlecture(request, course_id):
     # checks if the form is posted. If it is, create the object
@@ -146,11 +158,13 @@ def addlecture(request, course_id):
     return render(request,'teacher/addlecture.html',{'form':form, 'course':course})
 
 
-def activelecture(request):
-    lecture = Lecture.objects.get(active=True,course__teacher = request.user)
-    all_questions = Question.objects.filter(lecture=lecture.id).order_by('-timestamp')
+def activelecture(request, lecture_id):
+    lecture = Lecture.objects.get(id = lecture_id,course__teacher = request.user)
+    lecture.active = True
+    all_questions = Question.objects.filter(lecture=lecture_id).order_by('-timestamp')
     tasks = Task.objects.filter(lecture = lecture)
-    return render(request,'teacher/activelecture.html',{'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions})
+    print('This lecture is active')
+    return render(request,'teacher/activelecture.html', {'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions})
 
 def savetaskhistory(request):
     if request.method == 'POST':
@@ -206,15 +220,15 @@ def taskhistory(request,taskid):
 
 
 def endlecture(request):
-    lecture = Lecture.objects.get(active=True,course__teacher = request.user)
-    lecture.active = False
-    lecture.save()
-    return  redirect('lectures',lecture.course.id)
-
-
-def lecturespeed(request):
-    return render(request, 'teacher/lecturespeed.html')
-
+    lectures = Lecture.objects.filter(course__teacher = request.user)
+    #lecture = Lecture.objects.get(active=True,course__teacher = request.user)
+    for lecture in lectures:
+        print(lecture.active)
+        lecture.active = False
+        lecture.save()
+        print(lecture.active)
+    print('lecture ended')
+    return redirect('lecture',lecture.id)
 
 def login1(request):
     form = LoginForm(request.POST or None)
@@ -238,15 +252,17 @@ def add_question(request,lectureid):
             addquestion = form.save(commit=False)
             addquestion.lecture_id = lectureid
             addquestion.save()
+            form = QuestionForm()
             try:
+                # Using the natural language API script to check if there are any similar questions in the database that is already answered that could also answer the newly asked question. For more information see API2.py. 
                 apis.predict(addquestion)
                 apis.similar(addquestion)
             except:
                 pass
-            return redirect('/student/lecture/?lectureid=' + str(lectureid))
     else:
         form = QuestionForm()
-    return render(request, 'student/add_question.html', {'form': form})
+
+    return redirect('/student/lecture/?lectureid=' + str(lectureid), {'form': form})
 
 
 def question_list(request,lecture_id):
@@ -272,17 +288,20 @@ def register(request):
 def answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
+    # Finds all the API entities that has the question as its primary key. 
     a = Api.objects.all().filter(question__exact = question)
     if request.method == 'POST':
         form = AnswerForm(request.POST, instance=question)
         if form.is_valid():
             answer_question = form.save(commit=False)
             answer_question.lecture_id = lecture.id
+            # Updates the API_answer when a lecturer changes his answer.
             apis.update(answer_question.question, answer_question.answer)
             answer_question.save()
+            # If the question wasn't already answered the API entities for this question should all update it's answer_set attribute to show that the questions they refer to actually now has been answered. 
             a.update(answer_set=True)
             if lecture.active:
-                return redirect('activelecture')
+                return redirect('activelecture', lecture.id)
             else:
                 return redirect('lecture', lecture.id)
     else:
@@ -315,7 +334,6 @@ def delete_answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
     all_questions = Question.objects.filter(lecture=lecture.id).order_by('value')
-
     if request.POST.get('answer_button'):
         form = QuestionForm()
         #if request.method == 'POST':
@@ -323,8 +341,9 @@ def delete_answer_question(request, question_id):
     if request.POST.get('delete_button'):
         #if request.method == 'POST':
         question.delete()
-        if lecture.active:
-            return redirect('activelecture')
+        if lecture.active == True:
+            return redirect('activelecture', lecture.id)
         else:
             return redirect('lecture', lecture.id)
+
     return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})

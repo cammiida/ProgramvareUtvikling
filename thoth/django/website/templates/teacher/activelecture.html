@@ -13,12 +13,14 @@
       Students online:<br/>
       0
     </div>
-    <button onclick="endlecture('{% url 'endlecture' %}', {{lecture.id}})">
+    <p>
+    <button onclick="location.href='{% url 'endlecture' %}'">
       End Lecture
     </button>
-    <button onclick="endlecture('{% url 'lecture' lecture.id %}')">
-      Back to Lecture
+    <button onclick="location.href='{% url 'lectures' lecture.course.id %}'">
+      Back to Lectures
     </button>
+    </p>
 
 </div>
 

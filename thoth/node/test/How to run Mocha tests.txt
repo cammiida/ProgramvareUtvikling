@@ -1,10 +1,16 @@
 How to run node.js tests:
 
+
 1. You need to have Mocha, Chai, socket installed (perhaps some other moduels as well). Install these by entering the node folder and write 
 	- npm install mocha
 	- npm install chai
 	- npm install socket.io
+
+2. You have to have the node server running. Open up a terminal and start the node server with: 
+	node server.js
+
+ps! You can not have a open browser with the thoth webpage open. This could interfere with the tests. If a teacher or student is connected to the server we are testing some of the assertions would be wrong. 
 	
-2. open a shell or some form of terminal. Run this command:
+3. open a shell or some form of terminal. Run this command:
 	mocha test
 It should now run the test and you should see the different tests with a check mark next to it. 
