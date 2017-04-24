@@ -36,23 +36,23 @@ After installing all the django and node things you need as well as installing t
 1) Go inside the django folder
 2) activate the environment by writing;
 
-environment\Scripts\activate.ps1
+**environment\Scripts\activate.ps1**
 
 
 3) Run the django server by writing:
 	
-python.exe manage.py runserver
+**python.exe manage.py runserver**
 
 
 ## Open a new power shell/git-shell
 4) go into the node folder
 5) run the nodeserver by writing:
 
-node server.js
+**node server.js**
 
 6) GO INTO YOUR LOCALHOST in your preferred web browser by typing:
 
-localhost:8000
+**localhost:8000**
 
 # HOW TO RUN THE TESTS
 We have tests both for node and Django. The tests for node uses Mocha with Chai. 
@@ -63,10 +63,11 @@ You need to have both django and Node installed as previosly stated. In addition
 2) Navigate to the node folder where the node server.js is
 3) Install Mocha by writing:
 
-npm install mocha
+**npm install mocha**
 
 4) Install chai by writing:
-npm install chai
+
+**npm install chai**
 
 ## Run node tests
 You are now ready to run the tests. Start by running the node tests
@@ -74,11 +75,11 @@ You are now ready to run the tests. Start by running the node tests
 2) Navigate to the node folder
 3) Run tests by writing
 
-mocha test
+**mocha test**
 
 ## Run django tests
 1) Open a terminal/power shell
 2) Navigate to the django folder that contains manage.py
 3) run tests by writing:
 
-python3 manage.py test
+**python3 manage.py test**
