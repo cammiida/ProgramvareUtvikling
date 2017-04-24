@@ -1,3 +1,9 @@
+#=====================================================================
+#                       NATURAL LANGUAGE API
+#=====================================================================
+
+# This API is a bit hard to understand. If you have any questions regarding the code or the LUIS application that is being used in this script please ask Håkon. I have tried to comment as well as I can, but the thoughts behind is perhaps not always clear. 
+
 # Importing packages needed to run the script
 # The projectOxford package have to be downloaded. Run "pip install projectoxford" to download this package from microsoft.
 from projectoxford.luis import LuisClient   
