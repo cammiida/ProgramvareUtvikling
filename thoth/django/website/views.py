@@ -18,20 +18,29 @@ import sys
 # Importing the natural language API script
 import API2 as apis
 
-
+# @desc Directs the user to the index page
 def index (request):
     return render(request, 'index.html')
 
+# @desc Directs the user to the teacher about page
+# @return boolean - if the user is a teacher, show the right header
 def about_teacher (request):
     return render(request, 'about.html',{'teacher': True})
 
+# @desc Directs the user to the student about page
+# @return no boolean - automatically false
 def about (request):
     return render(request, 'about.html')
 
+# @desc Directs the user to the student index page.
+# @return boolean - to not show teacher drop down menu
 def student(request):
-    #return render(request,'student/question_list.html')
     return render(request, 'student/index.html', {'not_show_icon': True})
 
+# @desc Directs the user to the lecture as a student.
+# @param Lecture id. Primary key for lecture in database. Use this to find the right lecture.
+# @return if the ID given is incorrect - return student index page with boolean - to not show drop down menu and string - error message
+# else if the ID given is correct return the student lecture page with object - lecture, query set - tasks, query set - all_questions and form - form
 def studentlecture(request, lecture_id):
     try:
         # TODO: use LectureForm fra forms.py
@@ -44,13 +53,16 @@ def studentlecture(request, lecture_id):
     form = QuestionForm()
     return render(request, 'student/lecture.html', {'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions, 'form':form})
 
-#Shows username of teacher that is logged in, if noone is logged in, none is shown
+# @desc Directs the user to the teacher page. Shows username of teacher that is logged in, if noone is logged in, none is shown
+# @return Username of current user
 def teacher(request):
     username = None
     if request.user.is_authenticated:
         username = request.user.username
     return render(request, 'teacher/index.html', {'username': username})
 
+# @desc Directs the teacher to a list of his/her courses. Teacher can also add new courses
+# @return The courses page with an empty form and query set - courses
 def courses(request):
     courses = Course.objects.filter(teacher=request.user)
     # checks if the form is posted. If it is, create the object
@@ -68,12 +80,15 @@ def courses(request):
         form = CourseForm()
     return render(request, 'teacher/courses.html', {'courses':courses,'form':form})
 
+# @desc List of lectures in a course for a teacher. Teacher can add new lectures.
+# @return The lectures page with an empty form, query set - lectures and object - the course that the lectures are in
 def lectures(request,course_id):
     course = Course.objects.get(id=course_id)
     lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
+    # Make sure no lecture for this teacher is active
     for lecture in lectures:
         lecture.active = False
-    # checks if the form is posted. If it is, create the object
+    # Checks if the form is posted. If it is, create the object
     course = Course.objects.get(id=course_id)
     if request.method == 'POST':
         form = LectureForm(request.POST)
@@ -87,16 +102,23 @@ def lectures(request,course_id):
 
     return render(request, 'teacher/lectures.html', {'lectures':lectures,'course':course,'form':form})
 
+# @desc Lecture page with information about history, tasks and questions.
+# @return lecture page with empty form, object - lecture, query set - tasks for that lecture, query set - questions for that lecture,
+# query set - feedback history for that lecture and array - information for Google line chart
 def lecture(request,lecture_id):
     all_questions = Question.objects.filter(lecture = lecture_id).order_by('-timestamp')
     lecture = Lecture.objects.get(id=lecture_id)
     tasks = Task.objects.filter(lecture = lecture)
+    #feedbackhistory to sort the data for the line chart correctly - oldest first
     feedbackhistory = FeedbackHistory.objects.filter(lecture = lecture).order_by('timestamp')
+
+    # Create information array for Google line chart
     line_chart_array = []
     for entry in feedbackhistory:
         date = entry.timestamp.strftime("%Y-%m-%d %H:%M:%S")
         entry_array = [date, entry.up, entry.down, entry.none]
         line_chart_array.append(entry_array)
+    #feedbackhistory to sort the feedback information under the charts correctly - newest first
     feedbackhistory = FeedbackHistory.objects.filter(lecture=lecture).order_by('-timestamp')
     if request.method == 'POST':
         form = TaskForm(request.POST)
