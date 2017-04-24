@@ -25,7 +25,11 @@ SECRET_KEY = '&s6ir!*75=*8b8$t&md=oy$-6@ig6w$d+%v5goezqevos59hni'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ['localhost']
+
+#ALLOWED_HOSTS = ['thoth.helemork.com']
+
 
 
 # Application definition
