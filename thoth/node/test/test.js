@@ -1,5 +1,6 @@
 var io = require('socket.io-client')
 , expect = require("chai").expect;
+var server = require('../server');
 	//,io_server = require('socket.io').listen(3001);
 
 var socketUrl = 'http://localhost:3000';
