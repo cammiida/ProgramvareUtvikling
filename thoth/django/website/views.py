@@ -44,6 +44,7 @@ def studentlecture(request, lecture_id):
     form = QuestionForm()
     return render(request, 'student/lecture.html', {'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions, 'form':form})
 
+#Shows username of teacher that is logged in, if noone is logged in, none is shown
 def teacher(request):
     username = None
     if request.user.is_authenticated:
@@ -230,16 +231,19 @@ def endlecture(request):
     print('lecture ended')
     return redirect('lecture',lecture.id)
 
+#login using Django built-in user
 def login1(request):
     form = LoginForm(request.POST or None)
+    #gets user and validates
     if request.POST and form.is_valid():
         user = form.login(request)
         if user:
+            #built in django login system, logging in the user
             login(request, user)
             return redirect("teacher")# Redirect to a success page.
     return render(request, 'teacher/login.html', {'form': form })
 
-
+#logs out user
 def logout_view(request):
     logout(request)
     return render(request, 'teacher/logout.html')
@@ -272,6 +276,7 @@ def question_list(request,lecture_id):
 def register(request):
     registered = False
     if(request.method == 'POST'):
+        #checks if form is valid using build in function
         user_form = Userform(data=request.POST)
         if(user_form.is_valid()):
             user = user_form.save()
@@ -279,7 +284,8 @@ def register(request):
             user.save()
             registered = True
         else:
-            print (user_form.errors)
+            #shows what part of form is incorrect
+            print(user_form.errors)
     else:
         user_form = Userform()
     return render(request, 'teacher/registration.html', {'form': user_form, 'registered': registered})

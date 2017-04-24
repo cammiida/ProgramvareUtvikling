@@ -123,9 +123,10 @@ $(document).ready(function(){
 	/******************************************************
 	                     LECTURE SPEED LOGIC
 	******************************************************/
+  //if you can recieve push notifications
   var canCall = true;
+
   socket.on('update', function(data){
-    console.log(data);
     if (data.students < 1){
       $('#fast_slow').html('too few students online');
     }
@@ -133,7 +134,8 @@ $(document).ready(function(){
     console.log("cancall = " + canCall)
       slowerPercent = data.slower/data.students;
       fasterPercent = data.faster/data.students;
-      if (slowerPercent >= 0.4){
+
+      if (slowerPercent >= 0.4){	//chosen threshold for when pushnotification can be shown
         if (canCall){
           showNotification("too slow " + slowerPercent*100 + "% means this", "/static/images/thoth.png");
 					// Want to do an ajax post to save the history into the database
@@ -144,13 +146,13 @@ $(document).ready(function(){
 						down:data.faster,
 						none:(data.students-data.slower-data.faster),
 					});
-					canCall = false;
+		  canCall = false;
+		  //timer for how often push notifications can be shown, in ms
           setTimeout(function() {canCall = true;}, 10000);}
         $('#fast_slow').html('the lecture speed is too slow');}
       else if (fasterPercent >= 0.4){
         if (canCall){
           showNotification("too fast " + fasterPercent*100 + "% means this", "/static/images/thoth.png");
-          canCall = false;
 					// Want to do an ajax post to save the history into the database
 					// for later use.
 					$.post('/savefeedback/',{
@@ -159,6 +161,8 @@ $(document).ready(function(){
 						down:data.faster,
 						none:(data.students-data.slower-data.faster),
 					});
+          canCall = false;
+          //timer for how often push notifications can be shown, in ms
           setTimeout(function() {canCall = true;}, 10000);}
         $('#fast_slow').html('the lecture speed is too fast');}
       else{
@@ -171,8 +175,7 @@ $(document).ready(function(){
 	                   SHOW NOTOFICATION
 ******************************************************/
 function showNotification(message, icon){
-    var title = "Dette er en test";
-    console.log("kjører denne?")
+    var title = "Adjust your lecture speed";
 	var options = 	{
 						body: message,
 						icon: icon,
@@ -180,7 +183,6 @@ function showNotification(message, icon){
 						}
 	var notification = new Notification(title, options);
 		notification.onshow = function(){
-			  console.log("dette er en test")
 			  setTimeout(function(){
 			  	notification.close();
 			  }, 2000)

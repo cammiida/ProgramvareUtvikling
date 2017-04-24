@@ -72,7 +72,7 @@ io.on('connection',function(socket){
         socket.slower = true;
         socket.faster = false;
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
-        // ADDED CODE
+        //Timer for when student votes time out
         setTimeout(function() {
           resetTimer(lectureid, socket);}, 300000);
       });
@@ -81,7 +81,7 @@ io.on('connection',function(socket){
         socket.faster = true;
         socket.slower = false;
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
-        //ADDED CODE
+        //Timer for when student votes time out
         setTimeout(function() {
           resetTimer(lectureid, socket);}, 300000);
       });
