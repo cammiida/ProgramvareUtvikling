@@ -29,27 +29,72 @@ As the website aims to bring balance into the classrom, he became an inspiration
 namebringer for the project.
 
 
-# HOW TO RUN THE PAGE
-After installing all the django and node things you need as well as installing the projectoxford package from microsoft:
+# SETUP
 
-## Open a power shell/git shell:
-1) Go inside the django folder
-2) activate the environment by writing;
+## Requirements:
+1) Python 3
+2) Node
+3) Git 
 
-environment\Scripts\activate.ps1
+## Branch (IMPORTANT!):
+Checkout dev branch to run locally. The master branch has deployment specific settings specific. If running locally, run from the dev branch.
 
+## How to start the project:
+1) clone this repository
+2) Install django with pip install django (1.10)
+3) enter django folder
+4) activate the environment by writing;
 
-3) Run the django server by writing:
-	
-python.exe manage.py runserver
+**environment\Scripts\activate.ps1**
 
+5) create database by writing 
+
+**python manage.py migrate**
+
+6) start development server: 
+
+**python.exe manage.py runserver**
 
 ## Open a new power shell/git-shell
-4) go into the node folder
-5) run the nodeserver by writing:
+7) go into the node folder
+8) Install required packages (express, socket.io, cors, projectoxford: 
 
-node server.js
+**npm install <package>**
 
-6) GO INTO YOUR LOCALHOST in your preferred web browser by typing:
+9) run the nodeserver by writing:
 
-localhost:8000
+**node server.js**
+
+10) Access the webpage at LOCALHOST in your preferred web browser by typing:
+
+**localhost:8000**
+
+# HOW TO RUN THE TESTS
+We have tests both for node and Django. The tests for node uses Mocha with Chai. 
+
+## Install Modules for Node
+You need to have both django and Node installed as previosly stated. In addition you need the Mocha and Chai modules installed. 
+1) Open a new power shell/Terminal
+2) Navigate to the node folder where the node server.js is
+3) Install Mocha by writing:
+
+**npm install mocha**
+
+4) Install chai by writing:
+
+**npm install chai**
+
+## Run node tests
+You are now ready to run the tests. Start by running the node tests
+1) Open terminal/power shell
+2) Navigate to the node folder
+3) Run tests by writing
+
+**mocha test**
+
+## Run django tests
+1) Open a terminal/power shell
+2) Navigate to the django folder that contains manage.py
+3) run tests by writing:
+
+**python3 manage.py test**

@@ -74,7 +74,7 @@ io.on('connection',function(socket){
         io.to(lectures[lectureid].teacherid).emit('update',feedbackcalculator(lectureid));
         //Timer for when student votes time out
         setTimeout(function() {
-          resetTimer(lectureid, socket);}, 300000);
+          resetTimer(lectureid, socket);}, 3000);
       });
       socket.on('faster',function(){
         console.log('Student pressed faster button');
