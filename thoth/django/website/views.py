@@ -192,13 +192,18 @@ def savefeedback(request):
         print('ERROR')
     return HttpResponse('OK')
 
-
+# @desc Fetches the feedback history of current lecture from database
+# @param The current lecture ID as primary key from database
+# @return query set - entries from feedback history
 def feedbackhistory(request,lectureid):
     entries = FeedbackHistory.objects.filter(lecture_id=lectureid)
     return render(request,'teacher/taskhistory.html',{
         'entries':entries,
     })
 
+# @desc Collects information about tasks.
+# @param Current task ID as primary key from database
+# @return query set - taskentries, object - task, integers - number of correct, wrong and timed out answers
 def taskhistory(request,taskid):
     taskentries = TaskHistory.objects.filter(task_id=taskid)
     total_correct_answers = 0
@@ -217,7 +222,8 @@ def taskhistory(request,taskid):
         'total_timeout_answers':total_timeout_answers
     })
 
-
+# @desc Ends the current lecture and redirects the teacher to the (not active) lecture page
+# @ return integer - the current lecture's ID as primary key from database
 def endlecture(request):
     lectures = Lecture.objects.filter(course__teacher = request.user)
     #lecture = Lecture.objects.get(active=True,course__teacher = request.user)
@@ -229,7 +235,8 @@ def endlecture(request):
     print('lecture ended')
     return redirect('lecture',lecture.id)
 
-#login using Django built-in user
+# @desc Login using Django built-in user
+# @return form - empty LoginForm
 def login1(request):
     form = LoginForm(request.POST or None)
     #gets user and validates
@@ -241,12 +248,14 @@ def login1(request):
             return redirect("teacher")# Redirect to a success page.
     return render(request, 'teacher/login.html', {'form': form })
 
-#logs out user
+# @desc Logs out user
 def logout_view(request):
     logout(request)
     return render(request, 'teacher/logout.html')
 
-
+# @desc Adds a question to the database and connects it with the current lecture. Natural language API checks the question
+# @param The current lecture ID as primary key from database
+# @return form - empty QuestionForm, though cleaning the field using JavaScript
 def add_question(request,lectureid):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -268,11 +277,15 @@ def add_question(request,lectureid):
 
     return redirect('/student/lecture/?lectureid=' + str(lectureid), {'form': form})
 
-
+# @desc Fetches the questions related to the current lecture from database ordered by time, newest first.
+# @param The current lecture ID as primary key from database
+# @return query set - all_questions of that lecture
 def question_list(request,lecture_id):
     all_questions = Question.objects.filter(lecture_id=lecture_id).order_by('-timestamp')
     return render(request,'student/question_list.html',{'all_questions' : all_questions})
 
+# @desc Registers new user (teacher) and redirects to registration.html
+# @return empty - Userform and boolean - if the user is already registered or not
 def register(request):
     registered = False
     if(request.method == 'POST'):
@@ -290,7 +303,9 @@ def register(request):
         user_form = Userform()
     return render(request, 'teacher/registration.html', {'form': user_form, 'registered': registered})
 
-
+# @desc Lets the teacher answer questions posted by students.
+# @param The current question ID as primary key from database
+# @return object - current question, object - current lecture, form - empty AnswerForm
 def answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
@@ -308,6 +323,7 @@ def answer_question(request, question_id):
             #should all update it's answer_set attribute to show that the questions
             #they refer to actually now has been answered. 
             a.update(answer_set=True)
+            # If the lecture is active, stay on the active lecture page. If not, stay on the not active lecture page
             if lecture.active:
                 return redirect('activelecture', lecture.id)
             else:
@@ -316,11 +332,12 @@ def answer_question(request, question_id):
         form = AnswerForm(instance=question)
         return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
 
+# @desc Lets the students vote on a question
+# @param The current question ID as primary key from database
 def vote(request, question_id):
     print("test")
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
-    all_questions = Question.objects.filter(lecture=lecture.id).order_by('value')
     form = QuestionForm()
     if request.POST.get('up_button'):
         print("up")
@@ -336,8 +353,11 @@ def vote(request, question_id):
             question.save()
 
     return HttpResponse('OK')
-    #return render(request, 'student/lecture.html', {'lecture':lecture, 'all_questions':all_questions, 'form':form})
 
+# @desc Lets the teacher delete or answer a question, depends on which button the teacher clicked
+# @param The current question ID as primary key from database
+# @return If delete button: integer - current lecture ID. Teacher stays on current page
+# Else if answer button, teacher is redirected to an answer page with object - current question, object - current lecture and form - empty Answerform
 def delete_answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
