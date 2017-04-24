@@ -133,7 +133,7 @@ class LectureTest(TestCase):
 
         # try to open page before doing stuffs:
         response = self.client.get(reverse('endlecture'))
-        self.assertRedirects(response,reverse('lectures',args=[self.course.id]))
+        self.assertRedirects(response,reverse('lecture',args=[lecture.id]))
 
 
 class CourseTest(TestCase):

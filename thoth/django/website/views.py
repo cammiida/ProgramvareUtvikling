@@ -258,7 +258,9 @@ def add_question(request,lectureid):
             addquestion.save()
             form = QuestionForm()
             try:
-                # Using the natural language API script to check if there are any similar questions in the database that is already answered that could also answer the newly asked question. For more information see API2.py. 
+                # Using the natural language API script to check if there are any similar questions
+                #in the database that is already answered that could also answer the
+                #newly asked question. For more information see API2.py.
                 apis.predict(addquestion)
                 apis.similar(addquestion)
             except:
@@ -294,7 +296,7 @@ def register(request):
 def answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
-    # Finds all the API entities that has the question as its primary key. 
+    # Finds all the API entities that has the question as its primary key.
     a = Api.objects.all().filter(question__exact = question)
     if request.method == 'POST':
         form = AnswerForm(request.POST, instance=question)
@@ -304,7 +306,9 @@ def answer_question(request, question_id):
             # Updates the API_answer when a lecturer changes his answer.
             apis.update(answer_question.question, answer_question.answer)
             answer_question.save()
-            # If the question wasn't already answered the API entities for this question should all update it's answer_set attribute to show that the questions they refer to actually now has been answered. 
+            # If the question wasn't already answered the API entities for this question
+            #should all update it's answer_set attribute to show that the questions
+            #they refer to actually now has been answered. 
             a.update(answer_set=True)
             if lecture.active:
                 return redirect('activelecture', lecture.id)

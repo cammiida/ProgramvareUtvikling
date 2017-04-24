@@ -14,9 +14,9 @@ class Course(models.Model):
 
 class Lecture(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now = True)
+    date = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=200)
-    active = models.BooleanField(default = False)
+    active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.date.strftime("%B %d, %Y")
