@@ -146,15 +146,10 @@ class CourseTest(TestCase):
         self.client.login(username='testuser',password='testpassword')
 
 
-    #Test that the page opens itself correctly
-    def test_addcourse(self):
-        response = self.client.get(reverse('addcourse'))
-        self.assertEqual(response.status_code, 200)
-
     def test_addcourseform(self):
         # "POST" Data to the view:
         dict = {'name':'TDT4140'}
-        response = self.client.post(reverse('addcourse'),dict)
+        response = self.client.post(reverse('courses'),dict)
         self.assertRedirects(response,reverse('courses'))
 
         # Check that this post now exists in db:
