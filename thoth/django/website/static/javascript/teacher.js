@@ -116,7 +116,7 @@ $(document).ready(function(){
 		else{
 			$('#speedup').html(' 0%');
 			$('#slowdown').html(' 0%');
-			$('#studentsconnected').html(0);
+			$('#studentsconnected').html('Students online: 0');
 		}
 	});
 

@@ -45,12 +45,10 @@ urlpatterns = [
     url(r'^logout/$', views.logout_view, name="logout"),
 
     # Course urls
-    url(r'^addcourse/$', views.addcourse, name='addcourse'),
     url(r'^courses/$', views.courses, name='courses'),
     # Lecture urls
     url(r'^lectures/([0-9]+)/$', views.lectures, name='lectures'),
     url(r'^lecture/(?P<lecture_id>[0-9]+)/$', views.lecture, name='lecture'),
-    url(r'^addlecture/([0-9]+)/$', views.addlecture, name='addlecture'),
     url(r'^startlecture/([0-9]+)/$', views.startlecture, name='startlecture'),
     url(r'^activelecture/(?P<lecture_id>[0-9]+)/$', views.activelecture, name='activelecture'),
     url(r'^endlecture/$', views.endlecture, name='endlecture'),
