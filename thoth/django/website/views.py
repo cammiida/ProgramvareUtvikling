@@ -18,20 +18,29 @@ import sys
 # Importing the natural language API script
 import API2 as apis
 
-
+# @desc Directs the user to the index page
 def index (request):
     return render(request, 'index.html')
 
+# @desc Directs the user to the teacher about page
+# @return boolean - if the user is a teacher, show the right header
 def about_teacher (request):
     return render(request, 'about.html',{'teacher': True})
 
+# @desc Directs the user to the student about page
+# @return no boolean - automatically false
 def about (request):
     return render(request, 'about.html')
 
+# @desc Directs the user to the student index page.
+# @return boolean - to not show teacher drop down menu
 def student(request):
-    #return render(request,'student/question_list.html')
     return render(request, 'student/index.html', {'not_show_icon': True})
 
+# @desc Directs the user to the lecture as a student.
+# @param Lecture id. Primary key for lecture in database. Use this to find the right lecture.
+# @return if the ID given is incorrect - return student index page with boolean - to not show drop down menu and string - error message
+# else if the ID given is correct return the student lecture page with object - lecture, query set - tasks, query set - all_questions and form - form
 def studentlecture(request, lecture_id):
     try:
         # TODO: use LectureForm fra forms.py
@@ -44,13 +53,16 @@ def studentlecture(request, lecture_id):
     form = QuestionForm()
     return render(request, 'student/lecture.html', {'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions, 'form':form})
 
-#Shows username of teacher that is logged in, if noone is logged in, none is shown
+# @desc Directs the user to the teacher page. Shows username of teacher that is logged in, if noone is logged in, none is shown
+# @return Username of current user
 def teacher(request):
     username = None
     if request.user.is_authenticated:
         username = request.user.username
     return render(request, 'teacher/index.html', {'username': username})
 
+# @desc Directs the teacher to a list of his/her courses. Teacher can also add new courses
+# @return The courses page with an empty form and query set - courses
 def courses(request):
     courses = Course.objects.filter(teacher=request.user)
     # checks if the form is posted. If it is, create the object
@@ -68,12 +80,15 @@ def courses(request):
         form = CourseForm()
     return render(request, 'teacher/courses.html', {'courses':courses,'form':form})
 
+# @desc List of lectures in a course for a teacher. Teacher can add new lectures.
+# @return The lectures page with an empty form, query set - lectures and object - the course that the lectures are in
 def lectures(request,course_id):
     course = Course.objects.get(id=course_id)
     lectures = Lecture.objects.filter(course=course_id,course__teacher=request.user).order_by('-id')
+    # Make sure no lecture for this teacher is active
     for lecture in lectures:
         lecture.active = False
-    # checks if the form is posted. If it is, create the object
+    # Checks if the form is posted. If it is, create the object
     course = Course.objects.get(id=course_id)
     if request.method == 'POST':
         form = LectureForm(request.POST)
@@ -87,16 +102,23 @@ def lectures(request,course_id):
 
     return render(request, 'teacher/lectures.html', {'lectures':lectures,'course':course,'form':form})
 
+# @desc Lecture page with information about history, tasks and questions.
+# @return lecture page with empty form, object - lecture, query set - tasks for that lecture, query set - questions for that lecture,
+# query set - feedback history for that lecture and array - information for Google line chart
 def lecture(request,lecture_id):
     all_questions = Question.objects.filter(lecture = lecture_id).order_by('-timestamp')
     lecture = Lecture.objects.get(id=lecture_id)
     tasks = Task.objects.filter(lecture = lecture)
+    #feedbackhistory to sort the data for the line chart correctly - oldest first
     feedbackhistory = FeedbackHistory.objects.filter(lecture = lecture).order_by('timestamp')
+
+    # Create information array for Google line chart
     line_chart_array = []
     for entry in feedbackhistory:
         date = entry.timestamp.strftime("%Y-%m-%d %H:%M:%S")
         entry_array = [date, entry.up, entry.down, entry.none]
         line_chart_array.append(entry_array)
+    #feedbackhistory to sort the feedback information under the charts correctly - newest first
     feedbackhistory = FeedbackHistory.objects.filter(lecture=lecture).order_by('-timestamp')
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -115,23 +137,8 @@ def lecture(request,lecture_id):
                                                     'all_questions':all_questions, 'feedbackhistory':feedbackhistory,
                                                     'line_chart_array':line_chart_array})
 
-def addcourse(request):
-    # checks if the form is posted. If it is, create the object
-    if request.method == 'POST':
-        form = CourseForm(request.POST)
-        if form.is_valid():
-            # add course from form, but dont add it to db just yet.
-            course = form.save(commit=False)
-            # Now add current user to the course
-            course.teacher = request.user
-            # now add it to db since we now have all our stuffs
-            course.save()
-
-            return redirect('courses')
-    else:
-        form = CourseForm()
-    return render(request,'teacher/addcourse.html',{'form':form})
-
+# @desc Starts a lecture. Directs the user to the active lecture
+# @return integer - lecture id as primary key of that table in the database
 def startlecture(request, lecture_id):
     lectures = Lecture.objects.filter(course__teacher = request.user)
     print(lectures)
@@ -144,21 +151,9 @@ def startlecture(request, lecture_id):
     print('lecture started')
     return redirect('activelecture', lecture.id)
 
-def addlecture(request, course_id):
-    # checks if the form is posted. If it is, create the object
-    course = Course.objects.get(id=course_id)
-    if request.method == 'POST':
-        form = LectureForm(request.POST)
-        if form.is_valid():
-            lecture = form.save(commit=False)
-            lecture.course_id = course_id
-            lecture.save()
-            return redirect('lectures',course_id)
-    else:
-        form = LectureForm()
-    return render(request,'teacher/addlecture.html',{'form':form, 'course':course})
-
-
+# @desc Shows active lecture page.
+# @param The active lecture's id
+# @return object - the active lecture, query set - tasks relatet to this lecture and query set - questions related to this lecture
 def activelecture(request, lecture_id):
     lecture = Lecture.objects.get(id = lecture_id,course__teacher = request.user)
     lecture.active = True
@@ -167,6 +162,7 @@ def activelecture(request, lecture_id):
     print('This lecture is active')
     return render(request,'teacher/activelecture.html', {'lecture':lecture, 'tasks':tasks, 'all_questions':all_questions})
 
+# @desc Saves the task history when a task is completed
 def savetaskhistory(request):
     if request.method == 'POST':
         print('POSTING STUFF')
@@ -181,6 +177,7 @@ def savetaskhistory(request):
         print('ERROR')
     return HttpResponse('OK')
 
+# @desc Saves the speed feedback from students every time a push notification is sent to the teacher
 def savefeedback(request):
     if request.method == 'POST':
         print('POSTING STUFF')
@@ -195,12 +192,18 @@ def savefeedback(request):
         print('ERROR')
     return HttpResponse('OK')
 
+# @desc Fetches the feedback history of current lecture from database
+# @param The current lecture ID as primary key from database
+# @return query set - entries from feedback history
 def feedbackhistory(request,lectureid):
     entries = FeedbackHistory.objects.filter(lecture_id=lectureid)
     return render(request,'teacher/taskhistory.html',{
         'entries':entries,
     })
 
+# @desc Collects information about tasks.
+# @param Current task ID as primary key from database
+# @return query set - taskentries, object - task, integers - number of correct, wrong and timed out answers
 def taskhistory(request,taskid):
     taskentries = TaskHistory.objects.filter(task_id=taskid)
     total_correct_answers = 0
@@ -219,7 +222,8 @@ def taskhistory(request,taskid):
         'total_timeout_answers':total_timeout_answers
     })
 
-
+# @desc Ends the current lecture and redirects the teacher to the (not active) lecture page
+# @ return integer - the current lecture's ID as primary key from database
 def endlecture(request):
     lectures = Lecture.objects.filter(course__teacher = request.user)
     #lecture = Lecture.objects.get(active=True,course__teacher = request.user)
@@ -231,7 +235,8 @@ def endlecture(request):
     print('lecture ended')
     return redirect('lecture',lecture.id)
 
-#login using Django built-in user
+# @desc Login using Django built-in user
+# @return form - empty LoginForm
 def login1(request):
     form = LoginForm(request.POST or None)
     #gets user and validates
@@ -243,12 +248,14 @@ def login1(request):
             return redirect("teacher")# Redirect to a success page.
     return render(request, 'teacher/login.html', {'form': form })
 
-#logs out user
+# @desc Logs out user
 def logout_view(request):
     logout(request)
     return render(request, 'teacher/logout.html')
 
-
+# @desc Adds a question to the database and connects it with the current lecture. Natural language API checks the question
+# @param The current lecture ID as primary key from database
+# @return form - empty QuestionForm, though cleaning the field using JavaScript
 def add_question(request,lectureid):
     if request.method == 'POST':
         form = QuestionForm(request.POST)
@@ -270,11 +277,15 @@ def add_question(request,lectureid):
 
     return redirect('/student/lecture/?lectureid=' + str(lectureid), {'form': form})
 
-
+# @desc Fetches the questions related to the current lecture from database ordered by time, newest first.
+# @param The current lecture ID as primary key from database
+# @return query set - all_questions of that lecture
 def question_list(request,lecture_id):
     all_questions = Question.objects.filter(lecture_id=lecture_id).order_by('-timestamp')
     return render(request,'student/question_list.html',{'all_questions' : all_questions})
 
+# @desc Registers new user (teacher) and redirects to registration.html
+# @return empty - Userform and boolean - if the user is already registered or not
 def register(request):
     registered = False
     if(request.method == 'POST'):
@@ -292,7 +303,9 @@ def register(request):
         user_form = Userform()
     return render(request, 'teacher/registration.html', {'form': user_form, 'registered': registered})
 
-
+# @desc Lets the teacher answer questions posted by students.
+# @param The current question ID as primary key from database
+# @return object - current question, object - current lecture, form - empty AnswerForm
 def answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
@@ -310,6 +323,7 @@ def answer_question(request, question_id):
             #should all update it's answer_set attribute to show that the questions
             #they refer to actually now has been answered. 
             a.update(answer_set=True)
+            # If the lecture is active, stay on the active lecture page. If not, stay on the not active lecture page
             if lecture.active:
                 return redirect('activelecture', lecture.id)
             else:
@@ -318,11 +332,12 @@ def answer_question(request, question_id):
         form = AnswerForm(instance=question)
         return render(request, 'teacher/answer_question.html', {'question': question, 'lecture': lecture, 'form': form})
 
+# @desc Lets the students vote on a question
+# @param The current question ID as primary key from database
 def vote(request, question_id):
     print("test")
     question = Question.objects.get(id = question_id)
     lecture = question.lecture
-    all_questions = Question.objects.filter(lecture=lecture.id).order_by('value')
     form = QuestionForm()
     if request.POST.get('up_button'):
         print("up")
@@ -338,8 +353,11 @@ def vote(request, question_id):
             question.save()
 
     return HttpResponse('OK')
-    #return render(request, 'student/lecture.html', {'lecture':lecture, 'all_questions':all_questions, 'form':form})
 
+# @desc Lets the teacher delete or answer a question, depends on which button the teacher clicked
+# @param The current question ID as primary key from database
+# @return If delete button: integer - current lecture ID. Teacher stays on current page
+# Else if answer button, teacher is redirected to an answer page with object - current question, object - current lecture and form - empty Answerform
 def delete_answer_question(request, question_id):
     question = Question.objects.get(id = question_id)
     lecture = question.lecture

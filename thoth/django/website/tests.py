@@ -91,12 +91,12 @@ class LectureTest(TestCase):
         self.course = Course.objects.create(name='TDT4140',teacher=self.user)
 
     def test_addlecture(self):
-        response = self.client.get(reverse('addlecture',args=[self.course.id] ))
+        response = self.client.get(reverse('lectures',args=[self.course.id] ))
         self.assertEqual(response.status_code, 200)
 
         # "POST" Data to the view:
         dict = {'name':'Introduction'}
-        response = self.client.post(reverse('addlecture',args=[self.course.id] ),dict)
+        response = self.client.post(reverse('lectures',args=[self.course.id] ),dict)
         self.assertRedirects(response,reverse('lectures',args=[self.course.id]))
 
         # Check that this post now exists in db:
@@ -146,15 +146,10 @@ class CourseTest(TestCase):
         self.client.login(username='testuser',password='testpassword')
 
 
-    #Test that the page opens itself correctly
-    def test_addcourse(self):
-        response = self.client.get(reverse('addcourse'))
-        self.assertEqual(response.status_code, 200)
-
     def test_addcourseform(self):
         # "POST" Data to the view:
         dict = {'name':'TDT4140'}
-        response = self.client.post(reverse('addcourse'),dict)
+        response = self.client.post(reverse('courses'),dict)
         self.assertRedirects(response,reverse('courses'))
 
         # Check that this post now exists in db:

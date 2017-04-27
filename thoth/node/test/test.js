@@ -70,6 +70,24 @@ describe('sockets', function(){
 			});
 	});	
 	
+	it('Should update slower-array when student push the faster button', function(done){
+			teacher.on('connect', function(){
+				teacher.emit('usertype', 'teacher', 2);
+			});
+			student.on('connect', function(){
+				student.emit('usertype', 'student', 2);
+				student.emit('faster');
+			});
+			teacher.once('update', function(){
+				teacher.once('update', function(){
+					teacher.on('update', function(array){
+						expect(array['faster']).to.equal(1);
+						done();
+					});
+				});
+			});
+	});	
+	
 	it('should update when student log out', function(done){
 		teacher.on('connect', function(){
 			teacher.emit('usertype', 'teacher', 3);
@@ -89,6 +107,19 @@ describe('sockets', function(){
 		});
 	});
 	
+	it('should be possible for a teacher to end a lecture', function(done){
+		teacher.on('connect', function(){
+			teacher.emit('usertype', 'teacher', 4);
+		})
+		student.on('connect', function(){
+			student.emit('usertype', 'student', 4);
+		})
+		teacher.emit('endlecture', 4);
+		student.on('endlecture', function(){
+			done();
+		})
+		
+	})
 	it('should be possible for a teacher to start a task', function(done){
 		this.timeout(4000)
 		teacher.on('connect', function(){
@@ -104,7 +135,6 @@ describe('sockets', function(){
 		teacher.on('sendtasksummay', function(taskid,correct,wrong, loggedon){
 			expect(correct).to.equal(1)
 			done();
-		})
-		
+		})	
 	})
 });
